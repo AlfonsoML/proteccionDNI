@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
  <head>
   <meta charset="UTF-8">
@@ -10,12 +10,8 @@
   <h1>Protección de la imagen del DNI</h1>
   <p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas</p>
   <p>En esta página puedes bloquear los datos que no son necesarios y sobre-escribir un texto para que no lo puedan utilizar para otros propósitos</p>
-  <p><input type='button' id='ElegirFoto' value='Elige la foto'> <input type='file' id='SelectorFichero' accept='image/*'> 
-  - <label for='Formato'>Elige la máscara a usar</label>
-	<select id='Formato'>
-		<option value='DNI1-Frontal'>DNI - Frontal</option>
-		<option value='DNI1-Trasera'>DNI - Trasera</option>
-	</select>
+  <p><input type='button' id='ElegirFoto' value='Elige la foto'> <input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'> 
+	- <label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>
 	- <label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
   </p>
   <div id='ControlesDesplazamiento'>
@@ -25,7 +21,7 @@
 	<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
   </div>
   <p>Cuando esté bien, toca en la imagen para grabarla</p>
-  <div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
+  <div id='Previsualizacion' title='Pulsa para guardar'><canvas id='canvas' width='1000' height='625'></div>
   <a id='grabar'></a>
 
 <aside>
@@ -34,5 +30,6 @@
 </aside>
   <footer>Esta página no recolecta ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros</footer>
  </body>
+  <script type='text/javascript' src='formatos.js'></script>
   <script type='text/javascript' src='codigo.js'></script>
 </html>
