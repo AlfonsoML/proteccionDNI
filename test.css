@@ -1,0 +1,14 @@
+#Ejemplos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em;
+}
+
+#Ejemplos img {
+	max-width: 100px;
+	cursor: pointer;
+}
+
+#ElegirFoto {
+	display: none;
+}
