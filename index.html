@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <title>Protección de DNI</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+  <link rel='stylesheet' type='text/css' href='estilos.css'>
+ </head>
+ <body>
+  <h1>Protección de la imagen del DNI</h1>
+  <p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas</p>
+  <p>En esta página puedes bloquear los datos que no son necesarios y sobre-escribir un texto para que no lo puedan utilizar para otros propósitos</p>
+  <p><input type='button' id='ElegirFoto' value='Elige la foto'> <input type='file' id='SelectorFichero' accept='image/*'> 
+  - <label for='Formato'>Elige la máscara a usar</label>
+	<select id='Formato'>
+		<option value='DNI1-Frontal'>DNI - Frontal</option>
+		<option value='DNI1-Trasera'>DNI - Trasera</option>
+	</select>
+	- <label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
+  </p>
+  <div id='ControlesDesplazamiento'>
+	<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
+	<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+	<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+	<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+  </div>
+  <p>Cuando esté bien, toca en la imagen para grabarla</p>
+  <div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
+  <a id='grabar'></a>
+
+<aside>
+<p>¿Puedo fiarme de que no vas a hacer nada con mi DNI?<br>
+-El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna fora. Además está disponible completo en GitHub. Si quieres tener la máxima seguridad, guardate la página en tu ordenador/móvil y así sabes que el código no se va a modificar jamás</p>
+</aside>
+  <footer>Esta página no recolecta ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros</footer>
+ </body>
+  <script type='text/javascript' src='codigo.js'></script>
+</html>

@@ -1,0 +1,16 @@
+body {
+	font-family: Verdana, Sans-Serif;
+}
+
+#SelectorFichero {
+	width: 1px;
+	height: 1px;
+	opacity: 0.1;
+	background: transparent;
+}
+
+#Previsualizacion,
+canvas {
+	max-width: 100%;
+	height: auto;
+}
