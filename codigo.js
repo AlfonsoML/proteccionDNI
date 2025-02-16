@@ -49,12 +49,31 @@ controles.forEach(function (control) {
 document.getElementById('Guardar')
 	.addEventListener('click', GrabarImagen);
 
+configurarDobleClickComoReset('#ControlesDesplazamiento');
+
+/** 
+Al hacer doble click en el label, que vuelva a poner el control a 0
+*/
+function configurarDobleClickComoReset(contenedor) {
+	const labels = querySelector_Array(contenedor + ' label');
+	labels.forEach(label => label.addEventListener('dblclick', function (ev) {
+		const lbl = ev.target;
+		const input = document.getElementById(lbl.htmlFor);
+		input.value = input.defaultValue;
+
+		input.dispatchEvent(new Event('input'));
+		input.dispatchEvent(new Event('change'));
+	}));
+}
+
 /**
  * Dibujar cargar la imagen en img, redimensionar el canvas para que sea proporcional y comenzar proceso
  * @param {any} file
  */
 function MostrarImagen(file) {
+	console.time('Cargar imagen');
 	img.onload = function () {
+		console.timeEnd('Cargar imagen');
 		URL.revokeObjectURL(img.src)
 
 		const ancho = img.width;
@@ -73,7 +92,9 @@ function MostrarImagen(file) {
 Proceso de protección del DNI
 */
 function RedibujarComposicion() {
+	console.time('Borrar');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	console.timeEnd('Borrar');
 
 	const degrees = Rotacion.value;
 	if (degrees == 0) {
@@ -97,11 +118,17 @@ function RedibujarComposicion() {
 		ctx.restore();
 	}
 
+	console.time('Mascara');
 	DibujarMascara();
+	console.timeEnd('Mascara');
 
+	console.time('Watermark');
 	DibujarMarcaAgua();
+	console.timeEnd('Watermark');
 
+	console.time('BN');
 	ConvertirBN();
+	console.timeEnd('BN');
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
@@ -202,4 +229,14 @@ function GrabarImagen() {
 	link.download = 'Protegido.jpg';
 	link.href = canvas.toDataURL('image/jpeg', 0.8);
 	link.click();
+}
+
+/**
+ * Returns an Array with the result of a querySelectorAll call (a NodeList)
+ * @param {any} selector
+ * @param {any} root
+ * @returns
+ */
+function querySelector_Array(selector, root) {
+	return [].slice.call((root || document).querySelectorAll(selector));
 }

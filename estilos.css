@@ -2,6 +2,10 @@ body {
 	font-family: Verdana, Sans-Serif;
 }
 
+label {
+	user-select: none;
+}
+
 #pasos {
 }
 
