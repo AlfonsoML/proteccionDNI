@@ -1,34 +1,99 @@
 ﻿<!doctype html>
 <html lang="es">
- <head>
-  <meta charset="UTF-8">
-  <title>Protección de DNI</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-  <link rel='stylesheet' type='text/css' href='estilos.css'>
- </head>
+<head>
+	<meta charset="UTF-8">
+	<title>Protección del DNI</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+	<link rel='stylesheet' type='text/css' href='estilos.css'>
+</head>
  <body>
-  <h1>Protección de la imagen del DNI</h1>
-  <p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas</p>
-  <p>En esta página puedes bloquear los datos que no son necesarios y sobre-escribir un texto para que no lo puedan utilizar para otros propósitos</p>
-  <p><input type='button' id='ElegirFoto' value='Elige la foto'> <input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'> 
-	- <label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>
-	- <label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
-  </p>
-  <div id='ControlesDesplazamiento'>
-	<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
-	<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-	<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-	<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
-  </div>
-  <p>Cuando esté bien, toca en la imagen para grabarla</p>
-  <div id='Previsualizacion' title='Pulsa para guardar'><canvas id='canvas' width='1000' height='625'></div>
-  <a id='grabar'></a>
+	<h1>Protección del DNI</h1>
+	<p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas.</p>
+	<p>En esta página puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos.</p>
+	<section id='pasos'>
+		<details id='paso1' name='paso' open>
+			<summary>Foto</summary>
+			<div>
+				<p><input type='button' id='ElegirFoto' value='Elige la foto'>
+					<input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'> 
+				</p>
+			
+			</div>
+		</details>
+		<details id='paso2' name='paso'>
+			<summary>Posición</summary>
+			<div>
+				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
+				<div id='ControlesDesplazamiento'>
+					<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
+					<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+					<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+				</div>
+			</div>
+		</details>
+		<details id='paso3' name='paso'>
+			<summary>Tipo de foto</summary>
+			<div>
+				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.</p>
+				<label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>. 
+			</div>
+		</details>
+		<details id='paso4' name='paso'>
+			<summary>Texto</summary>
+			<div>
+				<p>Escribe un texto para añadir sobre la imagen</p>
+				<label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
+			</div>
+		</details>
+		<details id='paso5' name='paso'>
+			<summary>Guardar</summary>
+			<div>
+				<p><input type='button' value='Guardar la imagen' id='Guardar'></p>
+				<a id='grabar'></a>
+			</div>
+		</details>
+	</section>
+	<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
 
-<aside>
-<p>¿Puedo fiarme de que no vas a hacer nada con mi DNI?<br>
--El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna fora. Además está disponible completo en GitHub. Si quieres tener la máxima seguridad, guardate la página en tu ordenador/móvil y así sabes que el código no se va a modificar jamás</p>
-</aside>
-  <footer>Esta página no recolecta ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros</footer>
+	<aside id='FAQ'>
+		<h2>Preguntas y respuestas</h2>
+		<details>
+			<summary>¿Qué hace la página?</summary>
+			<div class='respuesta'>
+			<ol>
+			<li>Elige una foto de tu DNI. La imagen se convierte a blanco y negro y se escala a 1000px de anchura.</li>
+			<li>Elige el formato de DNI que tienes y si es la parte delantera o trasera. En base a eso se enmascaran los datos que no son necesario que nadie vea (si están en negro no hay posibilidad de que ningún sistema los recupere)</li>
+			<li>Ajustas si es necesario la posición de la foto para que encaje con las máscaras.</li>
+			<li>Añades un texto que se sobre escribirá como marca de agua, indicando para qué compartes la foto</li>
+			<li>Pincha en la foto para descargarla.</li>
+			</ol>
+			</div>
+		</details>
+
+		<details>
+			<summary>¿Puedo fiarme de que no vas a hacer nada con mi DNI?</summary>
+			<div class='respuesta'>
+			<p>La página no almacena ningún dato, no se usan cookies, no se usa ningún servicio de terceros y tu DNI solo se procesa en tu movil/ordenador</p>
+			<p>El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna forma. Además <a href='https://github.com/AlfonsoML/proteccionDNI/'>está disponible completo en GitHub</a>.<br>
+			Si quieres tener la máxima seguridad, guardate la página en tu ordenador/móvil y así sabes que el código no se va a modificar jamás.</p>
+			</div>
+		</details>
+
+		<details>
+			<summary>¿Por qué usarla?</summary>
+			<div class='respuesta'>
+			<p>Las empresas <b>no</b> deberían tener acceso a la mayoría de datos de tu DNI. <a href='https://www.aepd.es/documento/2023-0048.pdf'>Informe de la Agencia Española de Protección de datos</a>. 
+			Noticia sobre <a href='https://www.pymelegal.es/noticias/aepd/la-proteccion-de-datos-y-el-dni'>sanciones a empresas</a><br>
+			Si te manejas bien con la informática, tú puedes realizar los mismos pasos que se hacen en esta página. 
+			Si por contra no sueles usar programas de edición gráfica, esta página te facilita esas tareas.</p>
+			<p>Incluso si tú eres de las personas a las que esto le parece trivial, piensa en tus familiares, amistades, ... 
+			¿Te parece más sencillo explicarles cómo hacer estas operaciones por su cuenta, o enviarles un enlace o un zip para que lo puedan hacer de forma automatizada?.</p>
+			</div>
+		</details>
+	</aside>
+
+	<footer>Esta página no recolecta ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros</footer>
  </body>
   <script type='text/javascript' src='formatos.js'></script>
   <script type='text/javascript' src='codigo.js'></script>

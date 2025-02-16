@@ -30,8 +30,12 @@ SelectorFichero.addEventListener('change', function (e) {
 });
 
 // botón "bonito" para el usuario
-document.getElementById('ElegirFoto')
-	.addEventListener('click', () => SelectorFichero.click());
+//document.getElementById('ElegirFoto')
+//	.addEventListener('click', () => SelectorFichero.click());
+document.querySelector('#paso1 p')
+	.addEventListener('click', (ev) => {
+		SelectorFichero.click();
+	});
 
 const controles = [Formato, Watermark, Rotacion, Horizontal, Vertical, Zoom];
 
@@ -41,8 +45,9 @@ controles.forEach(function (control) {
 	});
 });
 
-// Al hacer click en la imagen guardarla ¿es intuitivo? ¿es mejor un botón separado?
-canvas.addEventListener('click', GrabarImagen);
+// Al hacer click guardarla
+document.getElementById('Guardar')
+	.addEventListener('click', GrabarImagen);
 
 /**
  * Dibujar cargar la imagen en img, redimensionar el canvas para que sea proporcional y comenzar proceso
@@ -58,6 +63,8 @@ function MostrarImagen(file) {
 		canvas.height = canvas.width * alto / ancho;
 
 		RedibujarComposicion();
+
+		document.getElementById('paso2').open = true;
 	}
 	img.src = URL.createObjectURL(file);
 }

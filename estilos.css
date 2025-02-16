@@ -2,6 +2,25 @@ body {
 	font-family: Verdana, Sans-Serif;
 }
 
+#pasos {
+}
+
+#pasos summary {
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+}
+
+#pasos summary::marker {
+  display: none;
+}
+
+#pasos details[open] {
+}
+
+#pasos details > div {
+	padding: 0 1em 1em;
+}
+
 #SelectorFichero {
 	width: 1px;
 	height: 1px;
@@ -14,3 +33,32 @@ canvas {
 	max-width: 100%;
 	height: auto;
 }
+
+#Previsualizacion canvas {
+	background: black;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+#FAQ summary {
+    cursor: pointer;
+}
+
+#FAQ details {
+    margin: 1em;
+}
+
+.respuesta {
+    padding: 0 1em;
+}
+
+footer {
+	background-color: #EFEFEF;
+	border-top: 1px solid #666;
+	padding: 0.4em;
+	text-align: center;
+	margin-top: 1em;
+    font-size: 80%;
+}
+
+
+
