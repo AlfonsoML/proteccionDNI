@@ -144,12 +144,13 @@ function DibujarMarcaAgua() {
 
 	const marcas = FormatosDnis[Formato.value].Watermarks;
 	marcas.forEach(marca => {
-		ctx.font = marca.fuente;
-		ctx.fillStyle = marca.estilo;
-		RellenarTexto(texto, marca.bb.x, marca.bb.y, marca.bb.w, marca.bb.h);
+		RellenarTexto(texto, ctx, marca.fuente, marca.estilo, marca.bb.x, marca.bb.y, marca.bb.w, marca.bb.h);
 	});
 
 }
+
+// Objeto para mantener caché de las métricas del texto sin recalcular
+const CacheMetricas = {};
 
 /**
  * Escribir un texto en la zona delimitada haciendo wrap letra a letra y repitiendo hasta llenar
@@ -159,7 +160,10 @@ function DibujarMarcaAgua() {
  * @param {any} maxWidth
  * @param {any} maxHeight
  */
-function RellenarTexto(texto, x, y, maxWidth, maxHeight) {
+function RellenarTexto(texto, ctx, fuente, estilo, x, y, maxWidth, maxHeight) {
+	ctx.font = fuente;
+	ctx.fillStyle = estilo;
+
 	// Calcular altura de linea con la fuente actual
 	const metrics = ctx.measureText("A");
 	const lineHeight = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
@@ -167,14 +171,31 @@ function RellenarTexto(texto, x, y, maxWidth, maxHeight) {
 
 	// Dividir el texto en letras (con un separador final para repeticiones)
 	const letras = (texto + ' - ').split('');
+
+	// Obtenemos las metricas de anchura cacheada o creamos un objeto nuevo
+	const key = fuente + estilo;
+	let Metricas = CacheMetricas[key];
+	if (!Metricas) {
+		Metricas = {};
+		CacheMetricas[key] = Metricas;
+	}
+	// validamos que todas las letras están en nuestra caché o las añadimos
+	letras.forEach(letra => {
+		if (Metricas[letra])
+			return;
+		Metricas[letra] = ctx.measureText(letra).width;
+	});
+
 	let line = ''; // Linea que vamos a escribir
 
 	// bucle hasta rellenar toda la zona, vamos letra a letra
 	let n = 0;
+	let ancho = 0;
 	while (true) {
 		const letra = letras[n];
 		// Medir la anchura que tendrá si añadimos esta letra
-		const testWidth = ctx.measureText(line + letra).width;
+		const anchoLetra = Metricas[letra];
+		const testWidth = ancho + anchoLetra;
 		// If the width of this test line is more than the max width
 		if (testWidth > maxWidth && n > 0) {
 			// escribir el texto
@@ -187,9 +208,11 @@ function RellenarTexto(texto, x, y, maxWidth, maxHeight) {
 
 			// Comenzamos una linea nueva con esta letra
 			line = letra;
+			ancho = 0;
 		} else {
 			// Si no hemos superado la anchura, la añadimos a la linea actual
 			line += letra;
+			ancho += anchoLetra;
 		}
 		// cuando llegamos al final, reseteamos para volver
 		if (n === letras.length - 1)
