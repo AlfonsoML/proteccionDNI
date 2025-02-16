@@ -5,22 +5,39 @@ Código específico para la página de pruebas
 
 const imgs = querySelector_Array('#Ejemplos img');
 
-imgs.forEach(imagenDemo => imagenDemo.addEventListener('click', CambiarImagenTest));
+imgs.forEach(imagenDemo => {
+	imagenDemo.title = imagenDemo.alt;
+	imagenDemo.addEventListener('click', CambiarImagenTest);
+});
 
 
 function CambiarImagenTest(ev) {
-	const imagen = ev.target;
+	const actual = document.querySelector('.Elegida');
+	if (actual)
+		actual.classList.remove('Elegida');
 
+	const imagen = ev.target;
+	imagen.classList.add('Elegida');
 	img.onload = function() {
 		const ancho = img.width;
 		const alto = img.height;
 		const ratio = ancho / alto;
 		canvas.height = canvas.width * alto / ancho;
 
+		const src = imagen.src;
+		// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente
+		const re = /ejemplos\/(.*)\.webp/;
+		const match = re.exec(src);
+		if (match) {
+			Formato.value = match[1];
+		}
+
 		RedibujarComposicion();
+
+		// Pasar al paso 2 y probar movimiento
+		document.getElementById('paso2').open = true;
 	}
 	img.src = imagen.src;
-
 }
 
 /**

@@ -10,25 +10,61 @@
  <body>
   <h1>Protección de la imagen del DNI</h1>
   <p>Pruebas para desarrollo con DNIs ejemplo</p>
-<div id='Ejemplos'>
-	<img src='ejemplos/dni.webp' alt='imagen test'>
-	<img src='ejemplos/anverso_2.jpg' alt='imagen test'>
-	<img src='ejemplos/reverso_2.jpg' alt='imagen test'>
-</div>
-  <p><input type='button' id='ElegirFoto' value='Elige la foto'> <input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'> 
-	- <label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>
-	- <label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
-  </p>
-  <div id='ControlesDesplazamiento'>
-	<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
-	<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-	<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-	<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
-  </div>
-  <p>Cuando esté bien, toca en la imagen para grabarla</p>
-  <div id='Previsualizacion' title='Pulsa para guardar'><canvas id='canvas' width='1000' height='625'></div>
-  <a id='grabar'></a>
+	<div id='Ejemplos'>
+		<img src='ejemplos/dni4-frontal.webp' alt='DNI 4 frontal'>
+		<img src='ejemplos/dni4-trasera.webp' alt='DNI 4 trasera'>
+		<img src='ejemplos/dni3-frontal.webp' alt='DNI 3 frontal'>
+		<img src='ejemplos/dni3-trasera.webp' alt='DNI 3 trasera'>
+		<img src='ejemplos/dni1-frontal.webp' alt='DNI 1 frontal'>
+		<img src='ejemplos/dni1-trasera.webp' alt='DNI 1 trasera'>
+	</div>
+	<section id='pasos'>
+		<details id='paso1' name='paso' open>
+			<summary>Foto</summary>
+			<div>
+				<p><input type='button' id='ElegirFoto' value='Elige la foto'>
+					<input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'> 
+				</p>
+			
+			</div>
+		</details>
+		<details id='paso2' name='paso'>
+			<summary>Posición</summary>
+			<div>
+				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
+				<div id='ControlesDesplazamiento'>
+					<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
+					<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+					<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+				</div>
+			</div>
+		</details>
+		<details id='paso3' name='paso'>
+			<summary>Tipo de foto</summary>
+			<div>
+				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.</p>
+				<label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>. 
+			</div>
+		</details>
+		<details id='paso4' name='paso'>
+			<summary>Texto</summary>
+			<div>
+				<p>Escribe un texto para añadir sobre la imagen</p>
+				<label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
+			</div>
+		</details>
+		<details id='paso5' name='paso'>
+			<summary>Guardar</summary>
+			<div>
+				<p><input type='button' value='Guardar la imagen' id='Guardar'></p>
+				<a id='grabar'></a>
+			</div>
+		</details>
+	</section>
+	<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
 
+  	<footer>Página de pruebas. <a href='index.html'>Ir a la principal</a></footer>
  </body>
   <script type='text/javascript' src='formatos.js'></script>
   <script type='text/javascript' src='codigo.js'></script>
