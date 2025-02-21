@@ -8,6 +8,8 @@
   <link rel='stylesheet' type='text/css' href='test.css'>
  </head>
  <body>
+  <main>
+
   <h1>Protección de la imagen del DNI</h1>
   <p>Pruebas para desarrollo con DNIs ejemplo</p>
 	<div id='Ejemplos'>
@@ -33,10 +35,11 @@
 			<div>
 				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
 				<div id='ControlesDesplazamiento'>
-					<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
-					<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-					<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-					<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+					<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+					<div class='ControlRango'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
+					<div class='ControlRango'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+					<div class='ControlRango'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<div class='ControlRango'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 				</div>
 			</div>
 		</details>
@@ -44,7 +47,7 @@
 			<summary>Tipo de foto</summary>
 			<div>
 				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.</p>
-				<label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>. 
+				<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
 			</div>
 		</details>
 		<details id='paso4' name='paso'>
@@ -63,6 +66,7 @@
 		</details>
 	</section>
 	<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
+ </main>
 
   	<footer>Página de pruebas. <a href='index.html'>Ir a la principal</a></footer>
  </body>

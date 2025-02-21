@@ -1,7 +1,22 @@
 ﻿'use strict';
 
 const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+/*
+const canvasEl = document.querySelector('canvas');
+const canvas =
+  'OffscreenCanvas' in window
+    ? canvasEl.transferControlToOffscreen()
+    : canvasEl;
+*/
+/*
+const offscreen = new OffscreenCanvas(canvas.width, canvas.height);
+const ctxPrincipal = canvas.getContext('2d', { alpha: false });
+const ctx = offscreen.getContext('2d', { alpha: false });
+*/
+const ctx = canvas.getContext('2d', { alpha: false });
+
+const canvasImagen = new OffscreenCanvas(0, 0);
+
 //const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const img = new Image;
 
@@ -13,6 +28,9 @@ const Rotacion = document.getElementById('Rotacion');
 const Horizontal = document.getElementById('Horizontal');
 const Vertical = document.getElementById('Vertical');
 const Zoom = document.getElementById('Zoom');
+
+// Ángulo de rotación del DNI (0, 90, 180, 270)
+let rotacion = 0;
 
 // Rellenar la lista de formatos de DNI automáticamente
 const opciones = []; 
@@ -50,6 +68,28 @@ document.getElementById('Guardar')
 	.addEventListener('click', GrabarImagen);
 
 configurarDobleClickComoReset('#ControlesDesplazamiento');
+configurarGiro();
+
+
+/**
+Giros de 90º del DNI
+*/
+function configurarGiro() {
+	const botones = querySelector_Array('input.girar');
+	botones.forEach(boton => boton.addEventListener('click', girarDNI));
+}
+
+function girarDNI(ev) {
+	const boton = ev.target;
+	const giro = parseInt(boton.dataset.giro, 10);
+	rotacion += giro;
+	if (rotacion > 360)
+		rotacion -= 360;
+	if (rotacion < 0)
+		rotacion += 360;
+
+	RedibujarComposicion();
+}
 
 /** 
 Al hacer doble click en el label, que vuelva a poner el control a 0
@@ -67,7 +107,7 @@ function configurarDobleClickComoReset(contenedor) {
 }
 
 /**
- * Dibujar cargar la imagen en img, redimensionar el canvas para que sea proporcional y comenzar proceso
+ * Dibujar cargar la imagen en img, dejar en blanco y negro y comenzar proceso
  * @param {any} file
  */
 function MostrarImagen(file) {
@@ -76,10 +116,19 @@ function MostrarImagen(file) {
 		console.timeEnd('Cargar imagen');
 		URL.revokeObjectURL(img.src)
 
-		const ancho = img.width;
-		const alto = img.height;
-		const ratio = ancho / alto;
-		canvas.height = canvas.width * alto / ancho;
+		ResetearControles();
+
+		canvasImagen.width = img.width;
+		canvasImagen.height = img.height;
+
+		console.time('Dibujar imagen');
+		const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
+		ctxImagen.drawImage(img, 0, 0);
+		console.timeEnd('Dibujar imagen');
+
+		console.time('BN');
+		ConvertirBN(canvasImagen, ctxImagen);
+		console.timeEnd('BN');
 
 		RedibujarComposicion();
 
@@ -88,35 +137,86 @@ function MostrarImagen(file) {
 	img.src = URL.createObjectURL(file);
 }
 
+function ResetearControles() {
+	rotacion = 0;
+
+	[Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
+		control.value = control.defaultValue;
+	});
+}
+
 /**
 Proceso de protección del DNI
 */
 function RedibujarComposicion() {
+	if (canvasImagen.width == 0 || canvasImagen.height == 0)
+		return;
+
 	console.time('Borrar');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	console.timeEnd('Borrar');
 
-	const degrees = Rotacion.value;
-	if (degrees == 0) {
-		ctx.drawImage(img, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.height * Zoom.value);
-	} else {
+	let canvasOrigen = canvasImagen;
+	// rotar ángulos rectos
+	if (rotacion != 0) {
+		const ancho = rotacion == 180 ? canvasOrigen.width : canvasOrigen.height;
+		const alto = rotacion == 180 ? canvasOrigen.height : canvasOrigen.width;
+		const canvasGiro = new OffscreenCanvas(ancho, alto);
+
+		console.time('Rotar ' + rotacion);
+		const ctxRotado = canvasGiro.getContext('2d');
+		ctxRotado.clearRect(0, 0, canvasGiro.width, canvasGiro.height);
 		// save the unrotated context of the canvas so we can restore it later
 		// the alternative is to untranslate & unrotate after drawing
-		ctx.save();
+		ctxRotado.save();
 
 		// move to the center of the canvas
-		ctx.translate(Horizontal.value + canvas.width / 2, Vertical.value + canvas.height / 2);
+		ctxRotado.translate(canvasGiro.width / 2, canvasGiro.height / 2);
 
 		// rotate the canvas to the specified degrees
-		ctx.rotate(degrees * Math.PI / 180);
+		ctxRotado.rotate(rotacion * Math.PI / 180);
 
 		// draw the image
 		// since the context is rotated, the image will be rotated also
-		ctx.drawImage(img, - (canvas.width / 2), - (canvas.height / 2), canvas.width * Zoom.value, canvas.height * Zoom.value);
+		ctxRotado.drawImage(canvasOrigen, - canvasOrigen.width / 2, - canvasOrigen.height / 2);
 
 		// we’re done with the rotating so restore the unrotated context
-		ctx.restore();
+		ctxRotado.restore();
+		console.timeEnd('Rotar ' + rotacion);
+		canvasOrigen = canvasGiro;
 	}
+
+	// pequeños ajustes de ángulo
+	const degrees = Rotacion.value;
+	if (degrees != 0) {
+		const canvasAjusteAngulo = new OffscreenCanvas(canvasOrigen.width, canvasOrigen.height);
+
+		console.time('Rotar');
+		const ctxRotado = canvasAjusteAngulo.getContext('2d');
+		ctxRotado.clearRect(0, 0, canvasAjusteAngulo.width, canvasAjusteAngulo.height);
+		// save the unrotated context of the canvas so we can restore it later
+		// the alternative is to untranslate & unrotate after drawing
+		ctxRotado.save();
+
+		// move to the center of the canvas
+		ctxRotado.translate(canvasAjusteAngulo.width / 2, canvasAjusteAngulo.height / 2);
+
+		// rotate the canvas to the specified degrees
+		ctxRotado.rotate(degrees * Math.PI / 180);
+
+		// draw the image
+		// since the context is rotated, the image will be rotated also
+		ctxRotado.drawImage(canvasOrigen, - canvasOrigen.width / 2, - canvasOrigen.height / 2);
+
+		// we’re done with the rotating so restore the unrotated context
+		ctxRotado.restore();
+		console.timeEnd('Rotar');
+		canvasOrigen = canvasAjusteAngulo;
+	}
+
+	console.time('Imagen');
+	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.height * Zoom.value);
+	console.timeEnd('Imagen');
 
 	console.time('Mascara');
 	DibujarMascara();
@@ -126,9 +226,11 @@ function RedibujarComposicion() {
 	DibujarMarcaAgua();
 	console.timeEnd('Watermark');
 
-	console.time('BN');
-	ConvertirBN();
-	console.timeEnd('BN');
+/*
+	console.time('Dibujar desde offscreen');
+	ctxPrincipal.drawImage(offscreen, 0, 0);
+	console.timeEnd('Dibujar desde offscreen');
+	*/
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
@@ -226,7 +328,7 @@ function RellenarTexto(texto, ctx, fuente, estilo, x, y, maxWidth, maxHeight) {
 /**
  * Convertir todo a blanco y negro
  */
-function ConvertirBN() {
+function ConvertirBN(canvas, ctx) {
 	const w = canvas.width;
 	const h = canvas.height;
 

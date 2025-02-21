@@ -19,10 +19,19 @@ function CambiarImagenTest(ev) {
 	const imagen = ev.target;
 	imagen.classList.add('Elegida');
 	img.onload = function() {
-		const ancho = img.width;
-		const alto = img.height;
-		const ratio = ancho / alto;
-		canvas.height = canvas.width * alto / ancho;
+		ResetearControles();
+
+		canvasImagen.width = img.width;
+		canvasImagen.height = img.height;
+
+		console.time('Dibujar imagen');
+		const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
+		ctxImagen.drawImage(img, 0, 0);
+		console.timeEnd('Dibujar imagen');
+
+//		console.time('BN');
+//		ConvertirBN(canvasImagen, ctxImagen);
+//		console.timeEnd('BN');
 
 		const src = imagen.src;
 		// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente

@@ -6,6 +6,13 @@ body {
 	font-family: Verdana, Sans-Serif;
 }
 
+main {
+	box-sizing: border-box;
+	margin: 0 auto;
+	max-width: 1020px;
+	padding: 0 10px;
+}
+
 label {
 	user-select: none;
 }
@@ -34,6 +41,35 @@ label {
 	height: 1px;
 	opacity: 0.1;
 	background: transparent;
+}
+
+
+#ControlesGiro {
+    text-align: center;
+}
+
+#ControlesDesplazamiento>div {
+  margin: 10px 0;
+}
+
+.ControlRango {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 10px;
+}
+
+.ControlRango input {
+	flex: 1;
+}
+
+.ControlRango label {
+	flex-basis: 140px;
+}
+
+@media (max-width: 560px) {
+	.ControlRango label {
+		flex-basis: 100%;
+	}
 }
 
 #Previsualizacion,

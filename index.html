@@ -7,6 +7,7 @@
 	<link rel='stylesheet' type='text/css' href='estilos.css'>
 </head>
  <body>
+ <main>
 	<h1>Protección del DNI</h1>
 	<p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas.</p>
 	<p>En esta página puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos.</p>
@@ -25,10 +26,11 @@
 			<div>
 				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
 				<div id='ControlesDesplazamiento'>
-					<div><label for='Rotacion'>Rotar</label> <input type='range' min='-180' max='180' id='Rotacion' value='0'></div>
-					<div><label for='Horizontal'>Desplazamiento Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-					<div><label for='Vertical'>Desplazamiento Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-					<div><label for='Zoom'>Zoom</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+					<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+					<div class='ControlRango'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
+					<div class='ControlRango'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+					<div class='ControlRango'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<div class='ControlRango'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 				</div>
 			</div>
 		</details>
@@ -36,7 +38,7 @@
 			<summary>Tipo de foto</summary>
 			<div>
 				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.</p>
-				<label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select>. 
+				<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
 			</div>
 		</details>
 		<details id='paso4' name='paso'>
@@ -92,6 +94,7 @@
 			</div>
 		</details>
 	</aside>
+ </main>
 
 	<footer>Esta página no recolecta ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros</footer>
  </body>
