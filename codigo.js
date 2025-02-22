@@ -86,6 +86,12 @@ document.getElementById('Guardar')
 configurarDobleClickComoReset('#ControlesDesplazamiento');
 configurarGiro();
 
+AsignarWatermarkPorDefecto(Watermark);
+
+function AsignarWatermarkPorDefecto(input) {
+	const hoy = new Date();
+	input.value = `Copia ${hoy.toISOString().substr(0, 10)} para...`;
+}
 
 /**
 Giros de 90º del DNI
