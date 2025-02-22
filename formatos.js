@@ -23,6 +23,11 @@ const FormatosDnis = {
 			{ x: 380, y: 490, w: 400, h: 80 }, // Firma
 			{ x: 780, y: 510, w: 200, h: 60 },
 		],
+		MascarasDni: [
+			{ x: 440, y: 100, w: 110, h: 55 },//Nº DNI 4 dígitos
+			{ x: 680, y: 100, w: 65, h: 55 }, //ampliado a final DNI
+			{ x: 20, y: 115, w: 160, h: 35 }, //DNI miniatura
+		],
 		Watermarks: [{
 			fuente: '900 48px sans-serif',
 			estilo: 'rgb(0 0 0 / 100%)',
@@ -57,6 +62,10 @@ const FormatosDnis = {
 			{ x: 380, y: 445, w: 400, h: 35 }, // Num Soporte, Validez
 			{ x: 380, y: 500, w: 400, h: 100 }, // Firma
 			{ x: 790, y: 525, w: 210, h: 75 },
+		],
+		MascarasDni: [
+			{ x: 90, y: 550, w: 90, h: 50 }, // Inicio DNI
+			{ x: 300, y: 550, w: 60, h: 50 }, // Final DNI
 		],
 		Watermarks: [{
 			fuente: '900 48px sans-serif',

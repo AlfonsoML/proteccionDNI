@@ -28,6 +28,8 @@ const Rotacion = document.getElementById('Rotacion');
 const Horizontal = document.getElementById('Horizontal');
 const Vertical = document.getElementById('Vertical');
 const Zoom = document.getElementById('Zoom');
+const EnmascararDni = document.getElementById('EnmascararDni');
+const DivMascaraDni = document.getElementById('DivMascaraDni');
 
 // Ángulo de rotación del DNI (0, 90, 180, 270)
 let rotacion = 0;
@@ -55,12 +57,26 @@ document.querySelector('#paso1 p')
 		SelectorFichero.click();
 	});
 
-const controles = [Formato, Watermark, Rotacion, Horizontal, Vertical, Zoom];
+[Formato, EnmascararDni].forEach(function (control) {
+	control.addEventListener('change', function (e) {
+		if (e.target == Formato) {
+			// ajustar visibilidad del checkbox de enmascarar DNI dependiendo de si el formato muestra el DNI o no
+			const formato = FormatosDnis[Formato.value];
+			DivMascaraDni.style.display = formato.MascarasDni ? '' : 'none';
+		}
 
-controles.forEach(function (control) {
+		RedibujarComposicion();
+	});
+});
+
+[Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
 	control.addEventListener('change', function (e) {
 		RedibujarComposicion();
 	});
+});
+
+Watermark.addEventListener('change', function (e) {
+	RedibujarComposicion();
 });
 
 // Al hacer click guardarla
@@ -153,7 +169,9 @@ function RedibujarComposicion() {
 		return;
 
 	console.time('Borrar');
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = 'white';
+	ctx.fill();
 	console.timeEnd('Borrar');
 
 	let canvasOrigen = canvasImagen;
@@ -239,6 +257,24 @@ function DibujarMascara() {
 
 	ctx.fillStyle = 'black';
 	bloques.forEach(bloque => ctx.fillRect(bloque.x, bloque.y, bloque.w, bloque.h));
+
+	if (EnmascararDni.checked) {
+		const bloquesDni = FormatosDnis[Formato.value].MascarasDni;
+		if (bloquesDni) {
+			ctx.fillStyle = 'white';
+			bloquesDni.forEach(bloque => ctx.fillRect(bloque.x, bloque.y, bloque.w, bloque.h));
+
+			let bloque = bloquesDni[0]
+			if (bloque.h == 50)
+				ctx.font = '74px sans-serif';
+			else
+				ctx.font = '82px sans-serif';
+			ctx.fillStyle = 'black';
+			ctx.fillText('***', bloque.x, bloque.y + bloque.h + 20);
+			bloque = bloquesDni[1]
+			ctx.fillText('**', bloque.x, bloque.y + bloque.h + 20);
+		}
+	}
 }
 
 function DibujarMarcaAgua() {

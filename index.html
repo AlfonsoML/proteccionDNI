@@ -39,6 +39,7 @@
 			<div>
 				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.</p>
 				<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
+				<div id='DivMascaraDni' style='display:none'><label for='EnmascararDni'>Ocultar parcialmente el DNI</label> <input type='checkbox' id='EnmascararDni'></div>
 			</div>
 		</details>
 		<details id='paso4' name='paso'>
@@ -91,6 +92,13 @@
 			Si por contra no sueles usar programas de edición gráfica, esta página te facilita esas tareas.</p>
 			<p>Incluso si tú eres de las personas a las que esto le parece trivial, piensa en tus familiares, amistades, ... 
 			¿Te parece más sencillo explicarles cómo hacer estas operaciones por su cuenta, o enviarles un enlace o un zip para que lo puedan hacer de forma automatizada?.</p>
+			</div>
+		</details>
+		<details>
+			<summary>¿Para qué sirve "Ocultar parcialmente el DNI"?</summary>
+			<div class='respuesta'>
+			<p>En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href='https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf'>orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br> 
+				Puedes leer la solicitud y caso de uso en <a href='https://github.com/AlfonsoML/proteccionDNI/issues/12' target='_blank'>la solicitud</a>.</p>
 			</div>
 		</details>
 	</aside>
