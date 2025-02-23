@@ -52,22 +52,22 @@ label {
   margin: 10px 0;
 }
 
-.ControlRango {
+.ContenedorControl {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0 10px;
 }
 
-.ControlRango input {
+.ContenedorControl input {
 	flex: 1;
 }
 
-.ControlRango label {
+.ContenedorControl label {
 	flex-basis: 140px;
 }
 
 @media (max-width: 560px) {
-	.ControlRango label {
+	.ContenedorControl label {
 		flex-basis: 100%;
 	}
 }
@@ -78,8 +78,18 @@ canvas {
 	height: auto;
 }
 
+#Previsualizacion {
+    aspect-ratio: 1000 / 625;
+	position: relative;
+}
+
 #Previsualizacion canvas {
-	background: black;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#canvas {
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 

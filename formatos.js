@@ -65,7 +65,7 @@ const FormatosDnis = {
 		],
 		MascarasDni: [
 			{ x: 90, y: 550, w: 90, h: 50 }, // Inicio DNI
-			{ x: 300, y: 550, w: 60, h: 50 }, // Final DNI
+			{ x: 300, y: 550, w: 70, h: 50 }, // Final DNI
 		],
 		Watermarks: [{
 			fuente: '900 48px sans-serif',

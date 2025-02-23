@@ -37,10 +37,10 @@
 				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
 				<div id='ControlesDesplazamiento'>
 					<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
-					<div class='ControlRango'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
-					<div class='ControlRango'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-					<div class='ControlRango'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-					<div class='ControlRango'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+					<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
+					<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+					<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 				</div>
 			</div>
 		</details>
@@ -56,7 +56,7 @@
 			<summary>Texto</summary>
 			<div>
 				<p>Escribe un texto para añadir sobre la imagen</p>
-				<label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'>
+				<div class='ContenedorControl'><label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'></div>
 			</div>
 		</details>
 		<details id='paso5' name='paso'>

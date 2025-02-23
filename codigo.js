@@ -1,6 +1,21 @@
 ﻿'use strict';
 
 const canvas = document.getElementById('canvas');
+const canvasMascara = document.createElement('canvas');
+const canvasWatermark = document.createElement('canvas');
+const canvaComposicion = document.createElement('canvas'); //new OffscreenCanvas(canvas.width, canvas.height);
+
+canvasMascara.width = canvas.width;
+canvasMascara.height = canvas.height;
+canvas.parentNode.appendChild(canvasMascara);
+
+canvasWatermark.width = canvas.width;
+canvasWatermark.height = canvas.height;
+canvas.parentNode.appendChild(canvasWatermark);
+
+canvaComposicion.width = canvas.width;
+canvaComposicion.height = canvas.height;
+
 /*
 const canvasEl = document.querySelector('canvas');
 const canvas =
@@ -13,12 +28,12 @@ const offscreen = new OffscreenCanvas(canvas.width, canvas.height);
 const ctxPrincipal = canvas.getContext('2d', { alpha: false });
 const ctx = offscreen.getContext('2d', { alpha: false });
 */
-const ctx = canvas.getContext('2d', { alpha: false });
+//const ctx = canvas.getContext('2d', { alpha: false });
 
+// Contiene la imagen del DNI elegida por el usuario, antes de girar, desplazar...
 const canvasImagen = new OffscreenCanvas(0, 0);
 
 //const ctx = canvas.getContext('2d', { willReadFrequently: true });
-const img = new Image;
 
 const SelectorFichero = document.getElementById('SelectorFichero');
 const Formato = document.getElementById('Formato');
@@ -30,6 +45,8 @@ const Vertical = document.getElementById('Vertical');
 const Zoom = document.getElementById('Zoom');
 const EnmascararDni = document.getElementById('EnmascararDni');
 const DivMascaraDni = document.getElementById('DivMascaraDni');
+
+let nombreFichero = '';
 
 // Ángulo de rotación del DNI (0, 90, 180, 270)
 let rotacion = 0;
@@ -46,6 +63,9 @@ SelectorFichero.addEventListener('change', function (e) {
 	const fichero = e.target.files[0];
 	if (fichero) {
 		MostrarImagen(fichero);
+		nombreFichero = e.target.value;
+		// borramos por si quieren volver a elegir la misma
+		e.target.value = '';
 	}
 });
 
@@ -65,28 +85,42 @@ document.querySelector('#paso1 p')
 			DivMascaraDni.style.display = formato.MascarasDni ? '' : 'none';
 		}
 
-		RedibujarComposicion();
+		DibujarMascara();
+		DibujarMarcaAgua();
 	});
 });
 
 [Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
 	control.addEventListener('change', function (e) {
-		RedibujarComposicion();
+		RedibujarDNI();
 	});
 });
 
-Watermark.addEventListener('change', function (e) {
-	RedibujarComposicion();
+Watermark.addEventListener('input', function (e) {
+	DibujarMarcaAgua();
 });
 
 // Al hacer click guardarla
-document.getElementById('Guardar')
-	.addEventListener('click', GrabarImagen);
+const botonGrabar = document.getElementById('Guardar');
+botonGrabar.addEventListener('click', GrabarImagen);
+botonGrabar.disabled = true;
 
 configurarDobleClickComoReset('#ControlesDesplazamiento');
 configurarGiro();
 
 AsignarWatermarkPorDefecto(Watermark);
+
+configurarCrearComposicion();
+
+function configurarCrearComposicion() {
+	// Al activar el paso de Grabar, crear la imagen offscreen con la mezcla de los tres canvas
+	document.getElementById('paso5')
+		.addEventListener('toggle', function(ev) {
+			if (ev.target.hasAttribute('open')) {
+				ComponerImagen();
+			}
+		});
+}
 
 function AsignarWatermarkPorDefecto(input) {
 	const hoy = new Date();
@@ -110,7 +144,7 @@ function girarDNI(ev) {
 	if (rotacion < 0)
 		rotacion += 360;
 
-	RedibujarComposicion();
+	RedibujarDNI();
 }
 
 /** 
@@ -134,6 +168,7 @@ function configurarDobleClickComoReset(contenedor) {
  */
 function MostrarImagen(file) {
 	console.time('Cargar imagen');
+	const img = new Image;
 	img.onload = function () {
 		console.timeEnd('Cargar imagen');
 		URL.revokeObjectURL(img.src)
@@ -144,7 +179,7 @@ function MostrarImagen(file) {
 		canvasImagen.height = img.height;
 
 		console.time('Dibujar imagen');
-		const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
+		const ctxImagen = canvasImagen.getContext('2d', {  willReadFrequently: true });
 		ctxImagen.drawImage(img, 0, 0);
 		console.timeEnd('Dibujar imagen');
 
@@ -152,7 +187,11 @@ function MostrarImagen(file) {
 		ConvertirBN(canvasImagen, ctxImagen);
 		console.timeEnd('BN');
 
-		RedibujarComposicion();
+		RedibujarDNI()
+
+		DibujarMascara();
+
+		DibujarMarcaAgua();
 
 		document.getElementById('paso2').open = true;
 	}
@@ -167,18 +206,9 @@ function ResetearControles() {
 	});
 }
 
-/**
-Proceso de protección del DNI
-*/
-function RedibujarComposicion() {
+function RedibujarDNI() {
 	if (canvasImagen.width == 0 || canvasImagen.height == 0)
 		return;
-
-	console.time('Borrar');
-	ctx.rect(0, 0, canvas.width, canvas.height);
-	ctx.fillStyle = 'white';
-	ctx.fill();
-	console.timeEnd('Borrar');
 
 	let canvasOrigen = canvasImagen;
 	// rotar ángulos rectos
@@ -237,30 +267,28 @@ function RedibujarComposicion() {
 		console.timeEnd('Rotar');
 		canvasOrigen = canvasAjusteAngulo;
 	}
+	
+	const ctx = canvas.getContext('2d', { alpha: false });
+
+	console.time('Borrar');
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = 'white';
+	ctx.fill();
+	console.timeEnd('Borrar');
 
 	console.time('Imagen');
 	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.height * Zoom.value);
 	console.timeEnd('Imagen');
-
-	console.time('Mascara');
-	DibujarMascara();
-	console.timeEnd('Mascara');
-
-	console.time('Watermark');
-	DibujarMarcaAgua();
-	console.timeEnd('Watermark');
-
-/*
-	console.time('Dibujar desde offscreen');
-	ctxPrincipal.drawImage(offscreen, 0, 0);
-	console.timeEnd('Dibujar desde offscreen');
-	*/
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
 function DibujarMascara() {
+	console.time('Mascara');
+
 	const bloques = FormatosDnis[Formato.value].Mascaras;
 
+	const ctx = canvasMascara.getContext('2d');
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = 'black';
 	bloques.forEach(bloque => ctx.fillRect(bloque.x, bloque.y, bloque.w, bloque.h));
 
@@ -281,16 +309,20 @@ function DibujarMascara() {
 			ctx.fillText('**', bloque.x, bloque.y + bloque.h + 20);
 		}
 	}
+	console.timeEnd('Mascara');
 }
 
 function DibujarMarcaAgua() {
+	console.time('Watermark');
+	const ctx = canvasWatermark.getContext('2d');
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const texto = Watermark.value;
 
 	const marcas = FormatosDnis[Formato.value].Watermarks;
 	marcas.forEach(marca => {
 		RellenarTexto(texto, ctx, marca.fuente, marca.estilo, marca.bb.x, marca.bb.y, marca.bb.w, marca.bb.h);
 	});
-
+	console.timeEnd('Watermark');
 }
 
 // Objeto para mantener caché de las métricas del texto sin recalcular
@@ -391,11 +423,28 @@ function ConvertirBN(canvas, ctx) {
 	}
 }
 
+function ComponerImagen() {
+	botonGrabar.disabled = true;
+	console.time('Componer imagen');
+
+	const ctx = canvaComposicion.getContext('2d');
+	ctx.drawImage(canvas, 0, 0);
+	ctx.drawImage(canvasMascara, 0, 0);
+	ctx.drawImage(canvasWatermark, 0, 0);
+	console.timeEnd('Componer imagen');
+
+	botonGrabar.disabled = false;
+}
+
 function GrabarImagen() {
 	const link = document.getElementById('grabar');
 	link.download = 'Protegido.jpg';
-	link.href = canvas.toDataURL('image/jpeg', 0.8);
-	link.click();
+	try	{
+		link.href = canvaComposicion.toDataURL('image/jpeg', 0.8);
+		link.click();
+	} catch (e) {
+		alert('No se ha podido generar la imagen\r\n' + e);
+	}
 }
 
 /**

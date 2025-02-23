@@ -18,35 +18,39 @@ function CambiarImagenTest(ev) {
 
 	const imagen = ev.target;
 	imagen.classList.add('Elegida');
-	img.onload = function() {
-		ResetearControles();
 
-		canvasImagen.width = img.width;
-		canvasImagen.height = img.height;
+	nombreFichero = imagen.src;
 
-		console.time('Dibujar imagen');
-		const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
-		ctxImagen.drawImage(img, 0, 0);
-		console.timeEnd('Dibujar imagen');
+	ResetearControles();
+
+	canvasImagen.width = imagen.naturalWidth;
+	canvasImagen.height = imagen.naturalHeight;
+
+	console.time('Dibujar imagen');
+	const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
+	ctxImagen.drawImage(imagen, 0, 0);
+	console.timeEnd('Dibujar imagen');
 
 //		console.time('BN');
 //		ConvertirBN(canvasImagen, ctxImagen);
 //		console.timeEnd('BN');
 
-		const src = imagen.src;
-		// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente
-		const re = /ejemplos\/(.*)\.webp/;
-		const match = re.exec(src);
-		if (match) {
-			Formato.value = match[1];
-		}
-
-		RedibujarComposicion();
-
-		// Pasar al paso 2 y probar movimiento
-		document.getElementById('paso2').open = true;
+	const src = imagen.src;
+	// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente
+	const re = /ejemplos\/(.*)\.webp/;
+	const match = re.exec(src);
+	if (match) {
+		Formato.value = match[1];
 	}
-	img.src = imagen.src;
+
+	RedibujarDNI()
+
+	DibujarMascara();
+
+	DibujarMarcaAgua();
+
+	// Pasar al paso 2 y probar movimiento
+	document.getElementById('paso2').open = true;
 }
 
 /**
