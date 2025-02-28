@@ -1,9 +1,13 @@
 ﻿'use strict';
 
+// canvas donde dibujamos el DNI con los ajustes de rotación y desplazamiento
 const canvas = document.getElementById('canvas');
+// canvas con las máscaras que tapan datos
 const canvasMascara = document.createElement('canvas');
+// canvas para la superposición de texto/marca de agua
 const canvasWatermark = document.createElement('canvas');
-const canvaComposicion = document.createElement('canvas'); //new OffscreenCanvas(canvas.width, canvas.height);
+// canvas para generar la imagen a descargar
+const canvaComposicion = document.createElement('canvas'); 
 
 canvasMascara.width = canvas.width;
 canvasMascara.height = canvas.height;
@@ -16,24 +20,8 @@ canvas.parentNode.appendChild(canvasWatermark);
 canvaComposicion.width = canvas.width;
 canvaComposicion.height = canvas.height;
 
-/*
-const canvasEl = document.querySelector('canvas');
-const canvas =
-  'OffscreenCanvas' in window
-    ? canvasEl.transferControlToOffscreen()
-    : canvasEl;
-*/
-/*
-const offscreen = new OffscreenCanvas(canvas.width, canvas.height);
-const ctxPrincipal = canvas.getContext('2d', { alpha: false });
-const ctx = offscreen.getContext('2d', { alpha: false });
-*/
-//const ctx = canvas.getContext('2d', { alpha: false });
-
-// Contiene la imagen del DNI elegida por el usuario, antes de girar, desplazar...
-const canvasImagen = new OffscreenCanvas(0, 0);
-
-//const ctx = canvas.getContext('2d', { willReadFrequently: true });
+// Contiene la imagen del DNI elegida por el usuario a escala 1:1 y en blanco y negro, antes de girar, desplazar...
+let imagenDNI_BN = null;
 
 const SelectorFichero = document.getElementById('SelectorFichero');
 const Formato = document.getElementById('Formato');
@@ -167,27 +155,14 @@ function configurarDobleClickComoReset(contenedor) {
  * @param {any} file
  */
 function MostrarImagen(file) {
-	console.time('Cargar imagen');
 	const img = new Image;
 	img.onload = function () {
-		console.timeEnd('Cargar imagen');
 		URL.revokeObjectURL(img.src)
 
 		ResetearControles();
 
-		canvasImagen.width = img.width;
-		canvasImagen.height = img.height;
-
-		console.time('Dibujar imagen');
-		const ctxImagen = canvasImagen.getContext('2d', {  willReadFrequently: true });
-		ctxImagen.drawImage(img, 0, 0);
-		console.timeEnd('Dibujar imagen');
-
-		console.time('BN');
-		ConvertirBN(canvasImagen, ctxImagen);
-		console.timeEnd('BN');
-
-		RedibujarDNI()
+		PrepararDNI(img)
+			.then(RedibujarDNI);
 
 		DibujarMascara();
 
@@ -198,6 +173,74 @@ function MostrarImagen(file) {
 	img.src = URL.createObjectURL(file);
 }
 
+/**
+Tomamos la imagen original del DNI y la preparamos a blanco y negro.
+Deveuelve una promesa
+*/
+function PrepararDNI(img) {
+	return new Promise((resolve, reject) => {
+
+		function handler(e) {
+			imagenDNI_BN = e.data;
+
+			resolve();
+		   }
+
+		procesadorDNI.addEventListener('message', handler);
+
+		// creamos un objeto transferable que podamos enviar al WebWorker
+		createImageBitmap(img)
+			.then(bitmap => {
+				procesadorDNI.postMessage({bitmap}); 
+			});
+	});
+}
+
+/**
+Se encarga de convertir la imagen original del DNI en una en blanco y negro mediante un webWorker
+*/
+const procesadorDNI = createWorker(() => {
+	/**
+	* Convertir todo a blanco y negro
+	*/
+	function ConvertirBN(canvas, ctx) {
+		const w = canvas.width;
+		const h = canvas.height;
+
+		try {
+			const imgPixels = ctx.getImageData(0, 0, w, h);
+			for (let y = 0; y < imgPixels.height; y++) {
+				for (let x = 0; x < imgPixels.width; x++) {
+					const i = (y * 4) * imgPixels.width + x * 4;
+					const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+					imgPixels.data[i] = avg;
+					imgPixels.data[i + 1] = avg;
+					imgPixels.data[i + 2] = avg;
+				}
+			}
+			ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+		} catch (e) {
+			// da error al usar imagen de prueba con file://
+		}
+	}
+
+    self.addEventListener('message', e => {
+		const img = e.data.bitmap;
+		const canvas = new OffscreenCanvas(img.width, img.height);
+
+		const ctxImagen = canvas.getContext('2d', {  willReadFrequently: true });
+		ctxImagen.drawImage(img, 0, 0);
+
+		ConvertirBN(canvas, ctxImagen);
+
+		const bitmap = canvas.transferToImageBitmap();
+		self.postMessage(bitmap);
+    });
+});
+
+/**
+Vuelve a poner los controles de posición y rotación con los valores iniciales
+*/
 function ResetearControles() {
 	rotacion = 0;
 
@@ -207,10 +250,10 @@ function ResetearControles() {
 }
 
 function RedibujarDNI() {
-	if (canvasImagen.width == 0 || canvasImagen.height == 0)
+	if (imagenDNI_BN == null)
 		return;
 
-	let canvasOrigen = canvasImagen;
+	let canvasOrigen = imagenDNI_BN;
 	// rotar ángulos rectos
 	if (rotacion != 0) {
 		const ancho = rotacion == 180 ? canvasOrigen.width : canvasOrigen.height;
@@ -399,30 +442,6 @@ function RellenarTexto(texto, ctx, fuente, estilo, x, y, maxWidth, maxHeight) {
 }
 
 
-/**
- * Convertir todo a blanco y negro
- */
-function ConvertirBN(canvas, ctx) {
-	const w = canvas.width;
-	const h = canvas.height;
-
-	try {
-		const imgPixels = ctx.getImageData(0, 0, w, h);
-		for (let y = 0; y < imgPixels.height; y++) {
-			for (let x = 0; x < imgPixels.width; x++) {
-				const i = (y * 4) * imgPixels.width + x * 4;
-				const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-				imgPixels.data[i] = avg;
-				imgPixels.data[i + 1] = avg;
-				imgPixels.data[i + 2] = avg;
-			}
-		}
-		ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
-	} catch (e) {
-		// da error al usar imagen de prueba
-	}
-}
-
 function ComponerImagen() {
 	botonGrabar.disabled = true;
 	console.time('Componer imagen');
@@ -455,4 +474,9 @@ function GrabarImagen() {
  */
 function querySelector_Array(selector, root) {
 	return [].slice.call((root || document).querySelectorAll(selector));
+}
+
+// https://gist.github.com/ahem/d19ee198565e20c6f5e1bcd8f87b3408
+function createWorker(f) {
+    return new Worker(URL.createObjectURL(new Blob([`(${f})()`])));
 }

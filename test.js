@@ -16,26 +16,14 @@ function CambiarImagenTest(ev) {
 	if (actual)
 		actual.classList.remove('Elegida');
 
-	const imagen = ev.target;
-	imagen.classList.add('Elegida');
+	const img = ev.target;
+	img.classList.add('Elegida');
 
-	nombreFichero = imagen.src;
+	nombreFichero = img.src;
 
 	ResetearControles();
 
-	canvasImagen.width = imagen.naturalWidth;
-	canvasImagen.height = imagen.naturalHeight;
-
-	console.time('Dibujar imagen');
-	const ctxImagen = canvasImagen.getContext('2d', { alpha: false });
-	ctxImagen.drawImage(imagen, 0, 0);
-	console.timeEnd('Dibujar imagen');
-
-//		console.time('BN');
-//		ConvertirBN(canvasImagen, ctxImagen);
-//		console.timeEnd('BN');
-
-	const src = imagen.src;
+	const src = img.src;
 	// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente
 	const re = /ejemplos\/(.*)\.webp/;
 	const match = re.exec(src);
@@ -43,7 +31,19 @@ function CambiarImagenTest(ev) {
 		Formato.value = match[1];
 	}
 
-	RedibujarDNI()
+	if (nombreFichero.startsWith('file:')) 	{
+		const canvasTmp = new OffscreenCanvas(img.naturalWidth, img.naturalHeight);
+
+		const ctxImagen = canvasTmp.getContext('2d');
+		ctxImagen.drawImage(img, 0, 0);
+
+		imagenDNI_BN = canvasTmp.transferToImageBitmap();
+		
+		RedibujarDNI();
+	} else {
+		PrepararDNI(img)
+			.then(RedibujarDNI);
+	}
 
 	DibujarMascara();
 
