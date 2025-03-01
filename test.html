@@ -1,103 +1,105 @@
 ﻿<!doctype html>
 <html lang="es">
- <head>
+<head>
 	<meta charset="UTF-8">
 	<title>Página de pruebas</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 	<link rel='stylesheet' type='text/css' href='estilos.css'>
 	<link rel='stylesheet' type='text/css' href='test.css'>
 	<link href="favicon.ico" rel="icon">
- </head>
- <body>
-  <main>
+</head>
+<body>
+	<main>
 
-  <h1>Protección de la imagen del DNI</h1>
-  <p>Pruebas para desarrollo con DNIs ejemplo</p>
-	<div id='Ejemplos'>
-		<img src='ejemplos/dni4-frontal.webp' alt='DNI 4 frontal'>
-		<img src='ejemplos/dni4-trasera.webp' alt='DNI 4 trasera'>
-		<img src='ejemplos/dni3-frontal.webp' alt='DNI 3 frontal'>
-		<img src='ejemplos/dni3-trasera.webp' alt='DNI 3 trasera'>
-		<img src='ejemplos/dni1-frontal.webp' alt='DNI 1 frontal'>
-		<img src='ejemplos/dni1-trasera.webp' alt='DNI 1 trasera'>
-	</div>
-	<section id='pasos'>
-<div class="wizard-progress">
-  <div class="step in-progress" id="step1">
-    <span class='step-name'>Foto</span>
-    <div class="node"></div>
-  </div>
-  <div class="step" id="step2">
-    <span class='step-name'>Posición</span>
-    <div class="node"></div>
-  </div>
-  <div class="step" id="step3">
-    <span class='step-name'>Tipo</span>
-    <div class="node"></div>
-  </div>
-  <div class="step" id="step4">
-    <span class='step-name'>Texto</span>
-    <div class="node"></div>
-  </div>
-  <div class="step" id="step5">
-    <span class='step-name'>Guardar</span>
-    <div class="node"></div>
-  </div>
-</div>
-
-		<details id='paso1' name='paso' open>
-			<summary>Foto</summary>
-			<div>
-				<p class='centrado'><input type='button' id='ElegirFoto' value='Elige la foto'></p>
-				<div style='height:0';><input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'></div>
-			</div>
-		</details>
-		<details id='paso2' name='paso'>
-			<summary>Posición</summary>
-			<div>
-				<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
-				<div id='ControlesDesplazamiento'>
-					<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
-					<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
-					<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-					<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-					<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+		<h1>Protección de la imagen del DNI</h1>
+		<p>Pruebas para desarrollo con DNIs ejemplo</p>
+		<div id='Ejemplos'>
+			<img src='ejemplos/dni4-frontal.webp' alt='DNI 4 frontal'>
+			<img src='ejemplos/dni4-trasera.webp' alt='DNI 4 trasera'>
+			<img src='ejemplos/dni3-frontal.webp' alt='DNI 3 frontal'>
+			<img src='ejemplos/dni3-trasera.webp' alt='DNI 3 trasera'>
+			<img src='ejemplos/dni1-frontal.webp' alt='DNI 1 frontal'>
+			<img src='ejemplos/dni1-trasera.webp' alt='DNI 1 trasera'>
+		</div>
+		<section id='pasos'>
+			<div class="wizard-progress">
+				<div class="step in-progress" id="step1">
+					<span class='step-name'>Foto</span>
+					<div class="node"></div>
 				</div>
-				<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='1'><input type='button' value='Siguiente' data-siguiente='3'></div>
+				<div class="step" id="step2">
+					<span class='step-name'>Posición</span>
+					<div class="node"></div>
+				</div>
+				<div class="step" id="step3">
+					<span class='step-name'>Tipo</span>
+					<div class="node"></div>
+				</div>
+				<div class="step" id="step4">
+					<span class='step-name'>Texto</span>
+					<div class="node"></div>
+				</div>
+				<div class="step" id="step5">
+					<span class='step-name'>Guardar</span>
+					<div class="node"></div>
+				</div>
 			</div>
-		</details>
-		<details id='paso3' name='paso'>
-			<summary>Tipo de foto</summary>
-			<div>
-				<p>Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados. 
-				Puede que quieras volver al paso anterior para ajustar mejor la posición.</p>
-				<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
-				<div id='DivMascaraDni' style='display:none'><label for='EnmascararDni'>Ocultar parcialmente el DNI</label> <input type='checkbox' id='EnmascararDni'></div>
-				<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='2'><input type='button' value='Siguiente' data-siguiente='4'></div>
-			</div>
-		</details>
-		<details id='paso4' name='paso'>
-			<summary>Texto</summary>
-			<div>
-				<p>Escribe un texto para añadir sobre la imagen</p>
-				<div class='ContenedorControl'><label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'></div>
-				<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='3'><input type='button' value='Siguiente' data-siguiente='5'></div>
-			</div>
-		</details>
-		<details id='paso5' name='paso'>
-			<summary>Guardar</summary>
-			<div>
-				<p class='centrado'><input type='button' value='Guardar la imagen' id='Guardar'></p>
-				<a id='grabar'></a>
-			</div>
-		</details>
-	</section>
-	<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
- </main>
 
-  	<footer>Página de pruebas. <a href='index.html'>Ir a la principal</a></footer>
- </body>
-  <script type='text/javascript' src='formatos.js'></script>
-  <script type='text/javascript' src='codigo.js'></script>
-  <script type='text/javascript' src='test.js'></script>
+			<details id='paso1' name='paso' open>
+				<summary>Foto</summary>
+				<div>
+					<p class='centrado'><input type='button' id='ElegirFoto' value='Elige la foto'></p>
+					<div style='height:0' ;><input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'></div>
+				</div>
+			</details>
+			<details id='paso2' name='paso'>
+				<summary>Posición</summary>
+				<div>
+					<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
+					<div id='ControlesDesplazamiento'>
+						<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+						<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
+						<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
+						<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
+					</div>
+					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='1'><input type='button' value='Siguiente' data-siguiente='3'></div>
+				</div>
+			</details>
+			<details id='paso3' name='paso'>
+				<summary>Tipo de foto</summary>
+				<div>
+					<p>
+						Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.
+						Puede que quieras volver al paso anterior para ajustar mejor la posición.
+					</p>
+					<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
+					<div id='DivMascaraDni' style='display:none'><label for='EnmascararDni'>Ocultar parcialmente el DNI</label> <input type='checkbox' id='EnmascararDni'></div>
+					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='2'><input type='button' value='Siguiente' data-siguiente='4'></div>
+				</div>
+			</details>
+			<details id='paso4' name='paso'>
+				<summary>Texto</summary>
+				<div>
+					<p>Escribe un texto para añadir sobre la imagen</p>
+					<div class='ContenedorControl'><label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para...'></div>
+					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='3'><input type='button' value='Siguiente' data-siguiente='5'></div>
+				</div>
+			</details>
+			<details id='paso5' name='paso'>
+				<summary>Guardar</summary>
+				<div>
+					<p class='centrado'><input type='button' value='Guardar la imagen' id='Guardar'></p>
+					<a id='grabar'></a>
+				</div>
+			</details>
+		</section>
+		<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></div>
+	</main>
+
+	<footer>Página de pruebas. <a href='index.html'>Ir a la principal</a></footer>
+	<script type='text/javascript' src='formatos.js'></script>
+	<script type='text/javascript' src='codigo.js'></script>
+	<script type='text/javascript' src='test.js'></script>
+</body>
 </html>

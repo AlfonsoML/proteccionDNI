@@ -32,22 +32,22 @@ function CambiarImagenTest(ev) {
 		Formato.value = match[1];
 	}
 
-	if (nombreFichero.startsWith('file:')) 	{
+	if (nombreFichero.startsWith('file:')) {
 		const canvasTmp = new OffscreenCanvas(img.naturalWidth, img.naturalHeight);
 
 		const ctxImagen = canvasTmp.getContext('2d');
 		ctxImagen.drawImage(img, 0, 0);
 
 		imagenDNI_BN = canvasTmp.transferToImageBitmap();
-		
+
 		RedibujarDNI();
 		activarWizard(document.getElementById('step2'));
 	} else {
 		PrepararDNI(img)
-			.then( () => {
+			.then(() => {
 				RedibujarDNI();
 				activarWizard(document.getElementById('step2'));
-		});
+			});
 	}
 
 	DibujarMascara();

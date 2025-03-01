@@ -1,9 +1,14 @@
 :root {
 	color-scheme: light dark;
+	/* colores para el wizard */
+	--mainColor: #07c;
+	--baseColor: light-dark(#555, currentColor);
+	--colorActivo: light-dark(#FFF, #000);
 }
 
 body {
 	font-family: Verdana, Sans-Serif;
+	margin: 0;
 }
 
 main {
@@ -17,8 +22,8 @@ label {
 	user-select: none;
 }
 
-#pasos summary {    
-  display: none;
+#pasos summary {
+	display: none;
 }
 
 #pasos details > div {
@@ -26,8 +31,8 @@ label {
 }
 
 #pasos details[open] > div {
-    border: 1px solid #BBB;
-    margin: 10px 0;
+	border: 1px solid #BBB;
+	margin: 10px 0;
 }
 
 #SelectorFichero {
@@ -39,11 +44,11 @@ label {
 
 
 #ControlesGiro {
-    text-align: center;
+	text-align: center;
 }
 
-#ControlesDesplazamiento>div {
-  margin: 10px 0;
+#ControlesDesplazamiento > div {
+	margin: 10px 0;
 }
 
 .ContenedorControl {
@@ -67,23 +72,23 @@ label {
 }
 
 .centrado {
-  text-align: center;
-  margin-top: 2em;
+	text-align: center;
+	margin-top: 2em;
 }
 
 .centrado input {
-  padding: 0.3em 2.3em;
-  font-size: 100%;
+	padding: 0.3em 2.3em;
+	font-size: 100%;
 }
 
 .Siguiente {
-    margin-top: 1em;
-  display: flex;
-  justify-content: space-between;
+	margin-top: 1em;
+	display: flex;
+	justify-content: space-between;
 }
 
 .Siguiente input {
-  font-size: 100%;
+	font-size: 100%;
 }
 
 #Previsualizacion,
@@ -93,7 +98,7 @@ canvas {
 }
 
 #Previsualizacion {
-    aspect-ratio: 1000 / 625;
+	aspect-ratio: 1000 / 625;
 	position: relative;
 }
 
@@ -108,91 +113,80 @@ canvas {
 }
 
 #FAQ summary {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 #FAQ details {
-    margin: 1em;
+	margin: 1em;
 }
 
 .respuesta {
-    padding: 0 1em;
+	padding: 0 1em;
 }
 
 footer {
-	background-color: #EFEFEF;
+	background-color: light-dark(#EFEFEF, #333);
 	border-top: 1px solid #666;
-	padding: 0.4em;
+	padding: 0.4em 0 0.8em;
 	text-align: center;
 	margin-top: 1em;
-    font-size: 80%;
-}
-
-
-
-:root {
-	--mainColor: #07c;
-	--baseColor: #555;
-	--colorActivo: #FFF;
+	font-size: 80%;
 }
 
 .wizard-progress {
-  display: flex;
-  min-height: 60px;
- }
+	display: flex;
+	min-height: 60px;
+}
 
 .node,
 .step-name {
 	cursor: pointer;
-
 }
 
-  .step{
-    text-align: center;
-    position:relative;
+.step {
+	text-align: center;
+	position: relative;
 	flex: 1;
-	
-    &:not(:last-child):before{
-      content: '';
-      display:block;
-      position: absolute;
-      left: 50%;
-      top: 33px;
-      background-color: var(--baseColor);
-      height: 5px;
-      width: 100%;
-    }
-    
-    .node{
-      border: 4px solid var(--baseColor);
-      background-color: var(--baseColor);
-      border-radius: 50%;
-      width: 14px;
-      aspect-ratio: 1;
-      position: absolute;
-      top: 24px;
-      left: 50%;
-      margin-left: -12px;
-    }
-    
-    &.complete{
-      &:before{
-        background-color: var(--mainColor);
-      }
-      .node{
-        border-color: var(--mainColor);
-        background-color: var(--mainColor);        
-      }
-    }
-    
-    &.in-progress{
-      &:before{
-        background: var(--mainColor);
-        background: linear-gradient(to right,  var(--mainColor) 0%, var(--baseColor) 100%);
-      }
-      .node{
-        border-color: var(--mainColor);
-		background-color: var(--colorActivo);
-      }
-    }
-  }
+}
+
+.step:not(:last-child):before {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 33px;
+	background-color: var(--baseColor);
+	height: 5px;
+	width: 100%;
+}
+
+.node {
+	border: 4px solid var(--baseColor);
+	background-color: var(--baseColor);
+	border-radius: 50%;
+	width: 14px;
+	aspect-ratio: 1;
+	position: absolute;
+	top: 24px;
+	left: 50%;
+	margin-left: -12px;
+}
+
+.step.complete:before {
+	background-color: var(--mainColor);
+}
+
+.complete .node {
+	border-color: var(--mainColor);
+	background-color: var(--mainColor);
+}
+
+.step.in-progress:before {
+	background: var(--mainColor);
+	background: linear-gradient(to right, var(--mainColor) 0%, var(--baseColor) 100%);
+}
+
+.in-progress .node {
+	border-color: var(--mainColor);
+	background-color: var(--colorActivo);
+}

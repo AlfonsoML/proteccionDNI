@@ -8,7 +8,7 @@ const canvasMascara = document.createElement('canvas');
 // canvas para la superposición de texto/marca de agua
 const canvasWatermark = document.createElement('canvas');
 // canvas para generar la imagen a descargar
-const canvaComposicion = document.createElement('canvas'); 
+const canvaComposicion = document.createElement('canvas');
 
 canvasMascara.width = canvas.width;
 canvasMascara.height = canvas.height;
@@ -41,7 +41,7 @@ let nombreFichero = '';
 let rotacion = 0;
 
 // Rellenar la lista de formatos de DNI automáticamente
-const opciones = []; 
+const opciones = [];
 for (const [key, value] of Object.entries(FormatosDnis)) {
 	opciones.push(`<option value='${key}'>${value.Nombre}</option>`);
 }
@@ -108,16 +108,16 @@ configurarWizard();
 
 function configurarWizard() {
 	querySelector_Array('.step > *')
-		.forEach(elmto => elmto.addEventListener('click', function(ev) {
-				activarWizard(ev.target.parentNode);
-			})
+		.forEach(elmto => elmto.addEventListener('click', function (ev) {
+			activarWizard(ev.target.parentNode);
+		})
 		);
 
 	querySelector_Array('.Siguiente input')
-		.forEach(btn => btn.addEventListener('click', function(ev) {
-				const siguiente = ev.target.dataset.siguiente;
-				activarWizard(document.getElementById('step' + siguiente));
-			})
+		.forEach(btn => btn.addEventListener('click', function (ev) {
+			const siguiente = ev.target.dataset.siguiente;
+			activarWizard(document.getElementById('step' + siguiente));
+		})
 		);
 }
 
@@ -125,7 +125,7 @@ function activarWizard(step) {
 	const paso = step.id.substr(4); // ej: step4
 
 	const actual = document.querySelector('.in-progress');
-	const pasoActual = actual.id.substr(4);
+	const pasoActual = actual.id.substring(4);
 
 	if (paso == pasoActual)
 		return;
@@ -156,7 +156,7 @@ function activarWizard(step) {
 function configurarCrearComposicion() {
 	// Al activar el paso de Grabar, crear la imagen offscreen con la mezcla de los tres canvas
 	document.getElementById('paso5')
-		.addEventListener('toggle', function(ev) {
+		.addEventListener('toggle', function (ev) {
 			if (ev.target.hasAttribute('open')) {
 				ComponerImagen();
 			}
@@ -165,7 +165,7 @@ function configurarCrearComposicion() {
 
 function AsignarWatermarkPorDefecto(input) {
 	const hoy = new Date();
-	input.value = `Copia ${hoy.toISOString().substr(0, 10)} para...`;
+	input.value = `Copia ${hoy.toISOString().substring(0, 10)} para...`;
 }
 
 /**
@@ -215,10 +215,10 @@ function MostrarImagen(file) {
 		ResetearControles();
 
 		PrepararDNI(img)
-			.then( () => {
+			.then(() => {
 				RedibujarDNI();
 				activarWizard(document.getElementById('step2'));
-		});
+			});
 
 		DibujarMascara();
 
@@ -238,14 +238,14 @@ function PrepararDNI(img) {
 			imagenDNI_BN = e.data;
 
 			resolve();
-		   }
+		}
 
 		procesadorDNI.addEventListener('message', handler);
 
 		// creamos un objeto transferable que podamos enviar al WebWorker
 		createImageBitmap(img)
 			.then(bitmap => {
-				procesadorDNI.postMessage({bitmap}); 
+				procesadorDNI.postMessage({ bitmap });
 			});
 	});
 }
@@ -278,18 +278,18 @@ const procesadorDNI = createWorker(() => {
 		}
 	}
 
-    self.addEventListener('message', e => {
+	self.addEventListener('message', e => {
 		const img = e.data.bitmap;
 		const canvas = new OffscreenCanvas(img.width, img.height);
 
-		const ctxImagen = canvas.getContext('2d', {  willReadFrequently: true });
+		const ctxImagen = canvas.getContext('2d', { willReadFrequently: true });
 		ctxImagen.drawImage(img, 0, 0);
 
 		ConvertirBN(canvas, ctxImagen);
 
 		const bitmap = canvas.transferToImageBitmap();
 		self.postMessage(bitmap);
-    });
+	});
 });
 
 /**
@@ -377,7 +377,7 @@ function RedibujarEnDNIEnRAF() {
 		ctxRotado.restore();
 		canvasOrigen = canvasAjusteAngulo;
 	}
-	
+
 	const ctx = canvas.getContext('2d', { alpha: false });
 
 	// Borrar
@@ -525,14 +525,14 @@ function GenerarNombreFichero() {
 	const match = nombreFichero.match(/([^\/\\]+)(?=\.[^\.]+$)/)
 	if (match)
 		return match[1] + ' - protegido.jpg'
-	
+
 	return 'protegido.jpg';
 }
 
 function GrabarImagen() {
 	const link = document.getElementById('grabar');
 	link.download = GenerarNombreFichero();
-	try	{
+	try {
 		link.href = canvaComposicion.toDataURL('image/jpeg', 0.8);
 		link.click();
 	} catch (e) {
@@ -552,5 +552,5 @@ function querySelector_Array(selector, root) {
 
 // https://gist.github.com/ahem/d19ee198565e20c6f5e1bcd8f87b3408
 function createWorker(f) {
-    return new Worker(URL.createObjectURL(new Blob([`(${f})()`])));
+	return new Worker(URL.createObjectURL(new Blob([`(${f})()`])));
 }
