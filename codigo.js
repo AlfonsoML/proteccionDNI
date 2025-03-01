@@ -260,7 +260,6 @@ function RedibujarDNI() {
 		const alto = rotacion == 180 ? canvasOrigen.height : canvasOrigen.width;
 		const canvasGiro = new OffscreenCanvas(ancho, alto);
 
-		console.time('Rotar ' + rotacion);
 		const ctxRotado = canvasGiro.getContext('2d');
 		ctxRotado.clearRect(0, 0, canvasGiro.width, canvasGiro.height);
 		// save the unrotated context of the canvas so we can restore it later
@@ -279,7 +278,7 @@ function RedibujarDNI() {
 
 		// we’re done with the rotating so restore the unrotated context
 		ctxRotado.restore();
-		console.timeEnd('Rotar ' + rotacion);
+
 		canvasOrigen = canvasGiro;
 	}
 
@@ -288,7 +287,6 @@ function RedibujarDNI() {
 	if (degrees != 0) {
 		const canvasAjusteAngulo = new OffscreenCanvas(canvasOrigen.width, canvasOrigen.height);
 
-		console.time('Rotar');
 		const ctxRotado = canvasAjusteAngulo.getContext('2d');
 		ctxRotado.clearRect(0, 0, canvasAjusteAngulo.width, canvasAjusteAngulo.height);
 		// save the unrotated context of the canvas so we can restore it later
@@ -307,27 +305,22 @@ function RedibujarDNI() {
 
 		// we’re done with the rotating so restore the unrotated context
 		ctxRotado.restore();
-		console.timeEnd('Rotar');
 		canvasOrigen = canvasAjusteAngulo;
 	}
 	
 	const ctx = canvas.getContext('2d', { alpha: false });
 
-	console.time('Borrar');
+	// Borrar
 	ctx.rect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = 'white';
 	ctx.fill();
-	console.timeEnd('Borrar');
 
-	console.time('Imagen');
+	// volcar Imagen DNI escalada y con desplazamient
 	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.height * Zoom.value);
-	console.timeEnd('Imagen');
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
 function DibujarMascara() {
-	console.time('Mascara');
-
 	const bloques = FormatosDnis[Formato.value].Mascaras;
 
 	const ctx = canvasMascara.getContext('2d');
@@ -352,11 +345,12 @@ function DibujarMascara() {
 			ctx.fillText('**', bloque.x, bloque.y + bloque.h + 20);
 		}
 	}
-	console.timeEnd('Mascara');
 }
 
+/**
+Sobre escribir texto en las zonas que se definan para el formato elegido
+*/
 function DibujarMarcaAgua() {
-	console.time('Watermark');
 	const ctx = canvasWatermark.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const texto = Watermark.value;
@@ -365,7 +359,6 @@ function DibujarMarcaAgua() {
 	marcas.forEach(marca => {
 		RellenarTexto(texto, ctx, marca.fuente, marca.estilo, marca.bb.x, marca.bb.y, marca.bb.w, marca.bb.h);
 	});
-	console.timeEnd('Watermark');
 }
 
 // Objeto para mantener caché de las métricas del texto sin recalcular
@@ -441,23 +434,34 @@ function RellenarTexto(texto, ctx, fuente, estilo, x, y, maxWidth, maxHeight) {
 	}
 }
 
-
+/**
+Combinar los 3 canvas parciales en una sola imagen para descarga canvaComposicion
+*/
 function ComponerImagen() {
 	botonGrabar.disabled = true;
-	console.time('Componer imagen');
 
 	const ctx = canvaComposicion.getContext('2d');
 	ctx.drawImage(canvas, 0, 0);
 	ctx.drawImage(canvasMascara, 0, 0);
 	ctx.drawImage(canvasWatermark, 0, 0);
-	console.timeEnd('Componer imagen');
 
 	botonGrabar.disabled = false;
 }
 
+/**
+Toma el nombre de ficheo actual y lo devuelve añadiendo el sufijo ' - protegido.jpg'
+*/
+function GenerarNombreFichero() {
+	const match = nombreFichero.match(/([^\/\\]+)(?=\.[^\.]+$)/)
+	if (match)
+		return match[1] + ' - protegido.jpg'
+	
+	return 'protegido.jpg';
+}
+
 function GrabarImagen() {
 	const link = document.getElementById('grabar');
-	link.download = 'Protegido.jpg';
+	link.download = GenerarNombreFichero();
 	try	{
 		link.href = canvaComposicion.toDataURL('image/jpeg', 0.8);
 		link.click();
