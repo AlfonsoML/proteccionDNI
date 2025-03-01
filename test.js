@@ -22,6 +22,7 @@ function CambiarImagenTest(ev) {
 	nombreFichero = img.src;
 
 	ResetearControles();
+	Previsualizacion.style.display = '';
 
 	const src = img.src;
 	// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente
@@ -40,17 +41,19 @@ function CambiarImagenTest(ev) {
 		imagenDNI_BN = canvasTmp.transferToImageBitmap();
 		
 		RedibujarDNI();
+		activarWizard(document.getElementById('step2'));
 	} else {
 		PrepararDNI(img)
-			.then(RedibujarDNI);
+			.then( () => {
+				RedibujarDNI();
+				activarWizard(document.getElementById('step2'));
+		});
 	}
 
 	DibujarMascara();
 
 	DibujarMarcaAgua();
 
-	// Pasar al paso 2 y probar movimiento
-	document.getElementById('paso2').open = true;
 }
 
 /**

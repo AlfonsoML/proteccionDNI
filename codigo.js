@@ -1,5 +1,6 @@
 ﻿'use strict';
 
+const Previsualizacion = document.getElementById('Previsualizacion');
 // canvas donde dibujamos el DNI con los ajustes de rotación y desplazamiento
 const canvas = document.getElementById('canvas');
 // canvas con las máscaras que tapan datos
@@ -11,11 +12,11 @@ const canvaComposicion = document.createElement('canvas');
 
 canvasMascara.width = canvas.width;
 canvasMascara.height = canvas.height;
-canvas.parentNode.appendChild(canvasMascara);
+Previsualizacion.appendChild(canvasMascara);
 
 canvasWatermark.width = canvas.width;
 canvasWatermark.height = canvas.height;
-canvas.parentNode.appendChild(canvasWatermark);
+Previsualizacion.appendChild(canvasWatermark);
 
 canvaComposicion.width = canvas.width;
 canvaComposicion.height = canvas.height;
@@ -45,11 +46,14 @@ for (const [key, value] of Object.entries(FormatosDnis)) {
 	opciones.push(`<option value='${key}'>${value.Nombre}</option>`);
 }
 Formato.innerHTML = opciones.join('');
+Previsualizacion.style.display = 'none';
 
 // asignar escucha de eventos
 SelectorFichero.addEventListener('change', function (e) {
 	const fichero = e.target.files[0];
 	if (fichero) {
+		Previsualizacion.style.display = '';
+
 		MostrarImagen(fichero);
 		nombreFichero = e.target.value;
 		// borramos por si quieren volver a elegir la misma
@@ -99,6 +103,55 @@ configurarGiro();
 AsignarWatermarkPorDefecto(Watermark);
 
 configurarCrearComposicion();
+
+configurarWizard();
+
+function configurarWizard() {
+	querySelector_Array('.step > *')
+		.forEach(elmto => elmto.addEventListener('click', function(ev) {
+				activarWizard(ev.target.parentNode);
+			})
+		);
+
+	querySelector_Array('.Siguiente input')
+		.forEach(btn => btn.addEventListener('click', function(ev) {
+				const siguiente = ev.target.dataset.siguiente;
+				activarWizard(document.getElementById('step' + siguiente));
+			})
+		);
+}
+
+function activarWizard(step) {
+	const paso = step.id.substr(4); // ej: step4
+
+	const actual = document.querySelector('.in-progress');
+	const pasoActual = actual.id.substr(4);
+
+	if (paso == pasoActual)
+		return;
+
+	if (!imagenDNI_BN) {
+		alert('Escoje primero la imagen de tu DNI');
+		return;
+	}
+
+	actual.classList.remove('in-progress');
+	document.getElementById('paso' + pasoActual).open = false;
+
+	step.classList.add('in-progress');
+	document.getElementById('paso' + paso).open = true;
+
+	let siguiente = step;
+	while (siguiente) {
+		siguiente.classList.remove('complete');
+		siguiente = siguiente.nextElementSibling;
+	}
+	let anterior = step.previousElementSibling;
+	while (anterior) {
+		anterior.classList.add('complete');
+		anterior = anterior.previousElementSibling;
+	}
+}
 
 function configurarCrearComposicion() {
 	// Al activar el paso de Grabar, crear la imagen offscreen con la mezcla de los tres canvas
@@ -162,13 +215,14 @@ function MostrarImagen(file) {
 		ResetearControles();
 
 		PrepararDNI(img)
-			.then(RedibujarDNI);
+			.then( () => {
+				RedibujarDNI();
+				activarWizard(document.getElementById('step2'));
+		});
 
 		DibujarMascara();
 
 		DibujarMarcaAgua();
-
-		document.getElementById('paso2').open = true;
 	}
 	img.src = URL.createObjectURL(file);
 }
