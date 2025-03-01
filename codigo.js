@@ -79,7 +79,7 @@ document.querySelector('#paso1 p')
 });
 
 [Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
-	control.addEventListener('change', function (e) {
+	control.addEventListener('input', function (e) {
 		RedibujarDNI();
 	});
 });
@@ -249,10 +249,26 @@ function ResetearControles() {
 	});
 }
 
+// Saber si tenemos pendiente un redibujo del DNI para no saturar la CPU/GPU
+let redibujoDNIpendiente = false;
+
 function RedibujarDNI() {
 	if (imagenDNI_BN == null)
 		return;
 
+	if (redibujoDNIpendiente)
+		return;
+
+	redibujoDNIpendiente = true;
+	requestAnimationFrame(RedibujarEnDNIEnRAF);
+}
+
+/**
+	Función que vamos a llamar con un throttle de requestAnimationFrame, colapsando multiples llamadas consecutivas
+	Se encarga de dibujar la copia que tenemos en BN del DNI ajustando posición y giro
+*/
+function RedibujarEnDNIEnRAF() {
+	redibujoDNIpendiente = false;
 	let canvasOrigen = imagenDNI_BN;
 	// rotar ángulos rectos
 	if (rotacion != 0) {
