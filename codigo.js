@@ -391,8 +391,8 @@ function RedibujarEnDNIEnRAF() {
 	ctx.fill();
 
 	// volcar Imagen DNI escalada y con desplazamiento
-	const aspectRatio = canvas.width / canvas.height;
-	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvasOrigen.height * Zoom.value * aspectRatio);
+	const aspectRatio = canvasOrigen.height / canvasOrigen.width;
+	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.width * Zoom.value * aspectRatio);
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
