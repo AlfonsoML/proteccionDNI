@@ -185,7 +185,7 @@ function girarDNI(ev) {
 	const boton = ev.target;
 	const giro = parseInt(boton.dataset.giro, 10);
 	rotacion += giro;
-	if (rotacion > 360)
+	if (rotacion >= 360)
 		rotacion -= 360;
 	if (rotacion < 0)
 		rotacion += 360;
@@ -390,8 +390,9 @@ function RedibujarEnDNIEnRAF() {
 	ctx.fillStyle = 'white';
 	ctx.fill();
 
-	// volcar Imagen DNI escalada y con desplazamient
-	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvas.height * Zoom.value);
+	// volcar Imagen DNI escalada y con desplazamiento
+	const aspectRatio = canvas.width / canvas.height;
+	ctx.drawImage(canvasOrigen, Horizontal.value, Vertical.value, canvas.width * Zoom.value, canvasOrigen.height * Zoom.value * aspectRatio);
 }
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
