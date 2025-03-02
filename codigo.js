@@ -106,6 +106,11 @@ configurarCrearComposicion();
 
 configurarWizard();
 
+// Abrir información de ayuda al pulsar el enlace
+document.getElementById('AyudaOcultarParcialmente')
+	.addEventListener('click', () => document.getElementById('OcultarParcialmente').open = true);
+
+
 function configurarWizard() {
 	querySelector_Array('.step > *')
 		.forEach(elmto => elmto.addEventListener('click', function (ev) {
@@ -165,7 +170,7 @@ function configurarCrearComposicion() {
 
 function AsignarWatermarkPorDefecto(input) {
 	const hoy = new Date();
-	input.value = `Copia ${hoy.toISOString().substring(0, 10)} para...`;
+	input.value = `Copia ${hoy.toISOString().substring(0, 10)} para …`;
 }
 
 /**

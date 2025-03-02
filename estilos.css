@@ -65,6 +65,10 @@ label {
 	flex-basis: 140px;
 }
 
+#DivMascaraDni {
+	margin-top: 0.5em;
+}
+
 @media (max-width: 560px) {
 	.ContenedorControl label {
 		flex-basis: 100%;
@@ -89,6 +93,10 @@ label {
 
 .Siguiente input {
 	font-size: 100%;
+}
+
+#AyudaOcultarParcialmente {
+	font-size: 90%;
 }
 
 #Previsualizacion,

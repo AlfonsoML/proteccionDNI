@@ -13,7 +13,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni4-frontal': {
-		Nombre: 'DNI v4 - Frontal', // desde 2021
+		Nombre: 'DNI v4 - Frontal (desde 2021)', // desde 2021
 		Mascaras: [
 			{ x: 760, y: 90, w: 120, h: 50 },
 			{ x: 790, y: 320, w: 180, h: 40 },// Fecha Nacimiento
@@ -39,7 +39,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni4-trasera': {
-		Nombre: 'DNI v4 - Trasera',
+		Nombre: 'DNI v4 - Trasera (desde 2021)',
 		Mascaras: [
 			{ x: 110, y: 90, w: 120, h: 40 },
 			{ x: 0, y: 180, w: 60, h: 190 }, // vertical
@@ -54,7 +54,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni3-frontal': {
-		Nombre: 'DNI v3 - Frontal', // desde 2015
+		Nombre: 'DNI v3 - Frontal (2015-2021)', // desde 2015
 		Mascaras: [
 			{ x: 750, y: 80, w: 140, h: 60 },
 			{ x: 380, y: 380, w: 240, h: 35 }, // Fecha Nacimiento
@@ -78,7 +78,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni3-trasera': {
-		Nombre: 'DNI v3 - Trasera',
+		Nombre: 'DNI v3 - Trasera (2015-2021)',
 		Mascaras: [
 			{ x: 100, y: 100, w: 130, h: 40 },
 			{ x: 0, y: 180, w: 60, h: 190 }, // vertical
@@ -93,7 +93,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni1-frontal': {
-		Nombre: 'DNI-E (v1) - Frontal',
+		Nombre: 'DNI-E (v1) - Frontal (hasta 2015)',
 		Mascaras: [
 			{ x: 290, y: 300, w: 230, h: 35 }, // Fecha nacimiento
 			{ x: 290, y: 350, w: 230, h: 35 }, // Esp
@@ -112,7 +112,7 @@ const FormatosDnis = {
 		}]
 	},
 	'dni1-trasera': {
-		Nombre: 'DNI-E (v1) - Trasera',
+		Nombre: 'DNI-E (v1) - Trasera (hasta 2015)',
 		Mascaras: [
 			{ x: 50, y: 45, w: 400, h: 40 },// Nacimiento
 			{ x: 50, y: 150, w: 400, h: 40 },// Padres
