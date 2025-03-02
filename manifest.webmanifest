@@ -7,12 +7,12 @@
 	"scope": "/",
 	"icons": [
 		{
-			"src": "/icons/icon-512x512.webp",
+			"src": "icons/icon-512x512.webp",
 			"sizes": "512x512",
 			"type": "image/webp"
 		},
 		{
-			"src": "/icons/maskable_icon_x512.webp",
+			"src": "icons/maskable_icon_x512.webp",
 			"sizes": "512x512",
 			"type": "image/webp",
 			"purpose": "maskable"
