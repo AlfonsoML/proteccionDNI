@@ -202,3 +202,31 @@ footer {
 	border-color: var(--mainColor);
 	background-color: var(--colorActivo);
 }
+
+
+.dragover {
+	position: relative;
+}
+
+.dragover * {
+	pointer-events: none;
+}
+
+.dragover::before {
+	content: "Suelta aqu\00ED  tu imagen";
+	display: flex;
+	position: absolute;
+	width: 99%;
+	height: 99%;
+	background-color: rgba(32, 32, 32, .6);
+	z-index: 2;
+	color: white;
+	font-size: 150%;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	text-shadow: 1px 1px 2px #333;
+	box-shadow: 0 0 10px rgba(32, 32, 32, 1);
+	pointer-events: none;
+	opacity: .9;
+}

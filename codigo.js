@@ -106,6 +106,8 @@ configurarCrearComposicion();
 
 configurarWizard();
 
+configurarDD(document.body);
+
 // Abrir información de ayuda al pulsar el enlace
 document.getElementById('AyudaOcultarParcialmente')
 	.addEventListener('click', () => document.getElementById('OcultarParcialmente').open = true);
@@ -559,4 +561,69 @@ function querySelector_Array(selector, root) {
 // https://gist.github.com/ahem/d19ee198565e20c6f5e1bcd8f87b3408
 function createWorker(f) {
 	return new Worker(URL.createObjectURL(new Blob([`(${f})()`])));
+}
+
+// d&d
+function configurarDD(root) {
+	root.addEventListener('dragenter', function (event) {
+		if (!hasFiles(event))
+			return;
+
+		root.classList.add('dragover');
+
+		// solo Chrome cambia el cursor
+		// http://stackoverflow.com/questions/24000954/in-firefox-and-ie-how-can-change-the-cursor-while-dragging-over-different-target
+		event.dataTransfer.dropEffect = 'copy';
+	}, false);
+
+	root.addEventListener('dragleave', function (event) {
+		const dataTransfer = event.dataTransfer;
+		if (!dataTransfer)
+			return;
+
+		if (event.target != root && event.srcElement != root && event.toElement != root)
+			return;
+
+		root.classList.remove('dragover');
+	}, false);
+
+	root.addEventListener('dragover', function (event) {
+		if (!hasFiles(event))
+			return;
+
+		const dataTransfer = event.dataTransfer;
+
+		// solo Chrome cambia el cursor
+		// http://stackoverflow.com/questions/24000954/in-firefox-and-ie-how-can-change-the-cursor-while-dragging-over-different-target
+		dataTransfer.dropEffect = 'copy';
+
+		// evitamos que al soltar lo procese el navegador
+		event.preventDefault();
+	}, false);
+
+	root.addEventListener('drop', function (event) {
+		event.preventDefault();
+		const dataTransfer = event.dataTransfer;
+		if (!dataTransfer)
+			return;
+
+		root.classList.remove('dragover');
+
+		const fichero = dataTransfer.files[0];
+		Previsualizacion.style.display = '';
+
+		MostrarImagen(fichero);
+		nombreFichero = fichero.name;
+	}, false);
+}
+
+function hasFiles(ev) {
+	const data = ev.dataTransfer;
+
+	if (!data || !data.types)
+		return false;
+
+	if (data.types.contains && data.types.contains('Files') && !data.types.contains('text/html')) return true;
+	if (data.types.indexOf && data.types.indexOf('Files') != -1) return true;
+	return false;
 }
