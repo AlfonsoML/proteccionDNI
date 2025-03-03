@@ -108,6 +108,9 @@ configurarWizard();
 
 configurarDD(document.body);
 
+let btnCompartir;
+configurarCompartir();
+
 // Abrir información de ayuda al pulsar el enlace
 document.getElementById('AyudaOcultarParcialmente')
 	.addEventListener('click', () => document.getElementById('OcultarParcialmente').open = true);
@@ -517,6 +520,8 @@ Combinar los 3 canvas parciales en una sola imagen para descarga canvaComposicio
 */
 function ComponerImagen() {
 	botonGrabar.disabled = true;
+	if (btnCompartir)
+		btnCompartir.disabled = true;
 
 	const ctx = canvaComposicion.getContext('2d');
 	ctx.drawImage(canvas, 0, 0);
@@ -524,6 +529,8 @@ function ComponerImagen() {
 	ctx.drawImage(canvasWatermark, 0, 0);
 
 	botonGrabar.disabled = false;
+	if (btnCompartir)
+		btnCompartir.disabled = false;
 }
 
 /**
@@ -626,4 +633,38 @@ function hasFiles(ev) {
 	if (data.types.contains && data.types.contains('Files') && !data.types.contains('text/html')) return true;
 	if (data.types.indexOf && data.types.indexOf('Files') != -1) return true;
 	return false;
+}
+
+function configurarCompartir() {
+	if (typeof navigator.share != 'undefined') {
+
+		btnCompartir = document.createElement('input');
+		btnCompartir.type = 'button';
+		btnCompartir.id = 'Compartir';
+		btnCompartir.value = 'Compartir';
+		botonGrabar.parentNode.appendChild(btnCompartir);
+
+		btnCompartir.addEventListener('click', async () => {
+			const dataUrl = canvaComposicion.toDataURL('image/jpeg', 0.8);
+
+			const blob = await (await fetch(dataUrl)).blob();
+			const file = new File(
+				[blob],
+				GenerarNombreFichero(),
+				{
+					type: 'image/jpeg',
+				}
+			);
+			const shareData = {
+				title: 'Copia de mi DNI',
+				text: 'Adjunto la copia de mi DNI para su uso exclusivo',
+				files: [file],
+			}
+			try {
+				await navigator.share(shareData)
+			} catch(err) {
+				alert( 'Error: ' + err);
+			}
+		});
+	}
 }

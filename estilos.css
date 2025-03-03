@@ -103,6 +103,10 @@ label {
 	font-size: 90%;
 }
 
+#Compartir {
+	margin-left: 1em;
+}
+
 #Previsualizacion,
 canvas {
 	max-width: 100%;
