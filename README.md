@@ -7,5 +7,6 @@ Todo el procesamiento se hace mediante javascript en tu ordenador/teléfono, no 
 Puedes [probarlo aquí](https://alfonsoml.github.io/proteccionDNI/).  
 Si quieres descargarte los ficheros para ejecutarlo desde tu ordenador, pincha en [Releases](https://github.com/AlfonsoML/proteccionDNI/releases) y bájate de ahí el último zip, lo descomprimes y abres el index.html 
 
-Icono de máscara creado por [Andrew Nenakhov](https://pictogrammers.com/library/mdi/icon/domino-mask/).
+Icono de máscara creado por [Andrew Nenakhov](https://pictogrammers.com/library/mdi/icon/domino-mask/).  
+Icono candado para Web App por [Dios Campechano](https://mastodon.social/@Dios_Campechano@tkz.one/114094705033755223).  
 
