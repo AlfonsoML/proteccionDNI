@@ -48,7 +48,7 @@
 			<details id='paso1' name='paso' open>
 				<summary>Foto</summary>
 				<div>
-					<p class='centrado'><input type='button' id='ElegirFoto' value='Elige la foto'></p>
+					<p class='centrado'><button class="btn" type="button" id='ElegirFoto'><span>Elige la foto</span></button></p>
 					<div style='height:0' ;><input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'></div>
 				</div>
 			</details>
@@ -57,11 +57,11 @@
 				<div>
 					<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
 					<div id='ControlesDesplazamiento'>
-						<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+						<div id='ControlesGiro' class='centrado'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 						<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
 						<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
 						<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 					</div>
 					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='1'><input type='button' value='Siguiente' data-siguiente='3'></div>
 				</div>
@@ -89,12 +89,13 @@
 			<details id='paso5' name='paso'>
 				<summary>Guardar</summary>
 				<div>
-					<p class='centrado'><input type='button' value='Guarda la imagen' id='Guardar'></p>
+					<p class='centrado'><button class="btn" type="button" id='Guardar'><span>Guardar</span></button>
+					<button class="btn" type="button" id='Compartir' style='display:none'><span>Compartir</span></button></p>
 					<a id='grabar'></a>
 				</div>
 			</details>
+			<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></canvas></div>
 		</section>
-		<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></canvas></div>
 	</main>
 
 	<footer>Página de pruebas. <a href='index.html'>Ir a la principal</a></footer>

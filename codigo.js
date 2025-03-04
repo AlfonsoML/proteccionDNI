@@ -234,6 +234,10 @@ function MostrarImagen(file) {
 
 		DibujarMarcaAgua();
 	}
+	img.onerror = function(e) {
+		console.log(e);
+		alert('Por favor, escoge una imagen válida');
+	}
 	img.src = URL.createObjectURL(file);
 }
 
@@ -636,16 +640,18 @@ function hasFiles(ev) {
 }
 
 function configurarCompartir() {
+	btnCompartir = document.getElementById('Compartir');
+
 	if (typeof navigator.share != 'undefined') {
-
-		btnCompartir = document.createElement('input');
-		btnCompartir.type = 'button';
-		btnCompartir.id = 'Compartir';
-		btnCompartir.value = 'Compartir';
-		botonGrabar.parentNode.appendChild(btnCompartir);
-
+		btnCompartir.style.display = 'block';
 		btnCompartir.addEventListener('click', async () => {
-			const dataUrl = canvaComposicion.toDataURL('image/jpeg', 0.8);
+
+			let dataUrl;
+			try {
+				dataUrl = canvaComposicion.toDataURL('image/jpeg', 0.8);
+			} catch (e) {
+				alert('No se ha podido generar la imagen\r\n' + e);
+			}
 
 			const blob = await (await fetch(dataUrl)).blob();
 			const file = new File(

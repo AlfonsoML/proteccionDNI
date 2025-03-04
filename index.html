@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Protección del DNI</title>
+	<title>Protege mi DNI</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 	<link rel='stylesheet' type='text/css' href='estilos.css'>
 	<link href="favicon.ico" rel="icon">
@@ -16,9 +16,14 @@
 </head>
 <body>
 	<main>
-		<h1>Proteger el DNI</h1>
-		<p>En ocasiones te pueden pedir que les envíes una foto del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas.</p>
-		<p>En esta página puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos. de esta manera la imagen que compartas será única y no se podrá reutilizar, y además nadie tendrá acceso a los datos privados.</p>
+		<section id="introduccion" class="informacion">
+			<h1>Protege mi DNI</h1>
+			<p>Esta página te permite ocultar fácilmente los datos privados de tu DNI.</p>
+			<p>En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas.</p>
+			<p>En esta página puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos. de esta manera la imagen que compartas será única para evitar que la reutilicen, y además nadie tendrá acceso a los datos privados.</p>
+			<p>Para empezar, pulsa en el botón de elegir foto. Después la ajustas para que quede encuadrada, elige que tipo de DNI tienes y añade un texto para indicar porqué has dado esta copia. Finalmente la guardas o compartes.<br>
+			Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.</p>
+		</section>
 		<section id='pasos'>
 			<div class="wizard-progress">
 				<div class="step in-progress" id="step1">
@@ -46,7 +51,7 @@
 			<details id='paso1' name='paso' open>
 				<summary>Foto</summary>
 				<div>
-					<p class='centrado'><input type='button' id='ElegirFoto' value='Elige la foto'></p>
+					<p class='centrado'><button class="btn" type="button" id='ElegirFoto'><span>Elige la foto</span></button></p>
 					<div style='height:0' ;><input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'></div>
 				</div>
 			</details>
@@ -55,11 +60,11 @@
 				<div>
 					<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
 					<div id='ControlesDesplazamiento'>
-						<div id='ControlesGiro'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> - <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+						<div id='ControlesGiro' class='centrado'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
+						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 						<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
 						<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
 						<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
-						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
 					</div>
 					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='1'><input type='button' value='Siguiente' data-siguiente='3'></div>
 				</div>
@@ -87,23 +92,24 @@
 			<details id='paso5' name='paso'>
 				<summary>Guardar</summary>
 				<div>
-					<p class='centrado'><input type='button' value='Guarda la imagen' id='Guardar'></p>
+					<p class='centrado'><button class="btn" type="button" id='Guardar'><span>Guardar</span></button>
+					<button class="btn" type="button" id='Compartir' style='display:none'><span>Compartir</span></button></p>
 					<a id='grabar'></a>
 				</div>
 			</details>
+			<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></canvas></div>
 		</section>
-		<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></canvas></div>
 
-		<aside id='FAQ'>
+		<aside id='FAQ' class="informacion">
 			<h2>Preguntas y respuestas</h2>
 			<details>
 				<summary>¿Qué hace la página?</summary>
 				<div class='respuesta'>
 					<ol>
 						<li>Elige una foto de tu DNI. La imagen se convierte a blanco y negro y se escala a 1000px de anchura.</li>
-						<li>Elige el formato de DNI que tienes y si es la parte delantera o trasera. En base a eso se enmascaran los datos que no son necesario que nadie vea (si están en negro no hay posibilidad de que ningún sistema los recupere)</li>
-						<li>Ajustas si es necesario la posición de la foto para que encaje con las máscaras.</li>
-						<li>Añades un texto que se sobre escribirá como marca de agua, indicando para qué compartes la foto</li>
+						<li>Ajustas si es necesario la posición de la foto para que se vea bien en la previsualización.</li>
+						<li>Elige el formato de DNI que tienes y si es la parte delantera o trasera. En base a eso se enmascaran los datos que no son necesario que nadie vea.</li>
+						<li>Añades un texto que se sobre escribirá como marca de agua, indicando para qué compartes la foto.</li>
 						<li>Pulsa en el botón para descargar la foto.</li>
 					</ol>
 				</div>
@@ -112,7 +118,7 @@
 			<details>
 				<summary>¿Puedo fiarme de que no vas a hacer nada con mi DNI?</summary>
 				<div class='respuesta'>
-					<p>La página no almacena ningún dato, no se usan cookies, no se usa ningún servicio de terceros y tu DNI solo se procesa en tu movil/ordenador</p>
+					<p>La página no almacena ningún dato, no se usan cookies, no se usa ningún servicio de terceros y tu DNI solo se procesa en tu movil/ordenador.</p>
 					<p>
 						El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna forma. Además <a href='https://github.com/AlfonsoML/proteccionDNI/'>está disponible completo en GitHub</a>,
 						puedes descargarte <a href='https://github.com/AlfonsoML/proteccionDNI/archive/refs/heads/main.zip'>todo el código completo</a>.<br>
@@ -127,11 +133,11 @@
 					<p>
 						Las empresas <b>no</b> deberían tener acceso a la mayoría de datos de tu DNI. <a href='https://www.aepd.es/documento/2023-0048.pdf'>Informe de la Agencia Española de Protección de datos</a>.
 						Noticia sobre <a href='https://www.pymelegal.es/noticias/aepd/la-proteccion-de-datos-y-el-dni'>sanciones a empresas</a><br>
-						Si te manejas bien con la informática, tú puedes realizar los mismos pasos que se hacen en esta página.
+						Si te manejas bien con la informática, tú puedes realizar los mismos pasos que se hacen en esta página.<br>
 						Si por contra no sueles usar programas de edición gráfica, esta página te facilita esas tareas.
 					</p>
 					<p>
-						Incluso si tú eres de las personas a las que esto le parece trivial, piensa en tus familiares, amistades, ...
+						Incluso si tú eres de las personas a las que esto le parece trivial, piensa en tus familiares, amistades, ...<br>
 						¿Te parece más sencillo explicarles cómo hacer estas operaciones por su cuenta, o enviarles un enlace o un zip para que lo puedan hacer de forma automatizada?.
 					</p>
 				</div>
@@ -142,6 +148,18 @@
 					<p>
 						En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href='https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf'>orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br>
 						Puedes leer la solicitud y caso de uso en <a href='https://github.com/AlfonsoML/proteccionDNI/issues/12' target='_blank'>la solicitud</a>.
+					</p>
+				</div>
+			</details>
+			<details>
+				<summary>Tengo un problema, ¿cómo me pongo en contacto?</summary>
+				<div class='respuesta'>
+					<p>
+						Puedes crear un "issue" en el <a href="https://github.com/AlfonsoML/proteccionDNI/issues">GitHub del proyecto</a>, o puedes <a href="https://mastodon.social/@alfonsoml">hacerlo en Mastodon</a>. 
+					</p>
+					<p>
+						Incluso si tú eres de las personas a las que esto le parece trivial, piensa en tus familiares, amistades, ...<br>
+						¿Te parece más sencillo explicarles cómo hacer estas operaciones por su cuenta, o enviarles un enlace o un zip para que lo puedan hacer de forma automatizada?.
 					</p>
 				</div>
 			</details>

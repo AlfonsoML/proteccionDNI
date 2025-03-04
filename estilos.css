@@ -15,15 +15,26 @@ body {
 	justify-content: space-between;
 }
 
+p {
+    line-height: 1.4;
+}
+
 main {
 	box-sizing: border-box;
 	margin: 0 auto;
 	max-width: 1020px;
 	padding: 0 10px;
+	width: 100%;
 }
 
 label {
 	user-select: none;
+}
+
+button,
+input,
+select {
+	font-size: 100%;
 }
 
 #pasos summary {
@@ -47,15 +58,12 @@ label {
 }
 
 
-#ControlesGiro {
-	text-align: center;
-}
-
-#ControlesDesplazamiento > div {
+#ControlesDesplazamiento > .ContenedorControl {
 	margin: 10px 0;
 }
 
 .ContenedorControl {
+	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0 10px;
@@ -73,6 +81,10 @@ label {
 	margin-top: 0.5em;
 }
 
+#Watermark {
+    padding: 3px 5px;
+}
+
 @media (max-width: 560px) {
 	.ContenedorControl label {
 		flex-basis: 100%;
@@ -80,23 +92,25 @@ label {
 }
 
 .centrado {
-	text-align: center;
-	margin-top: 2em;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em;
+	justify-content: center;
+	margin: 2em 0 1em;
+}
+
+#ControlesGiro {
+    margin-top: 1em;
 }
 
 .centrado input {
 	padding: 0.3em 2.3em;
-	font-size: 100%;
 }
 
 .Siguiente {
 	margin-top: 1em;
 	display: flex;
 	justify-content: space-between;
-}
-
-.Siguiente input {
-	font-size: 100%;
 }
 
 #AyudaOcultarParcialmente {
@@ -233,4 +247,61 @@ footer {
 	box-shadow: 0 0 10px rgba(32, 32, 32, 1);
 	pointer-events: none;
 	opacity: .9;
+}
+
+
+
+.btn {
+  position: relative;
+
+  display: block;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+  
+  background-color: #efefef;
+  
+  transition: background-color .3s;
+}
+
+.btn:hover, .btn:focus {
+  background-color: #F5F5F5;
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn span {
+  display: block;
+  padding: 12px 24px;
+}
+
+.btn:before {
+  content: "";
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  display: block;
+  width: 0;
+  padding-top: 0;
+    
+  border-radius: 100%;
+  
+  background-color: rgba(16 120 146 / .3);
+  
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+  
+  transition: width .2s ease-out, padding-top .2s ease-out;
 }
