@@ -4,7 +4,7 @@ Las empresas no deben tener acceso a la mayoría de datos de tu DNI, por lo que 
 
 Todo el procesamiento se hace mediante javascript en tu ordenador/teléfono, no se envían los datos a ninguna parte, no se usan cookies ni servicios de terceros. 
 
-Puedes [probarlo aquí](https://alfonsoml.github.io/proteccionDNI/).  
+Puedes [probarlo aquí](https://protegemidni.es/).  
 Si quieres descargarte los ficheros para ejecutarlo desde tu ordenador, pincha en [Releases](https://github.com/AlfonsoML/proteccionDNI/releases) y bájate de ahí el último zip, lo descomprimes y abres el index.html 
 
 Icono de máscara creado por [Andrew Nenakhov](https://pictogrammers.com/library/mdi/icon/domino-mask/).  

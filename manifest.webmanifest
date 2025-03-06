@@ -1,6 +1,6 @@
 {
 	"name": "Protege mi DNI",
-	"short_name": "Protege DNI",
+	"short_name": "Protege mi DNI",
 	"start_url": "index.html",
 	"description": "Genera una copia protegida del DNI",
 	"display": "standalone",
