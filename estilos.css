@@ -4,6 +4,10 @@
 	--mainColor: #07c;
 	--baseColor: light-dark(#555, currentColor);
 	--colorActivo: light-dark(#FFF, #000);
+
+	--colorBoton: light-dark(currentColor, #333);
+	--colorFondoBoton: light-dark(#EFEFEF, #EFEFEF);
+	--colorFondoBotonHover: light-dark(#F5F5F5, #C0C0C0);
 }
 
 body {
@@ -263,13 +267,14 @@ footer {
   border-radius: 2px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
   
-  background-color: #efefef;
-  
+  color: var(--colorBoton);
+  background-color: var(--colorFondoBoton);
+
   transition: background-color .3s;
 }
 
 .btn:hover, .btn:focus {
-  background-color: #F5F5F5;
+  background-color: var(--colorFondoBotonHover);
 }
 
 .btn > * {
