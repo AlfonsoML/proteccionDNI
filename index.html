@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Protege mi DNI</title>
-	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-	<link rel='stylesheet' type='text/css' href='estilos.css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="estilos.css">
 	<link href="favicon.ico" rel="icon">
 	<meta name="keywords" content="DNI, seguridad, compartir DNI, protección DNI">
 	<meta name="description" content="Aquí puedes crear fácilmente una copia del DNI que oculte los datos privados y tenga sobre escrito el motivo por el que lo estás compartiendo.">
@@ -17,94 +17,107 @@
 <body>
 	<main>
 		<section id="introduccion" class="informacion">
-			<h1>Protege mi DNI</h1>
-			<p>Esta página te permite ocultar fácilmente los datos privados de tu DNI.</p>
-			<p>En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual del DNI ya que si cae en malas manos puede causarte graves problemas.</p>
-			<p>Aquí puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos. de esta manera la imagen que compartas será única para evitar que la reutilicen, y además nadie tendrá acceso a los datos privados.</p>
-			<p>Para empezar, pulsa en el botón de elegir foto. Después la ajustas para que quede encuadrada, elige que tipo de DNI tienes y añade un texto para indicar porqué has dado esta copia. Finalmente la guardas o compartes.<br>
+		<h1>Protección del DNI</h1>
+			<p>Esta página te permite ocultar fácilmente los datos privados de tu DNI.
+			En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual ya que si cae en malas manos puede causarte graves problemas.</p>
+			<p>Aquí puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos, de esta manera la imagen que compartas será única para evitar que la reutilicen y además nadie tendrá acceso a los datos privados.</p>
+			<p>Para empezar, pulsa en el botón de elegir foto y continúa con los pasos siguientes.<br>
 			Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.</p>
 		</section>
-		<section id='pasos'>
+		<section id="pasos">
+			<a id="cerrar" title="Cerrar progreso"><svg viewBox='0 0 12 12' role='presentation'><path d='M1,1 l 10,10 M1,11 l 10,-10'/></svg></a>
 			<div class="wizard-progress">
 				<div class="step in-progress" id="step1">
-					<span class='step-name'>Foto</span>
+					<a class="step-name">Foto</a>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step2">
-					<span class='step-name'>Posición</span>
+					<a class="step-name">Posición</a>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step3">
-					<span class='step-name'>Tipo</span>
+					<a class="step-name">Tipo</a>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step4">
-					<span class='step-name'>Texto</span>
+					<a class="step-name">Texto</a>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step5">
-					<span class='step-name'>Guardar</span>
+					<a class="step-name">Guardar</a>
 					<div class="node"></div>
 				</div>
 			</div>
 
-			<details id='paso1' name='paso' open>
+			<details id="paso1" name="paso" open>
 				<summary>Foto</summary>
 				<div>
-					<p class='centrado'><button class="btn" type="button" id='ElegirFoto'><span>Elige la foto</span></button></p>
-					<div style='height:0' ;><input type='file' id='SelectorFichero' accept='image/*' title='Selector de foto (no visible)'></div>
+					<p class="centrado"><button class="btn" type="button" id="ElegirFoto"><span>Elige la foto</span></button></p>
+					<div style="height:0" ;><input type="file" id="SelectorFichero" accept="image/*" title="Selector de foto (no visible)"></div>
 				</div>
 			</details>
-			<details id='paso2' name='paso'>
+			<details id="paso2" name="paso">
 				<summary>Posición</summary>
 				<div>
-					<p>Ajusta la orientación y posición de la foto para que se vea correctamente</p>
-					<div id='ControlesDesplazamiento'>
-						<div id='ControlesGiro' class='centrado'><input type='button' data-giro='-90' value='Girar a Izquierda' class='girar'> <input type='button' data-giro='90' value='Girar a Derecha' class='girar'></div>
-						<div class='ContenedorControl'><label for='Zoom'>Acercar</label> <input type='range' min='0.8' max='2' id='Zoom' value='1' step='any'></div>
-						<div class='ContenedorControl'><label for='Rotacion'>Rotar</label> <input type='range' min='-10' max='10' id='Rotacion' value='0' step='any'></div>
-						<div class='ContenedorControl'><label for='Horizontal'>Desp. Horizontal</label> <input type='range' min='-200' max='200' id='Horizontal' value='0'></div>
-						<div class='ContenedorControl'><label for='Vertical'>Desp. Vertical</label> <input type='range' min='-200' max='200' id='Vertical' value='0'></div>
+					<p>Ajusta la orientación y posición para que el DNI se vea correctamente.</p>
+					<div id="ControlesDesplazamiento">
+						<div id="ControlesGiro" class="centrado">
+							<button class="btn girar" type="button" data-giro="-90"><span>Girar a izquierda</span></button>
+							<button class="btn girar" type="button" data-giro="90"><span>Girar a derecha</span></button>
+						</div>
+						<div class="ContenedorControl"><label for="Zoom">Acercar</label> <input type="range" min="0.8" max="2" id="Zoom" value="1" step="any"></div>
+						<div class="ContenedorControl"><label for="Rotacion">Rotar</label> <input type="range" min="-10" max="10" id="Rotacion" value="0" step="any"></div>
+						<div class="ContenedorControl"><label for="Horizontal">Desp. Horizontal</label> <input type="range" min="-200" max="200" id="Horizontal" value="0"></div>
+						<div class="ContenedorControl"><label for="Vertical">Desp. Vertical</label> <input type="range" min="-200" max="200" id="Vertical" value="0"></div>
 					</div>
-					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='1'><input type='button' value='Siguiente' data-siguiente='3'></div>
+					<div class="Siguiente">
+						<button class="btn atras" type="button" data-siguiente="1"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="3"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
+					</div>
 				</div>
 			</details>
-			<details id='paso3' name='paso'>
+			<details id="paso3" name="paso">
 				<summary>Tipo de foto</summary>
 				<div>
 					<p>
 						Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.
 						Puede que quieras volver al paso anterior para ajustar mejor la posición.
 					</p>
-					<div><label for='Formato'>Elige la máscara a usar</label> <select id='Formato'></select></div>
-					<div id='DivMascaraDni' style='display:none'><label for='EnmascararDni'>Ocultar parcialmente el DNI</label> <span><input type='checkbox' id='EnmascararDni'> <a href='#OcultarParcialmente' id='AyudaOcultarParcialmente'>¿qué es esto?</a></span></div>
-					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='2'><input type='button' value='Siguiente' data-siguiente='4'></div>
+					<div><label for="Formato">Elige la máscara a usar</label> <select id="Formato"></select></div>
+					<div id="DivMascaraDni" style="display:none"><label for="EnmascararDni">Ocultar parcialmente el DNI</label> <span><input type="checkbox" id="EnmascararDni"> <a href="#OcultarParcialmente" id="AyudaOcultarParcialmente">¿qué es esto?</a></span></div>
+					<div class="Siguiente">
+						<button class="btn atras" type="button" data-siguiente="2"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="4"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
+					</div>
 				</div>
 			</details>
-			<details id='paso4' name='paso'>
+			<details id="paso4" name="paso">
 				<summary>Texto</summary>
 				<div>
-					<p>Escribe un texto para añadir sobre la imagen</p>
-					<div class='ContenedorControl'><label for='Watermark'>Sobreescribir: </label> <input type='text' id='Watermark' value='Copia para …'></div>
-					<div class='Siguiente'><input type='button' value='Anterior' data-siguiente='3'><input type='button' value='Siguiente' data-siguiente='5'></div>
+					<p>Escribe un texto para añadir sobre la imagen.</p>
+					<div class="ContenedorControl"><label for="Watermark">Sobreescribir: </label> <input type="text" id="Watermark" value="Copia para …"></div>
+					<div class="Siguiente">
+						<button class="btn atras" type="button" data-siguiente="3"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="5"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
+					</div>
 				</div>
 			</details>
-			<details id='paso5' name='paso'>
+			<details id="paso5" name="paso">
 				<summary>Guardar</summary>
 				<div>
-					<p class='centrado'><button class="btn" type="button" id='Guardar'><span>Guardar</span></button>
-					<button class="btn" type="button" id='Compartir' style='display:none'><span>Compartir</span></button></p>
-					<a id='grabar'></a>
+					<p class="centrado"><button class="btn" type="button" id="Guardar"><span>Guardar<svg viewBox='0 0 24 24' role='presentation'><path d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/></svg></span></button>
+					<button class="btn" type="button" id="Compartir" style="display:none"><span>Compartir<svg viewBox='0 0 24 24' role='presentation'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 00-3 3 3 3 0 003 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0018 16.08z'/></svg></span></button></p>
+					<a id="grabar"></a>
 				</div>
 			</details>
-			<div id='Previsualizacion'><canvas id='canvas' width='1000' height='625'></canvas></div>
+			<div id="Previsualizacion"><canvas id="canvas" width="1000" height="625"></canvas></div>
 		</section>
 
-		<aside id='FAQ' class="informacion">
+		<aside id="FAQ" class="informacion">
 			<h2>Preguntas y respuestas</h2>
 			<details>
 				<summary>¿Qué hace la página?</summary>
-				<div class='respuesta'>
+				<div class="respuesta">
 					<ol>
 						<li>Elige una foto de tu DNI. La imagen se convierte a blanco y negro y se escala a 1000px de anchura.</li>
 						<li>Ajustas si es necesario la posición de la foto para que se vea bien en la previsualización.</li>
@@ -117,11 +130,11 @@
 
 			<details>
 				<summary>¿Puedo fiarme de que no vas a hacer nada con mi DNI?</summary>
-				<div class='respuesta'>
+				<div class="respuesta">
 					<p>La página no almacena ningún dato, no se usan cookies, no se usa ningún servicio de terceros y tu DNI solo se procesa en tu movil/ordenador.</p>
 					<p>
-						El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna forma. Además <a href='https://github.com/AlfonsoML/proteccionDNI/'>está disponible completo en GitHub</a>,
-						puedes descargarte <a href='https://github.com/AlfonsoML/proteccionDNI/archive/refs/heads/main.zip'>todo el código completo</a>.<br>
+						El código fuente puedes verlo pulsando F12, no está encriptado ni minimizado de ninguna forma. Además <a href="https://github.com/AlfonsoML/proteccionDNI/">está disponible completo en GitHub</a>,
+						puedes descargarte <a href="https://github.com/AlfonsoML/proteccionDNI/archive/refs/heads/main.zip">todo el código completo</a>.<br>
 						Si quieres tener la máxima seguridad, guárdate la página en tu ordenador/móvil y así sabes que el código no se va a modificar jamás.
 					</p>
 				</div>
@@ -129,10 +142,10 @@
 
 			<details>
 				<summary>¿Por qué usarla?</summary>
-				<div class='respuesta'>
+				<div class="respuesta">
 					<p>
-						Las empresas <b>no</b> deberían tener acceso a la mayoría de datos de tu DNI. <a href='https://www.aepd.es/documento/2023-0048.pdf'>Informe de la Agencia Española de Protección de datos</a>.
-						Noticia sobre <a href='https://www.pymelegal.es/noticias/aepd/la-proteccion-de-datos-y-el-dni'>sanciones a empresas</a><br>
+						Las empresas <b>no</b> deberían tener acceso a la mayoría de datos de tu DNI. <a href="https://www.aepd.es/documento/2023-0048.pdf">Informe de la Agencia Española de Protección de datos</a>.
+						Noticia sobre <a href="https://www.pymelegal.es/noticias/aepd/la-proteccion-de-datos-y-el-dni">sanciones a empresas</a><br>
 						Si te manejas bien con la informática, tú puedes realizar los mismos pasos que se hacen en esta página.<br>
 						Si por contra no sueles usar programas de edición gráfica, esta página te facilita esas tareas.
 					</p>
@@ -142,18 +155,18 @@
 					</p>
 				</div>
 			</details>
-			<details id='OcultarParcialmente'>
+			<details id="OcultarParcialmente">
 				<summary>¿Para qué sirve "Ocultar parcialmente el DNI"?</summary>
-				<div class='respuesta'>
+				<div class="respuesta">
 					<p>
-						En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href='https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf'>orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br>
-						Puedes leer la solicitud y caso de uso en <a href='https://github.com/AlfonsoML/proteccionDNI/issues/12' target='_blank'>la solicitud</a>.
+						En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href="https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf">orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br>
+						Puedes leer la solicitud y caso de uso en <a href="https://github.com/AlfonsoML/proteccionDNI/issues/12" target="_blank">la solicitud</a>.
 					</p>
 				</div>
 			</details>
 			<details>
 				<summary>Tengo un problema, ¿cómo me pongo en contacto?</summary>
-				<div class='respuesta'>
+				<div class="respuesta">
 					<p>
 						Puedes crear un "issue" en el <a href="https://github.com/AlfonsoML/proteccionDNI/issues">GitHub del proyecto</a>, o puedes <a href="https://mastodon.social/@alfonsoml">hacerlo en Mastodon</a>. 
 					</p>
@@ -167,7 +180,7 @@
 	</main>
 
 	<footer>Esta página no recoge ningún dato. No se envían datos a ninguna parte. No se usan cookies ni servicios de terceros.</footer>
-	<script type='text/javascript' src='formatos.js'></script>
-	<script type='text/javascript' src='codigo.js'></script>
+	<script type="text/javascript" src="formatos.js"></script>
+	<script type="text/javascript" src="codigo.js"></script>
 </body>
 </html>

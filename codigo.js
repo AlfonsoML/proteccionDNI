@@ -111,27 +111,50 @@ configurarDD(document.body);
 let btnCompartir;
 configurarCompartir();
 
+activarClickConTeclado(document.getElementById('cerrar'), () => document.body.classList.remove('Editando'));
+
+
 // Abrir información de ayuda al pulsar el enlace
 document.getElementById('AyudaOcultarParcialmente')
-	.addEventListener('click', () => document.getElementById('OcultarParcialmente').open = true);
+	.addEventListener('click', () => {
+		document.body.classList.remove('Editando');
+		const info = document.getElementById('OcultarParcialmente')
+		info.open = true;
+		setTimeout(() => info.scrollIntoView({behavior: 'smooth'}), 500);
+	});
 
+function activarClickConTeclado(elmto, callback) {
+	elmto.tabIndex = '0';
+	elmto.addEventListener('keydown', function (ev) {
+		if (ev.key == 'Enter' || ev.key == ' ')
+			callback(ev.currentTarget);
+	});
+	elmto.addEventListener('click', ev =>  callback(ev.currentTarget));
+}
 
 function configurarWizard() {
-	querySelector_Array('.step > *')
+	querySelector_Array('.step-name')
+		.forEach(elmto => {
+			activarClickConTeclado(elmto, target => activarWizard(target.parentNode))
+		});
+
+	querySelector_Array('.step > .node')
 		.forEach(elmto => elmto.addEventListener('click', function (ev) {
 			activarWizard(ev.target.parentNode);
 		})
 		);
 
-	querySelector_Array('.Siguiente input')
+	querySelector_Array('.Siguiente button')
 		.forEach(btn => btn.addEventListener('click', function (ev) {
-			const siguiente = ev.target.dataset.siguiente;
+			const siguiente = ev.currentTarget.dataset.siguiente;
 			activarWizard(document.getElementById('step' + siguiente));
 		})
 		);
 }
 
 function activarWizard(step) {
+	document.body.classList.add('Editando');
+
 	const paso = step.id.substr(4); // ej: step4
 
 	const actual = document.querySelector('.in-progress');
@@ -182,12 +205,12 @@ function AsignarWatermarkPorDefecto(input) {
 Giros de 90º del DNI
 */
 function configurarGiro() {
-	const botones = querySelector_Array('input.girar');
+	const botones = querySelector_Array('.girar');
 	botones.forEach(boton => boton.addEventListener('click', girarDNI));
 }
 
 function girarDNI(ev) {
-	const boton = ev.target;
+	const boton = ev.currentTarget;
 	const giro = parseInt(boton.dataset.giro, 10);
 	rotacion += giro;
 	if (rotacion >= 360)
@@ -557,6 +580,7 @@ function GrabarImagen() {
 	} catch (e) {
 		alert('No se ha podido generar la imagen\r\n' + e);
 	}
+	document.body.classList.remove('Editando');
 }
 
 /**
@@ -671,6 +695,7 @@ function configurarCompartir() {
 			} catch(err) {
 				alert( 'Error: ' + err);
 			}
+			document.body.classList.remove('Editando');
 		});
 	}
 }
