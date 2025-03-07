@@ -160,8 +160,12 @@ function activarWizard(step) {
 	const actual = document.querySelector('.in-progress');
 	const pasoActual = actual.id.substring(4);
 
-	if (paso == pasoActual)
+	if (paso == pasoActual) {
+		if (paso == '1')
+			SelectorFichero.click();
+
 		return;
+	}
 
 	if (!imagenDNI_BN) {
 		alert('Escoje primero la imagen de tu DNI');
@@ -183,6 +187,36 @@ function activarWizard(step) {
 	while (anterior) {
 		anterior.classList.add('complete');
 		anterior = anterior.previousElementSibling;
+	}
+
+	setTimeout(() => activarElementoWizard(paso), 50);
+}
+
+/**
+	Poner el foco en el elemento adecuado al pasar en cada elemento del wizard
+*/
+function activarElementoWizard(paso) {
+	switch (paso) {
+//		case '1':
+//			SelectorFichero.click();
+//			break;
+
+		case '2':
+			Zoom.focus();
+			break;
+
+		case '3':
+			Formato.focus();
+			break;
+
+		case '4':
+			Watermark.focus();
+			break;
+
+		case '5':
+			botonGrabar.focus();
+			break;
+
 	}
 }
 
