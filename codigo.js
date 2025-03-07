@@ -46,7 +46,6 @@ for (const [key, value] of Object.entries(FormatosDnis)) {
 	opciones.push(`<option value='${key}'>${value.Nombre}</option>`);
 }
 Formato.innerHTML = opciones.join('');
-Previsualizacion.style.display = 'none';
 
 // asignar escucha de eventos
 SelectorFichero.addEventListener('change', function (e) {
