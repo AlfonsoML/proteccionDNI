@@ -119,7 +119,7 @@ document.getElementById('AyudaOcultarParcialmente')
 		document.body.classList.remove('Editando');
 		const info = document.getElementById('OcultarParcialmente')
 		info.open = true;
-		setTimeout(() => info.scrollIntoView({behavior: 'smooth'}), 500);
+		setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
 	});
 
 function activarClickConTeclado(elmto, callback) {
@@ -128,7 +128,7 @@ function activarClickConTeclado(elmto, callback) {
 		if (ev.key == 'Enter' || ev.key == ' ')
 			callback(ev.currentTarget);
 	});
-	elmto.addEventListener('click', ev =>  callback(ev.currentTarget));
+	elmto.addEventListener('click', ev => callback(ev.currentTarget));
 }
 
 function configurarWizard() {
@@ -196,9 +196,9 @@ function activarWizard(step) {
 */
 function activarElementoWizard(paso) {
 	switch (paso) {
-//		case '1':
-//			SelectorFichero.click();
-//			break;
+		//		case '1':
+		//			SelectorFichero.click();
+		//			break;
 
 		case '2':
 			Zoom.focus();
@@ -290,7 +290,7 @@ function MostrarImagen(file) {
 
 		DibujarMarcaAgua();
 	}
-	img.onerror = function(e) {
+	img.onerror = function (e) {
 		console.log(e);
 		alert('Por favor, escoge una imagen válida');
 	}
@@ -699,36 +699,44 @@ function hasFiles(ev) {
 function configurarCompartir() {
 	btnCompartir = document.getElementById('Compartir');
 
-	if (typeof navigator.share != 'undefined') {
-		btnCompartir.style.display = 'block';
-		btnCompartir.addEventListener('click', async () => {
+	if (typeof navigator.share == 'undefined')
+		return;
 
-			let dataUrl;
-			try {
-				dataUrl = canvaComposicion.toDataURL('image/jpeg', 0.8);
-			} catch (e) {
-				alert('No se ha podido generar la imagen\r\n' + e);
-			}
+	// Verificar si el navegador soporta compartir ficheros (Firefox no lo tiene implementado)
+	if (!navigator.canShare({
+		title: 'Copia de mi DNI',
+		files: [new File([''], 'test.jpg', { type: 'image/jpeg' })],
+	}))
+		return;
 
-			const blob = await (await fetch(dataUrl)).blob();
-			const file = new File(
-				[blob],
-				GenerarNombreFichero(),
-				{
-					type: 'image/jpeg',
-				}
-			);
-			const shareData = {
-				title: 'Copia de mi DNI',
-				text: 'Adjunto la copia de mi DNI para su uso exclusivo',
-				files: [file],
+	btnCompartir.style.display = 'block';
+	btnCompartir.addEventListener('click', async () => {
+		let dataUrl;
+		try {
+			dataUrl = canvaComposicion.toDataURL('image/jpeg', 0.8);
+		} catch (e) {
+			alert('No se ha podido generar la imagen\r\n' + e);
+		}
+
+		const blob = await (await fetch(dataUrl)).blob();
+		const file = new File(
+			[blob],
+			GenerarNombreFichero(),
+			{
+				type: 'image/jpeg',
 			}
-			try {
-				await navigator.share(shareData)
-			} catch(err) {
-				alert( 'Error: ' + err);
-			}
-			document.body.classList.remove('Editando');
-		});
-	}
+		);
+		const shareData = {
+			title: 'Copia de mi DNI',
+			text: 'Adjunto la copia de mi DNI para su uso exclusivo',
+			files: [file],
+		}
+		try {
+			await navigator.share(shareData)
+		} catch (err) {
+			alert('Error: ' + err);
+		}
+		document.body.classList.remove('Editando');
+	});
+
 }

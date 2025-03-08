@@ -4,7 +4,6 @@
 	--mainColor: #07c;
 	--baseColor: light-dark(#555, currentColor);
 	--colorActivo: light-dark(#FFF, #000);
-
 	--colorBoton: light-dark(currentColor, #333);
 	--colorFondoBoton: light-dark(#EFEFEF, #EFEFEF);
 	--colorFondoBotonHover: light-dark(#F5F5F5, #C0C0C0);
@@ -21,7 +20,7 @@ body {
 }
 
 p {
-    line-height: 1.4;
+	line-height: 1.4;
 }
 
 main {
@@ -87,7 +86,7 @@ select {
 }
 
 #Watermark {
-    padding: 3px 5px;
+	padding: 3px 5px;
 }
 
 @media (max-width: 560px) {
@@ -105,7 +104,7 @@ select {
 }
 
 #ControlesGiro {
-    margin-top: 1em;
+	margin-top: 1em;
 }
 
 .centrado input {
@@ -157,14 +156,15 @@ canvas {
 }
 
 details ol {
-    padding-left: 1.2em;
+	padding-left: 1.2em;
 }
+
 details li {
-    margin-bottom: 0.4em;
+	margin-bottom: 0.4em;
 }
 
 details:target {
-    box-shadow: 1px 1px 2px 2px rgb(0 0 0 / 23%);
+	box-shadow: 1px 1px 2px 2px rgb(0 0 0 / 23%);
 }
 
 .respuesta {
@@ -266,72 +266,59 @@ footer {
 	opacity: .9;
 }
 
-
-
 .btn {
-  position: relative;
-
-  display: block;
-  padding: 0;
-
-  overflow: hidden;
-
-  border-width: 0;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-  
-  color: var(--colorBoton);
-  background-color: var(--colorFondoBoton);
-
-  transition: background-color .3s;
+	position: relative;
+	display: block;
+	padding: 0;
+	overflow: hidden;
+	border-width: 0;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+	color: var(--colorBoton);
+	background-color: var(--colorFondoBoton);
+	transition: background-color .3s;
 }
 
 .btn:hover, .btn:focus {
-  background-color: var(--colorFondoBotonHover);
+	background-color: var(--colorFondoBotonHover);
 }
 
 .btn > * {
-  position: relative;
+	position: relative;
 }
 
 .btn span {
-  display: block;
-  padding: 12px 24px;
+	display: block;
+	padding: 12px 24px;
 }
 
 .btn:before {
-  content: "";
-  
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  
-  display: block;
-  width: 0;
-  padding-top: 0;
-    
-  border-radius: 100%;
-  
-  background-color: rgba(16 120 146 / .3);
-  
-  transform: translate(-50%, -50%);
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: block;
+	width: 0;
+	padding-top: 0;
+	border-radius: 100%;
+	background-color: rgba(16 120 146 / .3);
+	transform: translate(-50%, -50%);
 }
 
 .btn:active:before {
-  width: 120%;
-  padding-top: 120%;
-  
-  transition: width .2s ease-out, padding-top .2s ease-out;
+	width: 120%;
+	padding-top: 120%;
+	transition: width .2s ease-out, padding-top .2s ease-out;
 }
 
 .btn svg {
 	aspect-ratio: 1;
 	fill: currentColor;
-    width: 1.2em;
+	width: 1.2em;
 	margin-left: 10px;
-    vertical-align: middle;
-    transform: translateY(-1px);
- }
+	vertical-align: middle;
+	transform: translateY(-1px);
+}
 
 .atras svg {
 	margin-left: 0;
@@ -339,41 +326,42 @@ footer {
 }
 
 .Siguiente .btn span {
-    padding: 6px 12px;
+	padding: 6px 12px;
 }
 
 #cerrar {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    margin: 0;
-    padding: 4px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	margin: 0;
+	padding: 4px;
 	line-height: 0;
-    border-radius: 50%;
+	border-radius: 50%;
 	background: #fff;
-    color: #333;
-    cursor: pointer;
-    transition: all .2sease-out 0s;
-    transition-property: background-color, color;
-    z-index: 1;
+	color: #333;
+	cursor: pointer;
+	transition: all .2s ease-out 0s;
+	transition-property: background-color, color;
+	z-index: 1;
 	display: none;
 }
 
 #cerrar:hover {
-    color: #fff;
-    background: #666;
+	color: #fff;
+	background: #666;
 }
+
 #cerrar svg {
 	stroke: currentColor;
-    width: 12px;
-    height: 12px;
-    stroke-width: 1.3px;
+	width: 12px;
+	height: 12px;
+	stroke-width: 1.3px;
 }
 
 .informacion {
-  transition: height 0.25s, display 0.25s;
-  transition-behavior: allow-discrete; /* Note: be sure to write this after the shorthand */
-  overflow: hidden;
+	transition: height 0.25s, display 0.25s;
+	transition-behavior: allow-discrete; /* Note: be sure to write this after the shorthand */
+	overflow: hidden;
 }
 
 .Editando .informacion {
@@ -385,8 +373,8 @@ footer {
 }
 
 .Editando #pasos {
-    position: relative;
-    padding-top: 40px;
+	position: relative;
+	padding-top: 40px;
 }
 
 .Editando #cerrar {
