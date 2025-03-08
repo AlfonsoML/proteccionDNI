@@ -231,7 +231,9 @@ function configurarCrearComposicion() {
 
 function AsignarWatermarkPorDefecto(input) {
 	const hoy = new Date();
-	input.value = `Copia ${hoy.toISOString().substring(0, 10)} para …`;
+	const sp = new URLSearchParams(location.search)
+	const sufijo = sp.has('para') ? sp.get('para') : '…';
+	input.value = `Copia ${hoy.toISOString().substring(0, 10)} para ${sufijo}`;
 }
 
 /**
