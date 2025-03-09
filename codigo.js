@@ -112,6 +112,7 @@ configurarCompartir();
 
 activarClickConTeclado(document.getElementById('cerrar'), () => document.body.classList.remove('Editando'));
 
+initGestures();
 
 // Abrir información de ayuda al pulsar el enlace
 document.getElementById('AyudaOcultarParcialmente')
@@ -122,6 +123,18 @@ document.getElementById('AyudaOcultarParcialmente')
 		setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
 	});
 
+
+//////////////////////////////////////
+//
+// Definición de funciones
+//
+//////////////////////////////////////
+
+/**
+ * Detecta click o que activamos un elemento mediante el teclado con espacio o la tecla de enteer 
+ * @param {any} elmto
+ * @param {any} callback
+ */
 function activarClickConTeclado(elmto, callback) {
 	elmto.tabIndex = '0';
 	elmto.addEventListener('keydown', function (ev) {
@@ -408,7 +421,7 @@ const procesadorDNI = createWorker(() => {
 		const img = e.data.bitmap;
 
 		const canvas = ReducirAnchura(PonerHorizontal(img));
-		
+
 		ConvertirBN(canvas);
 
 		const bitmap = canvas.transferToImageBitmap();
@@ -794,4 +807,99 @@ function configurarCompartir() {
 		document.body.classList.remove('Editando');
 	});
 
+}
+
+/*
+Touch gestures https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Pinch_zoom_gestures
+*/
+
+// Global vars to cache event state
+const evCache = [];
+
+let distanciaInicial;
+let zoomInicial;
+
+/**
+ * Calcula la distancia actual entre los dos dedos
+ * @returns
+ */
+function calcularDistancia() {
+	const toque0 = evCache[0];
+	const toque1 = evCache[1];
+
+	const dx = toque1.clientX - toque0.clientX;
+	const dy = toque1.clientY - toque0.clientY;
+	return Math.sqrt(dx * dx + dy * dy);
+}
+
+function initGestures() {
+	// Install event handlers for the pointer target
+	const el = Previsualizacion;
+	el.onpointerdown = pointerdownHandler;
+	el.onpointermove = pointermoveHandler;
+
+	// Use same handler for pointer{up,cancel,out,leave} events since
+	// the semantics for these events - in this app - are the same.
+	el.onpointerup = pointerupHandler;
+	el.onpointercancel = pointerupHandler;
+	el.onpointerout = pointerupHandler;
+	el.onpointerleave = pointerupHandler;
+}
+
+function pointerdownHandler(ev) {
+	// The pointerdown event signals the start of a touch interaction.
+	// This event is cached to support 2-finger gestures
+	evCache.push(ev);
+
+	if (evCache.length == 2) {
+		// registrar datos iniciales para cambio de zoom
+		distanciaInicial = calcularDistancia();
+		zoomInicial = Zoom.valueAsNumber;
+	}
+}
+
+function pointermoveHandler(ev) {
+	// This function implements a 2-pointer horizontal pinch/zoom gesture.
+
+	// Find this event in the cache and update its record with this event
+	const index = evCache.findIndex(
+		(cachedEv) => cachedEv.pointerId === ev.pointerId,
+	);
+	const evAnterior = evCache[index];
+	evCache[index] = ev;
+
+	// If two pointers are down, check for pinch gestures
+	if (evCache.length === 2) {
+		var cambioDistancia = calcularDistancia() - distanciaInicial;
+		ActualizarValorInput(Zoom, zoomInicial + cambioDistancia * 0.01);
+	}
+
+	// desplazamiento Horizontal/Vertical
+	if (evCache.length == 1 && evAnterior) {
+		CambiarInputPorDelta(Horizontal, ev.clientX - evAnterior.clientX);
+
+		CambiarInputPorDelta(Vertical, ev.clientY - evAnterior.clientY);
+	}
+}
+
+function pointerupHandler(ev) {
+	// Remove this pointer from the cache 
+	const index = evCache.findIndex(
+		(cachedEv) => cachedEv.pointerId === ev.pointerId,
+	);
+	evCache.splice(index, 1);
+}
+
+function CambiarInputPorDelta(input, delta) {
+	if (Math.abs(delta) < 1)
+		return;
+
+	const valor = input.valueAsNumber + delta;
+	ActualizarValorInput(input, valor);
+}
+
+function ActualizarValorInput(input, value) {
+	input.value = value;
+	input.dispatchEvent(new Event('input'));
+	input.dispatchEvent(new Event('change'));
 }

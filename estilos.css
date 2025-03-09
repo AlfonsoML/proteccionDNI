@@ -135,12 +135,14 @@ canvas {
 	aspect-ratio: 1000 / 625;
 	position: relative;
 	margin-bottom: 10px;
+	touch-action: none;
 }
 
 #Previsualizacion canvas {
 	position: absolute;
 	left: 0;
 	top: 0;
+	touch-action: none;
 }
 
 #canvas {
