@@ -114,6 +114,8 @@ activarClickConTeclado(document.getElementById('cerrar'), () => document.body.cl
 
 initGestures();
 
+configurarPantallaCompleta();
+
 // Abrir información de ayuda al pulsar el enlace
 document.getElementById('AyudaOcultarParcialmente')
 	.addEventListener('click', () => {
@@ -130,6 +132,26 @@ document.getElementById('AyudaOcultarParcialmente')
 //
 //////////////////////////////////////
 
+/**
+Permitir ver el DNI a pantalla completa para facilitar ajustes de zoom y posición
+*/
+function configurarPantallaCompleta() {
+	activarClickConTeclado(document.getElementById('Expandir'), () => {
+		// añadimos una clase para ocultar el resto de elementos de la página en cualquier caso
+		document.body.classList.add('EnZoom');
+
+		// y le pedimos al usuario a ver si nos permite usar la pantalla completa real
+		if (Previsualizacion.requestFullscreen)
+			Previsualizacion.requestFullscreen();
+	});
+
+	activarClickConTeclado(document.getElementById('Colapsar'), () => {
+		document.body.classList.remove('EnZoom');
+
+		if (document.fullscreenElement)
+			document.exitFullscreen();
+	});
+}
 /**
  * Detecta click o que activamos un elemento mediante el teclado con espacio o la tecla de enteer 
  * @param {any} elmto

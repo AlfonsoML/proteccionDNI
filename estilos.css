@@ -382,3 +382,57 @@ footer {
 .Editando #cerrar {
 	display: block;
 }
+
+.IconoAccion {
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	background-color: var(--colorFondoBoton);
+	color: var(--colorBoton);
+	line-height: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.IconoAccion svg {
+	width: 2em;
+	height: 2em;
+	fill: currentColor;
+}
+
+#Colapsar {
+	display: none;
+}
+
+.EnZoom #Colapsar {
+	display: block;
+}
+
+.EnZoom #Expandir {
+	display: none;
+}
+
+.EnZoom #Previsualizacion {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	width: 100%;
+}
+
+.EnZoom main {
+	max-width: none;
+}
+
+.EnZoom canvas {
+	width: 100%;
+}
+
+.EnZoom footer {
+	display: none;
+}
+
+.EnZoom main {
+	box-shadow: none;
+	padding: 0;
+}
