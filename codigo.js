@@ -141,8 +141,8 @@ function configurarPantallaCompleta() {
 		document.body.classList.add('EnZoom');
 
 		// y le pedimos al usuario a ver si nos permite usar la pantalla completa real
-		if (Previsualizacion.requestFullscreen)
-			Previsualizacion.requestFullscreen();
+		if (document.body.requestFullscreen)
+			document.body.requestFullscreen();
 	});
 
 	activarClickConTeclado(document.getElementById('Colapsar'), () => {
