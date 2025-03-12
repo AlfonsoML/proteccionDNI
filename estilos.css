@@ -414,10 +414,10 @@ footer {
 }
 
 .EnZoom #Previsualizacion {
-	position: absolute;
-	top: 0;
 	z-index: 1;
-	width: 100%;
+/*	width: 100%;*/
+	max-height: 100vh;
+	margin: 0 auto;
 }
 
 .EnZoom main {
@@ -433,6 +433,27 @@ footer {
 }
 
 .EnZoom main {
-	box-shadow: none;
 	padding: 0;
+	width: auto;
+}
+
+.EnZoom details {
+  display: none;
+}
+
+.EnZoom .wizard-progress {
+  display: none;
+}
+
+.EnZoom #pasos {
+  padding: 0;
+}
+
+.EnZoom #cerrar {
+  display: none;
+}
+
+body.EnZoom {
+  display: grid;
+  justify-content: center;
 }
