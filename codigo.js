@@ -841,6 +841,9 @@ const evCache = [];
 let distanciaInicial;
 let zoomInicial;
 
+let puntoInicial;
+let desplazamientoInicial;
+
 /**
  * Calcula la distancia actual entre los dos dedos
  * @returns
@@ -878,6 +881,19 @@ function pointerdownHandler(ev) {
 		distanciaInicial = calcularDistancia();
 		zoomInicial = Zoom.valueAsNumber;
 	}
+	if (evCache.length == 1)
+		registrarUnPunto(ev);
+}
+
+function registrarUnPunto(ev) {
+	puntoInicial = {
+		x: ev.clientX,
+		y: ev.clientY,
+	}
+	desplazamientoInicial = {
+		x: Horizontal.valueAsNumber,
+		y: Vertical.valueAsNumber,
+	};
 }
 
 function pointermoveHandler(ev) {
@@ -887,7 +903,6 @@ function pointermoveHandler(ev) {
 	const index = evCache.findIndex(
 		(cachedEv) => cachedEv.pointerId === ev.pointerId,
 	);
-	const evAnterior = evCache[index];
 	evCache[index] = ev;
 
 	// If two pointers are down, check for pinch gestures
@@ -897,10 +912,10 @@ function pointermoveHandler(ev) {
 	}
 
 	// desplazamiento Horizontal/Vertical
-	if (evCache.length == 1 && evAnterior) {
-		CambiarInputPorDelta(Horizontal, ev.clientX - evAnterior.clientX);
+	if (evCache.length == 1) {
+		ActualizarValorInput(Horizontal, desplazamientoInicial.x + ev.clientX - puntoInicial.x);
 
-		CambiarInputPorDelta(Vertical, ev.clientY - evAnterior.clientY);
+		ActualizarValorInput(Vertical, desplazamientoInicial.y + ev.clientY - puntoInicial.y);
 	}
 }
 
@@ -910,14 +925,9 @@ function pointerupHandler(ev) {
 		(cachedEv) => cachedEv.pointerId === ev.pointerId,
 	);
 	evCache.splice(index, 1);
-}
 
-function CambiarInputPorDelta(input, delta) {
-	if (Math.abs(delta) < 1)
-		return;
-
-	const valor = input.valueAsNumber + delta;
-	ActualizarValorInput(input, valor);
+	if (evCache.length == 1)
+		registrarUnPunto(evCache[0]);
 }
 
 function ActualizarValorInput(input, value) {
