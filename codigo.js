@@ -117,14 +117,15 @@ initGestures();
 configurarPantallaCompleta();
 
 // Abrir información de ayuda al pulsar el enlace
-document.getElementById('AyudaOcultarParcialmente')
-	.addEventListener('click', () => {
-		document.body.classList.remove('Editando');
-		const info = document.getElementById('OcultarParcialmente')
-		info.open = true;
-		setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
+querySelector_Array('.AbrirInfo')
+	.forEach(elmto => {
+		activarClickConTeclado(elmto, (target) => {
+			document.body.classList.remove('Editando');
+			const info = document.querySelector(target.getAttribute('href'));
+			info.open = true;
+			setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
+		});
 	});
-
 
 //////////////////////////////////////
 //
