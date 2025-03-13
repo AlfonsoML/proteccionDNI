@@ -558,13 +558,21 @@ function DibujarMascara() {
 	const ctx = canvasMascara.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = 'black';
-	bloques.forEach(bloque => ctx.fillRect(bloque.x, bloque.y, bloque.w, bloque.h));
+	bloques.forEach(bloque => {
+		ctx.beginPath();
+		ctx.roundRect(bloque.x, bloque.y, bloque.w, bloque.h, 5);
+		ctx.fill();
+	});
 
 	if (EnmascararDni.checked) {
 		const bloquesDni = FormatosDnis[Formato.value].MascarasDni;
 		if (bloquesDni) {
 			ctx.fillStyle = 'white';
-			bloquesDni.forEach(bloque => ctx.fillRect(bloque.x, bloque.y, bloque.w, bloque.h));
+			bloquesDni.forEach(bloque => {
+				ctx.beginPath();
+				ctx.roundRect(bloque.x, bloque.y, bloque.w, bloque.h, 5);
+				ctx.fill();
+			});
 
 			let bloque = bloquesDni[0]
 			if (bloque.h == 50)
