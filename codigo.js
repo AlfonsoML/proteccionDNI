@@ -594,6 +594,9 @@ function DibujarMarcaAgua() {
 	const ctx = canvasWatermark.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const texto = Watermark.value;
+	// Si ha borrado todo el texto, no escribir nada
+	if (!texto)
+		return;
 
 	const marcas = FormatosDnis[Formato.value].Watermarks;
 	marcas.forEach(marca => {
