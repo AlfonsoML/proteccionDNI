@@ -237,11 +237,11 @@ function activarElementoWizard(paso) {
 		//			break;
 
 		case '2':
-			Zoom.focus();
+			Formato.focus();
 			break;
 
 		case '3':
-			Formato.focus();
+			Zoom.focus();
 			break;
 
 		case '4':

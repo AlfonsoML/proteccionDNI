@@ -25,18 +25,18 @@
 			Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.</p>
 		</section>
 		<section id="pasos">
-			<a id="cerrar" title="Cerrar progreso"><svg viewBox='0 0 12 12' role='presentation'><path d='M1,1 l 10,10 M1,11 l 10,-10'/></svg></a>
+			<a id="cerrar" title="Cerrar progreso"><svg viewBox='0 0 12 12' role='presentation'><path d='M1,1 l 10,10 M1,11 l 10,-10' /></svg></a>
 			<div class="wizard-progress">
 				<div class="step in-progress" id="step1">
 					<span class="step-name">Foto</span>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step2">
-					<span class="step-name">Posición</span>
+					<span class="step-name">Tipo</span>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step3">
-					<span class="step-name">Tipo</span>
+					<span class="step-name">Posición</span>
 					<div class="node"></div>
 				</div>
 				<div class="step" id="step4">
@@ -57,6 +57,20 @@
 				</div>
 			</details>
 			<details id="paso2" name="paso">
+				<summary>Tipo de foto</summary>
+				<div>
+					<p>
+						Elige si estás usando la foto delantera o trasera del DNI; puedes ajustar el tamaño y posición del DNI a continuación. 						
+					</p>
+					<div><label for="Formato">Elige la máscara a usar</label> <select id="Formato"></select></div>
+					<div id="DivMascaraDni" style="display:none"><label for="EnmascararDni">Ocultar parcialmente el DNI</label> <span><input type="checkbox" id="EnmascararDni"> <a href="#OcultarParcialmente" id="AyudaOcultarParcialmente" class="AbrirInfo">¿qué es esto?</a></span></div>
+					<div class="Siguiente">
+						<button class="btn atras" type="button" data-siguiente="1"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="3"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
+					</div>
+				</div>
+			</details>
+			<details id="paso3" name="paso">
 				<summary>Posición</summary>
 				<div>
 					<p>Ajusta la orientación y posición para que el DNI se vea correctamente.</p>
@@ -71,23 +85,8 @@
 						<div class="ContenedorControl"><label for="Vertical">Desp. Vertical</label> <input type="range" min="-200" max="200" id="Vertical" value="0"></div>
 					</div>
 					<div class="Siguiente">
-						<button class="btn atras" type="button" data-siguiente="1"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="3"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
-					</div>
-				</div>
-			</details>
-			<details id="paso3" name="paso">
-				<summary>Tipo de foto</summary>
-				<div>
-					<p>
-						Elige si estás usando la foto delantera o trasera del DNI y comprueba que se están tapando los datos privados.
-						Puede que quieras volver al paso anterior para ajustar mejor la posición.
-					</p>
-					<div><label for="Formato">Elige la máscara a usar</label> <select id="Formato"></select></div>
-					<div id="DivMascaraDni" style="display:none"><label for="EnmascararDni">Ocultar parcialmente el DNI</label> <span><input type="checkbox" id="EnmascararDni"> <a href="#OcultarParcialmente" id="AyudaOcultarParcialmente" class="AbrirInfo">¿qué es esto?</a></span></div>
-					<div class="Siguiente">
-						<button class="btn atras" type="button" data-siguiente="2"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="4"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
+						<button class="btn atras" type="button" data-siguiente="2"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="4"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
 					</div>
 				</div>
 			</details>
@@ -97,8 +96,8 @@
 					<p>Escribe un texto para añadir sobre la imagen.</p>
 					<div class="ContenedorControl"><label for="Watermark">Sobreescribir: </label> <input type="text" id="Watermark" value="Copia para …"></div>
 					<div class="Siguiente">
-						<button class="btn atras" type="button" data-siguiente="3"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="5"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/></svg></span></button>	
+						<button class="btn atras" type="button" data-siguiente="3"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
+						<button class="btn adelante" type="button" data-siguiente="5"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
 					</div>
 				</div>
 			</details>
@@ -106,14 +105,17 @@
 				<summary>Guardar</summary>
 				<div>
 					<p>Elige ahora si quieres guardar la imagen o directamente compartirla con una app (si tu navegador lo soporta).</p>
-					<p class="centrado"><button class="btn" type="button" id="Guardar"><span>Guardar<svg viewBox='0 0 24 24' role='presentation'><path d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/></svg></span></button>
-					<button class="btn" type="button" id="Compartir" style="display:none"><span>Compartir<svg viewBox='0 0 24 24' role='presentation'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 00-3 3 3 3 0 003 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0018 16.08z'/></svg></span></button></p>
+					<p class="centrado">
+						<button class="btn" type="button" id="Guardar"><span>Guardar<svg viewBox='0 0 24 24' role='presentation'><path d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z' /></svg></span></button>
+						<button class="btn" type="button" id="Compartir" style="display:none"><span>Compartir<svg viewBox='0 0 24 24' role='presentation'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 00-3 3 3 3 0 003 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0018 16.08z' /></svg></span></button>
+					</p>
 					<a id="grabar"></a>
 				</div>
 			</details>
-			<div id="Previsualizacion" style="display: none"><canvas id="canvas" width="1000" height="625"></canvas>
-				<div id="Expandir" class="IconoAccion" title="Ampliar a pantalla completa"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5m3 9h2v5h-5v-2h3v-3m-7 3v2H5v-5h2v3h3Z"/></svg></div>
-				<div id="Colapsar" class="IconoAccion" title="Volver a vista normal"><svg viewBox="0 0 24 24"><path d="M14 14h5v2h-3v3h-2v-5m-9 0h5v5H8v-3H5v-2m3-9h2v5H5V8h3V5m11 3v2h-5V5h2v3h3Z"/></svg></div>		
+			<div id="Previsualizacion" style="display: none">
+				<canvas id="canvas" width="1000" height="625"></canvas>
+				<div id="Expandir" class="IconoAccion" title="Ampliar a pantalla completa"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5m3 9h2v5h-5v-2h3v-3m-7 3v2H5v-5h2v3h3Z" /></svg></div>
+				<div id="Colapsar" class="IconoAccion" title="Volver a vista normal"><svg viewBox="0 0 24 24"><path d="M14 14h5v2h-3v3h-2v-5m-9 0h5v5H8v-3H5v-2m3-9h2v5H5V8h3V5m11 3v2h-5V5h2v3h3Z" /></svg></div>
 			</div>
 		</section>
 
@@ -172,7 +174,7 @@
 				<summary>¿Para qué sirve "Ocultar parcialmente el DNI"?</summary>
 				<div class="respuesta">
 					<p>
-						En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href="https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf" target="_blank">orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br>
+						Seguramente no necesitarás activar esta opción. En el número de DNI se ocultan las 3 primeras y 2 últimas cifras según la <a href="https://www.aepd.es/sites/default/files/2019-09/orientaciones-da7.pdf" target="_blank">orientación para la aplicación provisional de la disposición adicional septima de la LOPDGDD</a><br>
 						Puedes leer la solicitud y caso de uso en <a href="https://github.com/AlfonsoML/proteccionDNI/issues/12" target="_blank">la solicitud</a>.
 					</p>
 				</div>
