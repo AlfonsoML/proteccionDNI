@@ -29,7 +29,7 @@ function CambiarImagenTest(ev) {
 	const re = /ejemplos\/(.*)\.webp/;
 	const match = re.exec(src);
 	if (match) {
-		Formato.value = match[1];
+		ActualizarValorInput(Formato, match[1]);
 	}
 
 	if (nombreFichero.startsWith('file:')) {
