@@ -113,7 +113,7 @@ configurarDD(document.body);
 let btnCompartir;
 configurarCompartir();
 
-activarClickConTeclado(document.getElementById('cerrar'), () => document.body.classList.remove('Editando'));
+activarClickConTeclado(document.getElementById('cerrar'), () => DesactivarModoEdicion());
 
 initGestures();
 
@@ -123,11 +123,19 @@ configurarPantallaCompleta();
 querySelector_Array('.AbrirInfo')
 	.forEach(elmto => {
 		activarClickConTeclado(elmto, (target) => {
-			document.body.classList.remove('Editando');
+			DesactivarModoEdicion();
 			const info = document.querySelector(target.getAttribute('href'));
 			info.open = true;
 			setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
 		});
+	});
+
+// desactivar modo edición al pulsar Esc
+document.body
+	.addEventListener('keydown', e => {
+		if (e.key == 'Escape') {
+			DesactivarModoEdicion();
+		}
 	});
 
 //////////////////////////////////////
@@ -135,6 +143,14 @@ querySelector_Array('.AbrirInfo')
 // Definición de funciones
 //
 //////////////////////////////////////
+
+function ActivarModoEdicion() {
+	document.body.classList.add('Editando');
+}
+
+function DesactivarModoEdicion() {
+	document.body.classList.remove('Editando');
+}
 
 /**
 Permitir ver el DNI a pantalla completa para facilitar ajustes de zoom y posición
@@ -191,7 +207,7 @@ function configurarWizard() {
 }
 
 function activarWizard(step) {
-	document.body.classList.add('Editando');
+	ActivarModoEdicion();
 
 	const paso = step.id.substr(4); // ej: step4
 
@@ -721,7 +737,7 @@ function GrabarImagen() {
 	} catch (e) {
 		alert('No se ha podido generar la imagen\r\n' + e);
 	}
-	document.body.classList.remove('Editando');
+	DesactivarModoEdicion();
 }
 
 /**
@@ -844,7 +860,7 @@ function configurarCompartir() {
 		} catch (err) {
 			alert('Error: ' + err);
 		}
-		document.body.classList.remove('Editando');
+		DesactivarModoEdicion();
 	});
 
 }
