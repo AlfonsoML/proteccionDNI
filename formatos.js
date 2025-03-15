@@ -19,7 +19,7 @@ const FormatosDnis = {
 			{ x: 790, y: 320, w: 180, h: 40 },// Fecha Nacimiento
 			{ x: 380, y: 380, w: 400, h: 35 }, // emision, validez
 			{ x: 820, y: 420, w: 140, h: 40 },// 
-			{ x: 380, y: 490, w: 400, h: 80 }, // Firma
+			{ x: 380, y: 480, w: 400, h: 90 }, // Firma
 			{ x: 780, y: 510, w: 200, h: 60 },
 		],
 		MascarasDni: [
@@ -61,7 +61,7 @@ const FormatosDnis = {
 			{ x: 380, y: 380, w: 240, h: 35 }, // Fecha Nacimiento
 			{ x: 780, y: 370, w: 160, h: 45 },
 			{ x: 580, y: 445, w: 200, h: 35 }, // Validez
-			{ x: 380, y: 500, w: 400, h: 100 }, // Firma
+			{ x: 380, y: 480, w: 400, h: 120 }, // Firma
 			{ x: 790, y: 525, w: 210, h: 75 },
 		],
 		MascarasDni: [
