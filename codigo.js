@@ -380,6 +380,14 @@ function PrepararDNI(img) {
 		function handler(e) {
 			imagenDNI_BN = e.data;
 
+			// Vamos a intentar calcular si puede interesar hacer zoom y desplazar
+			const altoEscalado = canvas.width * imagenDNI_BN.height / imagenDNI_BN.width;
+
+			if (altoEscalado < canvas.height) {
+				Zoom.value = canvas.height / altoEscalado;
+				Horizontal.value = (canvas.width - canvas.width * Zoom.value) / 2;
+			}
+
 			resolve();
 		}
 
