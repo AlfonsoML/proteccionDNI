@@ -87,6 +87,7 @@ document.querySelector('#paso1 p')
 [Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
 	control.addEventListener('input', function (e) {
 		RedibujarDNI();
+		AjustarVisibilidadResetear();
 	});
 });
 
@@ -137,6 +138,13 @@ document.body
 			DesactivarModoEdicion();
 		}
 	});
+
+const Resetear = document.getElementById('Resetear');
+activarClickConTeclado(Resetear, () => {
+	ResetearControles();
+	RedibujarDNI();
+	AjustarVisibilidadResetear();
+});
 
 //////////////////////////////////////
 //
@@ -315,6 +323,7 @@ function girarDNI(ev) {
 		rotacion += 360;
 
 	RedibujarDNI();
+	AjustarVisibilidadResetear();
 }
 
 /** 
@@ -342,6 +351,7 @@ function MostrarImagen(file) {
 		URL.revokeObjectURL(img.src)
 
 		ResetearControles();
+		AjustarVisibilidadResetear();
 
 		PrepararDNI(img)
 			.then(() => {
@@ -486,6 +496,13 @@ function ResetearControles() {
 	[Rotacion, Horizontal, Vertical, Zoom].forEach(function (control) {
 		control.value = control.defaultValue;
 	});
+}
+
+function AjustarVisibilidadResetear() {
+	const Movido = rotacion != 0 || [Rotacion, Horizontal, Vertical, Zoom]
+		.some((control) => control.value != control.defaultValue);
+
+	Resetear.style.display = Movido ? '' : 'none';
 }
 
 // Saber si tenemos pendiente un redibujo del DNI para no saturar la CPU/GPU
