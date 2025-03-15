@@ -34,6 +34,8 @@ const Vertical = document.getElementById('Vertical');
 const Zoom = document.getElementById('Zoom');
 const EnmascararDni = document.getElementById('EnmascararDni');
 const DivMascaraDni = document.getElementById('DivMascaraDni');
+const NumeroSoporte = document.getElementById('NumeroSoporte');
+const DivNumeroSoporte = document.getElementById('DivNumeroSoporte');
 
 let nombreFichero = '';
 
@@ -68,12 +70,13 @@ document.querySelector('#paso1 p')
 		SelectorFichero.click();
 	});
 
-[Formato, EnmascararDni].forEach(function (control) {
+[Formato, EnmascararDni, NumeroSoporte].forEach(function (control) {
 	control.addEventListener('change', function (e) {
 		if (e.target == Formato) {
 			// ajustar visibilidad del checkbox de enmascarar DNI dependiendo de si el formato muestra el DNI o no
 			const formato = FormatosDnis[Formato.value];
 			DivMascaraDni.style.display = formato.MascarasDni ? '' : 'none';
+			DivNumeroSoporte.style.display = formato.NumeroSoporte ? '' : 'none';
 		}
 
 		DibujarMascara();
@@ -553,26 +556,29 @@ function RedibujarEnDNIEnRAF() {
 
 /** Ocultar las partes de la imagen que no hacen ninguna falta, dependerá del formato de DNI y el lado */
 function DibujarMascara() {
-	const bloques = FormatosDnis[Formato.value].Mascaras;
+	function DibujarRectangulo(bloque) {
+		ctx.beginPath();
+		ctx.roundRect(bloque.x, bloque.y, bloque.w, bloque.h, 5);
+		ctx.fill();
+	}
+	const DatosFormato = FormatosDnis[Formato.value];
+	const bloques = DatosFormato.Mascaras;
 
 	const ctx = canvasMascara.getContext('2d');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = 'black';
-	bloques.forEach(bloque => {
-		ctx.beginPath();
-		ctx.roundRect(bloque.x, bloque.y, bloque.w, bloque.h, 5);
-		ctx.fill();
-	});
+	bloques.forEach(DibujarRectangulo);
 
+	if (NumeroSoporte.checked) {
+		const bloque = DatosFormato.NumeroSoporte;
+		if (bloque)
+			DibujarRectangulo(bloque);
+	}
 	if (EnmascararDni.checked) {
-		const bloquesDni = FormatosDnis[Formato.value].MascarasDni;
+		const bloquesDni = DatosFormato.MascarasDni;
 		if (bloquesDni) {
 			ctx.fillStyle = 'white';
-			bloquesDni.forEach(bloque => {
-				ctx.beginPath();
-				ctx.roundRect(bloque.x, bloque.y, bloque.w, bloque.h, 5);
-				ctx.fill();
-			});
+			bloquesDni.forEach(DibujarRectangulo);
 
 			let bloque = bloquesDni[0]
 			if (bloque.h == 50)

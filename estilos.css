@@ -57,7 +57,7 @@ select {
 #SelectorFichero {
 	width: 1px;
 	height: 1px;
-	opacity: 0.1;
+	opacity: .1;
 	background: transparent;
 }
 
@@ -81,8 +81,8 @@ select {
 	flex-basis: 140px;
 }
 
-#DivMascaraDni {
-	margin-top: 0.5em;
+.CampoCheckbox {
+	margin-block: 1em;
 }
 
 #Watermark {
@@ -108,7 +108,7 @@ select {
 }
 
 .centrado input {
-	padding: 0.3em 2.3em;
+	padding: .3em 2.3em;
 }
 
 .Siguiente {
@@ -162,7 +162,7 @@ details ol {
 }
 
 details li {
-	margin-bottom: 0.4em;
+	margin-bottom: .4em;
 }
 
 details:target {
@@ -176,7 +176,7 @@ details:target {
 footer {
 	background-color: light-dark(#EFEFEF, #333);
 	border-top: 1px solid #666;
-	padding: 0.4em 0 0.8em;
+	padding: .4em 0 .8em;
 	text-align: center;
 	margin-top: 1em;
 	font-size: 80%;
@@ -385,8 +385,8 @@ footer {
 
 .IconoAccion {
 	position: absolute;
-	top: 1px;
-	right: 1px;
+	top: 5px;
+	right: 5px;
 	background-color: var(--colorFondoBoton);
 	color: var(--colorBoton);
 	line-height: 0;
@@ -399,6 +399,10 @@ footer {
 	width: 2em;
 	height: 2em;
 	fill: currentColor;
+}
+
+#Resetear {
+	top: 45px;
 }
 
 #Colapsar {
@@ -475,4 +479,8 @@ a[target='_blank']:hover::after {
 
 a[href^='#'] {
 	text-decoration-style: dotted;
+}
+
+.AbrirInfo {
+	cursor: help;
 }
