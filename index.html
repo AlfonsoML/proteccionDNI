@@ -27,13 +27,27 @@
 <body>
 	<main>
 		<section id="introduccion" class="informacion">
-		<h1>Protección del DNI</h1>
-			<p>Esta página te permite ocultar fácilmente los <a href="#porque" class="AbrirInfo">datos privados de tu DNI</a>.
-			En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual ya que si cae en malas manos puede causarte graves problemas.</p>
+			<h1>Protección del DNI</h1>
+			<p>
+				Esta página te permite ocultar fácilmente los <a href="#porque" class="AbrirInfo">datos privados de tu DNI</a>.
+				En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual ya que si cae en malas manos puede causarte graves problemas.
+			</p>
 			<p>Aquí puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos, de esta manera la imagen que compartas será única para evitar que la reutilicen y además nadie tendrá acceso a los datos privados.</p>
-			<p>Para empezar, pulsa en el botón de elegir foto y continúa con los pasos siguientes.<br>
-			Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.</p>
+			<p>
+				Para empezar, pulsa en el botón de elegir foto y continúa con los pasos siguientes.<br>
+				Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.
+			</p>
 		</section>
+		<noscript>
+			<p style="margin:2em; font-weight: bold; text-align: center">
+				Esta página necesita que actives el Javascript para poder ejecutarla. Todo el proceso se hace en tu navegador y es imprescindible el uso de javascript.
+			</p>
+			<style type="text/css">
+				#pasos {
+					display: none;
+				}
+			</style>
+		</noscript>
 		<section id="pasos">
 			<a id="cerrar" title="Cerrar progreso"><svg viewBox='0 0 12 12' role='presentation'><path d='M1,1 l 10,10 M1,11 l 10,-10' /></svg></a>
 			<div class="wizard-progress">
@@ -70,7 +84,7 @@
 				<summary>Tipo de foto</summary>
 				<div>
 					<p>
-						Elige si estás usando la foto delantera o trasera del DNI; puedes ajustar el tamaño y posición del DNI a continuación. 						
+						Elige si estás usando la foto delantera o trasera del DNI; puedes ajustar el tamaño y posición del DNI a continuación.
 					</p>
 					<div><label for="Formato">Tipo de foto</label> <select id="Formato"></select></div>
 					<div id="DivNumeroSoporte" style="display:none" class="CampoCheckbox"><label for="NumeroSoporte">Ocultar Número de Soporte</label> <span><input type="checkbox" id="NumeroSoporte" checked> <a href="#OcultarNumeroSoporte" id="AyudaOcultarNumeroSoporte" class="AbrirInfo">¿qué es esto?</a></span></div>
@@ -127,7 +141,7 @@
 				<canvas id="canvas" width="1000" height="625"></canvas>
 				<div id="Expandir" class="IconoAccion" title="Ampliar a pantalla completa"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5V5m9 0h5v5h-2V7h-3V5m3 9h2v5h-5v-2h3v-3m-7 3v2H5v-5h2v3h3Z" /></svg></div>
 				<div id="Colapsar" class="IconoAccion" title="Volver a vista normal"><svg viewBox="0 0 24 24"><path d="M14 14h5v2h-3v3h-2v-5m-9 0h5v5H8v-3H5v-2m3-9h2v5H5V8h3V5m11 3v2h-5V5h2v3h3Z" /></svg></div>
-				<div id="Resetear" class="IconoAccion" title="Deshacer cambios de tamaño y posición" style="display: none"><svg viewBox='0 0 24 24'><path d='M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z'/></svg></div>
+				<div id="Resetear" class="IconoAccion" title="Deshacer cambios de tamaño y posición" style="display: none"><svg viewBox='0 0 24 24'><path d='M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z' /></svg></div>
 			</div>
 		</section>
 
