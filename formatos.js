@@ -58,10 +58,10 @@ const FormatosDnis = {
 		Nombre: 'DNI Frontal (v3.0 2015-2021)', 
 		Mascaras: [
 			{ x: 750, y: 80, w: 140, h: 60 },
-			{ x: 380, y: 380, w: 240, h: 35 }, // Fecha Nacimiento
+			{ x: 390, y: 380, w: 230, h: 35 }, // Fecha Nacimiento
 			{ x: 780, y: 370, w: 160, h: 45 },
 			{ x: 580, y: 445, w: 200, h: 35 }, // Validez
-			{ x: 380, y: 480, w: 400, h: 120 }, // Firma
+			{ x: 390, y: 480, w: 390, h: 120 }, // Firma
 			{ x: 790, y: 525, w: 210, h: 75 },
 		],
 		MascarasDni: [
@@ -69,7 +69,7 @@ const FormatosDnis = {
 			{ x: 300, y: 550, w: 70, h: 50 }, // Final DNI
 		],
 		NumeroSoporte: 
-			{ x: 380, y: 445, w: 210, h: 35 },
+			{ x: 390, y: 445, w: 200, h: 35 },
 		Watermarks: [{
 			fuente: '900 48px sans-serif',
 			estilo: 'rgb(0 0 0 / 100%)',

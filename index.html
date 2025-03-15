@@ -76,7 +76,7 @@
 			<details id="paso1" name="paso" open>
 				<summary>Foto</summary>
 				<div>
-					<p class="centrado"><button class="btn" type="button" id="ElegirFoto"><span>Elige la foto</span></button></p>
+					<p class="centrado"><button class="btn BotonPrincipal" type="button" id="ElegirFoto"><span>Elige la foto</span></button></p>
 					<div style="height:0" ;><input type="file" id="SelectorFichero" accept="image/*" title="Selector de foto (no visible)"></div>
 				</div>
 			</details>
@@ -91,7 +91,7 @@
 					<div id="DivMascaraDni" style="display:none" class="CampoCheckbox"><label for="EnmascararDni">Ocultar parcialmente el DNI</label> <span><input type="checkbox" id="EnmascararDni"> <a href="#OcultarParcialmente" id="AyudaOcultarParcialmente" class="AbrirInfo">¿qué es esto?</a></span></div>
 					<div class="Siguiente">
 						<button class="btn atras" type="button" data-siguiente="1"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="3"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
+						<button class="btn adelante BotonPrincipal" type="button" data-siguiente="3"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
 					</div>
 				</div>
 			</details>
@@ -111,7 +111,7 @@
 					</div>
 					<div class="Siguiente">
 						<button class="btn atras" type="button" data-siguiente="2"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="4"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
+						<button class="btn adelante BotonPrincipal" type="button" data-siguiente="4"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
 					</div>
 				</div>
 			</details>
@@ -122,7 +122,7 @@
 					<div class="ContenedorControl"><label for="Watermark">Sobreescribir: </label> <input type="text" id="Watermark" value="Copia para …"></div>
 					<div class="Siguiente">
 						<button class="btn atras" type="button" data-siguiente="3"><span><svg viewBox='0 0 24 24' role='presentation'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' /></svg>Anterior</span></button>
-						<button class="btn adelante" type="button" data-siguiente="5"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
+						<button class="btn adelante BotonPrincipal" type="button" data-siguiente="5"><span>Siguiente<svg viewBox='0 0 24 24' role='presentation'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' /></svg></span></button>
 					</div>
 				</div>
 			</details>
@@ -131,8 +131,8 @@
 				<div>
 					<p>Elige ahora si quieres guardar la imagen o directamente compartirla con una app (si tu navegador lo soporta).</p>
 					<p class="centrado">
-						<button class="btn" type="button" id="Guardar"><span>Guardar<svg viewBox='0 0 24 24' role='presentation'><path d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z' /></svg></span></button>
-						<button class="btn" type="button" id="Compartir" style="display:none"><span>Compartir<svg viewBox='0 0 24 24' role='presentation'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 00-3 3 3 3 0 003 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0018 16.08z' /></svg></span></button>
+						<button class="btn BotonPrincipal" type="button" id="Guardar"><span>Guardar<svg viewBox='0 0 24 24' role='presentation'><path d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z' /></svg></span></button>
+						<button class="btn BotonPrincipal" type="button" id="Compartir" style="display:none"><span>Compartir<svg viewBox='0 0 24 24' role='presentation'><path d='M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 00-3 3 3 3 0 003 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0018 16.08z' /></svg></span></button>
 					</p>
 					<a id="grabar"></a>
 				</div>

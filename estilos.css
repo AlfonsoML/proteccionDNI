@@ -1,12 +1,15 @@
 :root {
 	color-scheme: light dark;
-	/* colores para el wizard */
-	--mainColor: #07c;
-	--baseColor: light-dark(#555, currentColor);
 	--colorActivo: light-dark(#FFF, #000);
 	--colorBoton: light-dark(currentColor, #333);
 	--colorFondoBoton: light-dark(#EFEFEF, #EFEFEF);
 	--colorFondoBotonHover: light-dark(#F5F5F5, #C0C0C0);
+	--colorBotonPrincipal: #FFFFFF;
+	--colorFondoBotonPrincipal: #0D6EFD;
+	--colorFondoBotonPrincipalHover: #0B5ED7;
+	/* colores para el wizard */
+	--mainColor: var(--colorFondoBotonPrincipal);
+	--baseColor: light-dark(#555, currentColor);
 }
 
 body {
@@ -117,6 +120,7 @@ select {
 	justify-content: space-between;
 }
 
+#AyudaOcultarNumeroSoporte,
 #AyudaOcultarParcialmente {
 	font-size: 90%;
 }
@@ -231,8 +235,7 @@ footer {
 }
 
 .step.in-progress:before {
-	background: var(--mainColor);
-	background: linear-gradient(to right, var(--mainColor) 0%, var(--baseColor) 100%);
+	background-image: linear-gradient(to right, var(--mainColor) 0%, var(--baseColor) 100%);
 }
 
 .in-progress .node {
@@ -320,6 +323,19 @@ footer {
 	margin-left: 10px;
 	vertical-align: middle;
 	transform: translateY(-1px);
+}
+
+.BotonPrincipal {
+	color: var(--colorBotonPrincipal);
+	background-color: var(--colorFondoBotonPrincipal);
+}
+
+.BotonPrincipal:hover, .BotonPrincipal:focus {
+	background-color: var(--colorFondoBotonPrincipalHover);
+}
+
+.BotonPrincipal:before {
+	background-color: rgba(49 132 253 / .5);
 }
 
 .atras svg {
@@ -419,7 +435,7 @@ footer {
 
 .EnZoom #Previsualizacion {
 	z-index: 1;
-/*	width: 100%;*/
+	/*	width: 100%;*/
 	max-height: 100vh;
 	margin: 0 auto;
 }
@@ -442,24 +458,24 @@ footer {
 }
 
 .EnZoom details {
-  display: none;
+	display: none;
 }
 
 .EnZoom .wizard-progress {
-  display: none;
+	display: none;
 }
 
 .EnZoom #pasos {
-  padding: 0;
+	padding: 0;
 }
 
 .EnZoom #cerrar {
-  display: none;
+	display: none;
 }
 
 body.EnZoom {
-  display: grid;
-  justify-content: center;
+	display: grid;
+	justify-content: center;
 }
 
 /* mostrar un indicador en los enlaces que abrirán nueva ventana */
