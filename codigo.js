@@ -383,7 +383,7 @@ function PrepararDNI(img) {
 			resolve();
 		}
 
-		procesadorDNI.addEventListener('message', handler);
+		procesadorDNI.addEventListener('message', handler, { once: true });
 
 		// creamos un objeto transferable que podamos enviar al WebWorker
 		createImageBitmap(img)
