@@ -146,10 +146,16 @@ document.body
 
 function ActivarModoEdicion() {
 	document.body.classList.add('Editando');
+	// Que no se salga el teclado a elementos no visibles
+	querySelector_Array('.informacion, footer')
+		.forEach(bloque => bloque.inert = true);
 }
 
 function DesactivarModoEdicion() {
 	document.body.classList.remove('Editando');
+	// Restaurar interactividad
+	querySelector_Array('.informacion, footer')
+		.forEach(bloque => bloque.inert = false);
 }
 
 /**
