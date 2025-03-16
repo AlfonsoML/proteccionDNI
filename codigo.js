@@ -908,6 +908,11 @@ let distanciaInicial;
 // Valor inicial de zoom para ajustarlo con pinch
 let zoomInicial;
 
+// Ángulo inicial entre los dos puntos de toque
+let anguloInicial;
+// Valor inicial de rotación para ajustarlo con rotate
+let rotacionInicial;
+
 // Punto inicial de referencia para las operaciones de panning
 let puntoInicial;
 // valores iniciales de desplazamiento al iniciar el panning
@@ -921,13 +926,26 @@ let escalaImagen;
  * Calcula la distancia actual entre los dos dedos
  * @returns
  */
-function calcularDistancia() {
+function CalcularDistancia() {
 	const toque0 = evCache[0];
 	const toque1 = evCache[1];
 
 	const dx = toque1.clientX - toque0.clientX;
 	const dy = toque1.clientY - toque0.clientY;
 	return Math.sqrt(dx * dx + dy * dy);
+}
+
+/**
+ * Calcula el ángulo entre los dos puntos de toque
+ * @returns
+ */
+function CalcularAngulo() {
+	const toque0 = evCache[0];
+	const toque1 = evCache[1];
+
+	const dx = toque1.clientX - toque0.clientX;
+	const dy = toque1.clientY - toque0.clientY;
+	return Math.atan2(dy, dx) * (180 / Math.PI);
 }
 
 function initGestures() {
@@ -951,7 +969,9 @@ function pointerdownHandler(ev) {
 
 	if (evCache.length == 2) {
 		// registrar datos iniciales para cambio de zoom
-		distanciaInicial = calcularDistancia();
+		distanciaInicial = CalcularDistancia();
+		anguloInicial = CalcularAngulo();
+		rotacionInicial = Rotacion.valueAsNumber;
 		zoomInicial = Zoom.valueAsNumber;
 	}
 	if (evCache.length == 1)
@@ -981,8 +1001,11 @@ function pointermoveHandler(ev) {
 
 	// If two pointers are down, check for pinch gestures
 	if (evCache.length === 2) {
-		var cambioDistancia = calcularDistancia() - distanciaInicial;
+		const cambioDistancia = CalcularDistancia() - distanciaInicial;
 		ActualizarValorInput(Zoom, zoomInicial + cambioDistancia * 0.01);
+
+		const cambioRotacion = CalcularAngulo() - anguloInicial;
+		ActualizarValorInput(Rotacion, rotacionInicial + cambioRotacion);
 	}
 
 	// desplazamiento Horizontal/Vertical
