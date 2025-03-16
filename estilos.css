@@ -106,10 +106,6 @@ select {
 	margin: 2em 0 1em;
 }
 
-#ControlesGiro {
-	margin-top: 1em;
-}
-
 .centrado input {
 	padding: .3em 2.3em;
 }
@@ -400,15 +396,14 @@ footer {
 }
 
 .IconoAccion {
-	position: absolute;
-	top: 5px;
-	right: 5px;
 	background-color: var(--colorFondoBoton);
 	color: var(--colorBoton);
 	line-height: 0;
 	border-radius: 5px;
 	cursor: pointer;
 	z-index: 1;
+	border: 0;
+	padding: 2px;
 }
 
 .IconoAccion svg {
@@ -416,9 +411,27 @@ footer {
 	height: 2em;
 	fill: currentColor;
 }
+.ControlesSuperpuestos {
+	position: absolute;
+	top: 0;
+	background: rgba(0 0 0 /.5);
+	padding: 5px;
+	z-index: 1;
+}
 
-#Resetear {
-	top: 45px;
+#ControlesPosicion {
+	left: 0;
+	display: flex;
+	gap: 5px;
+}
+
+.BloqueBotones {
+	display: flex;
+	gap: 3px;
+}
+
+#ControlesPantalla {
+	right: 0;
 }
 
 #Colapsar {
