@@ -903,11 +903,19 @@ Touch gestures https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/P
 // Global vars to cache event state
 const evCache = [];
 
+// Distancia inicial entre los dos dedos para operación de zoom con pinch
 let distanciaInicial;
+// Valor inicial de zoom para ajustarlo con pinch
 let zoomInicial;
 
+// Punto inicial de referencia para las operaciones de panning
 let puntoInicial;
+// valores iniciales de desplazamiento al iniciar el panning
 let desplazamientoInicial;
+
+// Para las operaciones de mover la imagen necesitamos tener en cuenta la escala con la que se está mostrando en pantalla
+// internamente son 1000px, pero si estamos en móvil o en pantalla completa la anchura será distinta
+let escalaImagen;
 
 /**
  * Calcula la distancia actual entre los dos dedos
@@ -959,6 +967,7 @@ function registrarUnPunto(ev) {
 		x: Horizontal.valueAsNumber,
 		y: Vertical.valueAsNumber,
 	};
+	escalaImagen = canvas.width / canvas.getBoundingClientRect().width;
 }
 
 function pointermoveHandler(ev) {
@@ -978,9 +987,9 @@ function pointermoveHandler(ev) {
 
 	// desplazamiento Horizontal/Vertical
 	if (evCache.length == 1) {
-		ActualizarValorInput(Horizontal, desplazamientoInicial.x + ev.clientX - puntoInicial.x);
+		ActualizarValorInput(Horizontal, desplazamientoInicial.x + escalaImagen * (ev.clientX - puntoInicial.x));
 
-		ActualizarValorInput(Vertical, desplazamientoInicial.y + ev.clientY - puntoInicial.y);
+		ActualizarValorInput(Vertical, desplazamientoInicial.y + escalaImagen * (ev.clientY - puntoInicial.y));
 	}
 }
 
