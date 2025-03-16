@@ -435,13 +435,8 @@ footer {
 
 .EnZoom #Previsualizacion {
 	z-index: 1;
-	/*	width: 100%;*/
 	max-height: 100vh;
 	margin: 0 auto;
-}
-
-.EnZoom main {
-	max-width: none;
 }
 
 .EnZoom canvas {
@@ -453,8 +448,9 @@ footer {
 }
 
 .EnZoom main {
+	max-width: none;
 	padding: 0;
-	width: auto;
+	width: 100vw;
 }
 
 .EnZoom details {

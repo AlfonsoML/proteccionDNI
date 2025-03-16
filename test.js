@@ -21,6 +21,7 @@ function CambiarImagenTest(ev) {
 
 	nombreFichero = img.src;
 
+	ActivarModoEdicion();
 	ResetearControles();
 	Previsualizacion.style.display = '';
 
@@ -51,9 +52,7 @@ function CambiarImagenTest(ev) {
 	}
 
 	DibujarMascara();
-
 	DibujarMarcaAgua();
-
 }
 
 /**
