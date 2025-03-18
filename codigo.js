@@ -120,14 +120,27 @@ initGestures();
 
 configurarPantallaCompleta();
 
+// detectar si se ha cargado la página con un hash y abrir ese details
+const hash = document.location.hash;
+if (hash) {
+	const info = document.querySelector(hash);
+	if (info && typeof info.open != 'undefined')
+		info.open = true;
+}
+
 // Abrir información de ayuda al pulsar el enlace
 querySelector_Array('.AbrirInfo')
 	.forEach(elmto => {
-		activarClickConTeclado(elmto, (target) => {
+		activarClickConTeclado(elmto, (target, ev) => {
 			DesactivarModoEdicion();
 			const info = document.querySelector(target.getAttribute('href'));
-			info.open = true;
-			setTimeout(() => info.scrollIntoView({ behavior: 'smooth' }), 500);
+			info.open = true;		
+			setTimeout(() => {
+				info.scrollIntoView({ behavior: 'smooth' });
+				info.firstElementChild.focus();
+			}, 500);
+			// que no cambie el hash de la página
+			ev.preventDefault();
 		});
 	});
 
@@ -195,9 +208,9 @@ function activarClickConTeclado(elmto, callback) {
 	elmto.tabIndex = '0';
 	elmto.addEventListener('keydown', function (ev) {
 		if (ev.key == 'Enter' || ev.key == ' ')
-			callback(ev.currentTarget);
+			callback(ev.currentTarget, ev);
 	});
-	elmto.addEventListener('click', ev => callback(ev.currentTarget));
+	elmto.addEventListener('click', ev => callback(ev.currentTarget, ev));
 }
 
 function configurarWizard() {
