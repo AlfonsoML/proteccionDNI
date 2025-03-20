@@ -57,6 +57,10 @@ select {
 	margin: 10px 0;
 }
 
+#DivFichero {
+	height: 0;
+}
+
 #SelectorFichero {
 	width: 1px;
 	height: 1px;
@@ -132,6 +136,7 @@ canvas {
 }
 
 #Previsualizacion {
+	display: none;
 	aspect-ratio: 1000 / 625;
 	position: relative;
 	margin-bottom: 10px;
@@ -166,9 +171,7 @@ details li {
 	margin-bottom: .4em;
 }
 
-details:focus,
-details:focus-within,
-details:target {
+#FAQ details:where(:focus, :focus-within, :target) {
 	box-shadow: 1px 1px 2px 2px rgb(0 0 0 / 23%);
 }
 
@@ -376,13 +379,14 @@ footer {
 }
 
 .informacion {
-	transition: height 0.25s, display 0.25s;
+	transition: height 0.25s all 0.25s;
 	transition-behavior: allow-discrete; /* Note: be sure to write this after the shorthand */
 	overflow: hidden;
 }
 
 .Editando .informacion {
 	height: 0;
+	margin: 0;
 }
 
 .Editando main {
@@ -414,6 +418,7 @@ footer {
 	height: 2em;
 	fill: currentColor;
 }
+
 .ControlesSuperpuestos {
 	position: absolute;
 	top: 0;
@@ -453,6 +458,10 @@ footer {
 	z-index: 1;
 	max-height: 100vh;
 	margin: 0 auto;
+}
+
+.EnZoom h1 {
+	display: none;
 }
 
 .EnZoom canvas {
@@ -511,4 +520,8 @@ a[href^='#'] {
 
 .AbrirInfo {
 	cursor: help;
+}
+
+.Oculto {
+	display: none;
 }

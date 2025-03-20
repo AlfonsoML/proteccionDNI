@@ -23,7 +23,7 @@ function CambiarImagenTest(ev) {
 
 	ActivarModoEdicion();
 	ResetearControles();
-	Previsualizacion.style.display = '';
+	Previsualizacion.style.display = 'block';
 
 	const src = img.src;
 	// si vemos que coincide con el nombre de un formato, seleccionarlo automáticamente

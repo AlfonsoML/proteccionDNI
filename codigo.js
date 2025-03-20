@@ -53,7 +53,7 @@ Formato.innerHTML = opciones.join('');
 SelectorFichero.addEventListener('change', function (e) {
 	const fichero = e.target.files[0];
 	if (fichero) {
-		Previsualizacion.style.display = '';
+		Previsualizacion.style.display = 'block';
 
 		MostrarImagen(fichero);
 		nombreFichero = e.target.value;
@@ -75,8 +75,8 @@ document.querySelector('#paso1 p')
 		if (e.target == Formato) {
 			// ajustar visibilidad del checkbox de enmascarar DNI dependiendo de si el formato muestra el DNI o no
 			const formato = FormatosDnis[Formato.value];
-			DivMascaraDni.style.display = formato.MascarasDni ? '' : 'none';
-			DivNumeroSoporte.style.display = formato.NumeroSoporte ? '' : 'none';
+			DivMascaraDni.classList.toggle('Oculto', !formato.MascarasDni);
+			DivNumeroSoporte.classList.toggle('Oculto', !formato.NumeroSoporte);
 		}
 
 		DibujarMascara();
@@ -134,7 +134,7 @@ querySelector_Array('.AbrirInfo')
 		activarClickConTeclado(elmto, (target, ev) => {
 			DesactivarModoEdicion();
 			const info = document.querySelector(target.getAttribute('href'));
-			info.open = true;		
+			info.open = true;
 			setTimeout(() => {
 				info.scrollIntoView({ behavior: 'smooth' });
 				info.firstElementChild.focus();
@@ -417,96 +417,7 @@ function PrepararDNI(img) {
 /**
 Se encarga de convertir la imagen original del DNI en una en blanco y negro mediante un webWorker
 */
-const procesadorDNI = createWorker(() => {
-	/**
-	* Convertir todo a blanco y negro
-	*/
-	function ConvertirBN(canvas) {
-		const w = canvas.width;
-		const h = canvas.height;
-		const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-		try {
-			const imgPixels = ctx.getImageData(0, 0, w, h);
-			for (let y = 0; y < imgPixels.height; y++) {
-				for (let x = 0; x < imgPixels.width; x++) {
-					const i = (y * 4) * imgPixels.width + x * 4;
-					const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-					imgPixels.data[i] = avg;
-					imgPixels.data[i + 1] = avg;
-					imgPixels.data[i + 2] = avg;
-				}
-			}
-			ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
-		} catch (e) {
-			// da error al usar imagen de prueba con file://
-		}
-	}
-
-	// Si la imagen parece estar en vertical, girarla automáticamente por defecto
-	function PonerHorizontal(img) {
-		let width = img.width;
-		let height = img.height;
-
-		if (height > width) {
-			const ancho = height;
-			const alto = width;
-			const canvasGiro = new OffscreenCanvas(ancho, alto);
-
-			const ctxRotado = canvasGiro.getContext('2d');
-			ctxRotado.clearRect(0, 0, ancho, alto);
-			// save the unrotated context of the canvas so we can restore it later
-			// the alternative is to untranslate & unrotate after drawing
-			ctxRotado.save();
-
-			// move to the center of the canvas
-			ctxRotado.translate(ancho / 2, alto / 2);
-
-			// rotate the canvas to the specified degrees
-			ctxRotado.rotate(270 * Math.PI / 180);
-
-			// draw the image
-			// since the context is rotated, the image will be rotated also
-			ctxRotado.drawImage(img, - width / 2, - height / 2);
-
-			// we’re done with the rotating so restore the unrotated context
-			ctxRotado.restore();
-
-			return canvasGiro;
-		}
-
-		const canvas = new OffscreenCanvas(img.width, img.height);
-		const ctxImagen = canvas.getContext('2d');
-		ctxImagen.drawImage(img, 0, 0);
-		return canvas;
-	}
-
-	function ReducirAnchura(canvas) {
-		// Limitamos a un ancho máximo de 2000px para mejorar rendimiento posterior
-		const anchoMaximo = 2000;
-		if (canvas.width <= anchoMaximo)
-			return canvas;
-
-		const width = anchoMaximo;
-		const height = anchoMaximo * canvas.height / canvas.width;
-
-		const canvasEscalado = new OffscreenCanvas(width, height);
-		const ctxImagen = canvasEscalado.getContext('2d');
-		ctxImagen.drawImage(canvas, 0, 0, width, height);
-		return canvasEscalado;
-	}
-
-	self.addEventListener('message', e => {
-		const img = e.data.bitmap;
-
-		const canvas = ReducirAnchura(PonerHorizontal(img));
-
-		ConvertirBN(canvas);
-
-		const bitmap = canvas.transferToImageBitmap();
-		self.postMessage(bitmap);
-	});
-});
+const procesadorDNI = new Worker('worker.js');
 
 /**
 Vuelve a poner los controles de posición y rotación con los valores iniciales
@@ -794,11 +705,6 @@ function querySelector_Array(selector, root) {
 	return [].slice.call((root || document).querySelectorAll(selector));
 }
 
-// https://gist.github.com/ahem/d19ee198565e20c6f5e1bcd8f87b3408
-function createWorker(f) {
-	return new Worker(URL.createObjectURL(new Blob([`(${f})()`])));
-}
-
 // d&d
 function configurarDD(root) {
 	root.addEventListener('dragenter', function (event) {
@@ -867,17 +773,20 @@ function hasFiles(ev) {
 function configurarCompartir() {
 	btnCompartir = document.getElementById('Compartir');
 
-	if (typeof navigator.share == 'undefined')
+	if (typeof navigator.share == 'undefined') {
+		btnCompartir.remove();
 		return;
+	}
 
 	// Verificar si el navegador soporta compartir ficheros (Firefox no lo tiene implementado)
 	if (!navigator.canShare({
 		title: 'Copia de mi DNI',
 		files: [new File([''], 'test.jpg', { type: 'image/jpeg' })],
-	}))
+	})) {
+		btnCompartir.remove();
 		return;
+	}
 
-	btnCompartir.style.display = 'block';
 	btnCompartir.addEventListener('click', async () => {
 		let dataUrl;
 		try {
@@ -886,7 +795,12 @@ function configurarCompartir() {
 			alert('No se ha podido generar la imagen\r\n' + e);
 		}
 
-		const blob = await (await fetch(dataUrl)).blob();
+		let blob;
+		try {
+			blob = await (await fetch(dataUrl)).blob();
+		} catch (e) {
+			alert('Error convirtiendo la imagen\r\n' + e);
+		}
 		const file = new File(
 			[blob],
 			GenerarNombreFichero(),
