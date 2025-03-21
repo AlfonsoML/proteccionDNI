@@ -1,5 +1,37 @@
 ﻿'use strict';
 
+window.onerror = (a, b, c, d, e) => {
+	console.log(`Error message: ${a}`, `lineno: ${c}`, `colno: ${d}`);
+	console.error(e);
+
+	alert(`Error inesperado: ${a}`)
+};
+
+// Global vars to cache event state
+const evCache = [];
+
+// Distancia inicial entre los dos dedos para operación de zoom con pinch
+let distanciaInicial;
+// Valor inicial de zoom para ajustarlo con pinch
+let zoomInicial;
+
+// Ángulo inicial entre los dos puntos de toque
+let anguloInicial;
+// Valor inicial de rotación para ajustarlo con rotate
+let rotacionInicial;
+
+// Punto inicial de referencia para las operaciones de panning
+let puntoInicial;
+// valores iniciales de desplazamiento al iniciar el panning
+let desplazamientoInicial;
+
+// Para las operaciones de mover la imagen necesitamos tener en cuenta la escala con la que se está mostrando en pantalla
+// internamente son 1000px, pero si estamos en móvil o en pantalla completa la anchura será distinta
+let escalaImagen;
+
+// Objeto para mantener caché de las métricas del texto sin recalcular
+const CacheMetricas = {};
+
 const Previsualizacion = document.getElementById('Previsualizacion');
 // canvas donde dibujamos el DNI con los ajustes de rotación y desplazamiento
 const canvas = document.getElementById('canvas');
@@ -370,6 +402,10 @@ function MostrarImagen(file) {
 			.then(() => {
 				RedibujarDNI();
 				activarWizard(document.getElementById('step2'));
+			})
+			.catch(error => {
+				alert('Error preparando DNI \r\n' + error);
+				console.error(error)
 			});
 
 		DibujarMascara();
@@ -389,6 +425,10 @@ Deveuelve una promesa
 */
 function PrepararDNI(img) {
 	return new Promise((resolve, reject) => {
+		if (!procesadorDNI) {
+			reject('No existe el objeto procesadorDNI');
+			return;
+		}
 
 		function handler(e) {
 			imagenDNI_BN = e.data;
@@ -417,7 +457,22 @@ function PrepararDNI(img) {
 /**
 Se encarga de convertir la imagen original del DNI en una en blanco y negro mediante un webWorker
 */
-const procesadorDNI = new Worker('worker.js');
+const procesadorDNI = CrearProcesador();
+
+function CrearProcesador() {
+	if (!window.Worker) {
+		alert('El navegador no soporta WebWorkers');
+		return null;
+	}
+
+	try {
+		return new Worker('worker.js');
+	} catch (e) {
+		console.log(e);
+		alert('Error creando WebWorker\r\n' + e);
+		return null;
+	}
+}
 
 /**
 Vuelve a poner los controles de posición y rotación con los valores iniciales
@@ -580,9 +635,6 @@ function DibujarMarcaAgua() {
 		RellenarTexto(texto, ctx, marca.fuente, marca.estilo, marca.bb.x, marca.bb.y, marca.bb.w, marca.bb.h);
 	});
 }
-
-// Objeto para mantener caché de las métricas del texto sin recalcular
-const CacheMetricas = {};
 
 /**
  * Escribir un texto en la zona delimitada haciendo wrap letra a letra y repitiendo hasta llenar
@@ -826,28 +878,6 @@ function configurarCompartir() {
 /*
 Touch gestures https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Pinch_zoom_gestures
 */
-
-// Global vars to cache event state
-const evCache = [];
-
-// Distancia inicial entre los dos dedos para operación de zoom con pinch
-let distanciaInicial;
-// Valor inicial de zoom para ajustarlo con pinch
-let zoomInicial;
-
-// Ángulo inicial entre los dos puntos de toque
-let anguloInicial;
-// Valor inicial de rotación para ajustarlo con rotate
-let rotacionInicial;
-
-// Punto inicial de referencia para las operaciones de panning
-let puntoInicial;
-// valores iniciales de desplazamiento al iniciar el panning
-let desplazamientoInicial;
-
-// Para las operaciones de mover la imagen necesitamos tener en cuenta la escala con la que se está mostrando en pantalla
-// internamente son 1000px, pero si estamos en móvil o en pantalla completa la anchura será distinta
-let escalaImagen;
 
 /**
  * Calcula la distancia actual entre los dos dedos
