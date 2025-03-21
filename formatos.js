@@ -20,7 +20,7 @@ const FormatosDnis = {
 			{ x: 380, y: 380, w: 400, h: 35 }, // emision, validez
 			{ x: 820, y: 420, w: 140, h: 40 },// 
 			{ x: 380, y: 480, w: 400, h: 90 }, // Firma
-			{ x: 780, y: 510, w: 200, h: 60 },
+			{ x: 780, y: 510, w: 200, h: 60 }, // CAN
 		],
 		MascarasDni: [
 			{ x: 440, y: 100, w: 110, h: 55 },//Nº DNI 4 dígitos
@@ -62,7 +62,7 @@ const FormatosDnis = {
 			{ x: 780, y: 370, w: 160, h: 45 },
 			{ x: 580, y: 445, w: 200, h: 35 }, // Validez
 			{ x: 390, y: 480, w: 390, h: 120 }, // Firma
-			{ x: 790, y: 525, w: 210, h: 75 },
+			{ x: 790, y: 525, w: 210, h: 75 }, // CAN
 		],
 		MascarasDni: [
 			{ x: 90, y: 550, w: 90, h: 50 }, // Inicio DNI
