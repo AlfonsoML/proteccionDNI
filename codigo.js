@@ -160,10 +160,41 @@ if (hash) {
 		info.open = true;
 }
 
+// Si el navegador soporta el Popover API, mostraremos la información de ayuda como tooltips sin salir del modo edición
+const soportaPopover = HTMLElement.prototype.hasOwnProperty('popover');
+
 // Abrir información de ayuda al pulsar el enlace
 querySelector_Array('.AbrirInfo')
 	.forEach(elmto => {
+		if (soportaPopover) {
+			// clonamos el contenido que queremos mostrar para seguir dentro del modo edición
+			const respuesta = document.querySelector(elmto.getAttribute('href') + ' .respuesta');
+			const popover = respuesta.cloneNode(true);
+			popover.classList.remove('respuesta');
+			popover.popover = 'auto';
+			elmto.parentNode.appendChild(popover);
+			elmto.popoverTargetElement = popover;
+		}
+
 		activarClickConTeclado(elmto, (target, ev) => {
+			const popover = elmto.popoverTargetElement;
+			// si hemos preparado el popover lo mostramos en vez de mostrar la respuesta en la parte inferior
+			if (popover) {
+				// no funciona bien, para cuando llegamos aquí el popover ya se ha cerrado por lo que se vuelve a mostrar
+				if (popover.matches(':popover-open')) 
+					popover.hidePopover();
+				else
+					popover.showPopover();
+
+				// lo ponemos por debajo
+				const bb = target.getBoundingClientRect();
+				popover.style.top = (bb.y + bb.height + 10) + 'px';
+
+				ev.preventDefault();
+				return;
+			}
+
+			// navegadores antiguos
 			DesactivarModoEdicion();
 			const info = document.querySelector(target.getAttribute('href'));
 			info.open = true;
@@ -180,6 +211,10 @@ querySelector_Array('.AbrirInfo')
 document.body
 	.addEventListener('keydown', e => {
 		if (e.key == 'Escape') {
+			// si hay un popover abierto dejamos que lo procese de forma normal
+			if (document.querySelector(':popover-open'))
+				return;
+
 			DesactivarModoEdicion();
 		}
 	});
@@ -658,7 +693,7 @@ function RellenarTexto(texto, ctx, fuente, estilo, x, y, maxWidth, maxHeight) {
 	ctx.fillStyle = estilo;
 
 	// Calcular altura de linea con la fuente actual
-	const metrics = ctx.measureText("A");
+	const metrics = ctx.measureText('A');
 	const lineHeight = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
 	const yMax = y + maxHeight - lineHeight;
 
