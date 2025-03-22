@@ -7,7 +7,7 @@ const FormatosDnis = {
 		Mascaras: [
 		],
 		Watermarks: [{
-			fuente: '20px serif',
+			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
 			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
@@ -34,9 +34,9 @@ const FormatosDnis = {
 			estilo: 'rgb(0 0 0 / 100%)',
 			bb: { x: 10, y: 190, w: 360, h: 490 }
 		}, {
-			fuente: '20px serif',
+			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 560, y: 180, w: 420, h: 170 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 	'dni4-trasera': {
@@ -51,7 +51,7 @@ const FormatosDnis = {
 		Watermarks: [{
 			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 10, y: 70, w: 980, h: 100 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 	'dni3-frontal': {
@@ -75,9 +75,9 @@ const FormatosDnis = {
 			estilo: 'rgb(0 0 0 / 100%)',
 			bb: { x: 10, y: 140, w: 350, h: 460 }
 		}, {
-			fuente: '20px serif',
+			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 10, y: 70, w: 980, h: 60 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 	'dni3-trasera': {
@@ -92,7 +92,7 @@ const FormatosDnis = {
 		Watermarks: [{
 			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 10, y: 70, w: 980, h: 100 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 	'dni1-frontal': {
@@ -110,9 +110,9 @@ const FormatosDnis = {
 			estilo: 'rgb(0 0 0 / 100%)',
 			bb: { x: 700, y: 340, w: 290, h: 310 }
 		}, {
-			fuente: '20px serif',
+			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 530, y: 80, w: 450, h: 240 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 	'dni1-trasera': {
@@ -126,7 +126,7 @@ const FormatosDnis = {
 		Watermarks: [{
 			fuente: '12px serif',
 			estilo: 'rgb(0 0 0 / 30%)',
-			bb: { x: 10, y: 70, w: 980, h: 100 }
+			bb: { x: 10, y: 30, w: 980, h: 605 }
 		}]
 	},
 };
