@@ -300,14 +300,12 @@ function configurarWizard() {
 		);
 }
 
+let pasoActual = '1';
+
 function activarWizard(step) {
 	ActivarModoEdicion();
 
 	const paso = step.id.substr(4); // ej: step4
-
-	const actual = document.querySelector('.in-progress');
-	const pasoActual = actual.id.substring(4);
-
 	if (paso == pasoActual) {
 		if (paso == '1')
 			SelectorFichero.click();
@@ -320,11 +318,16 @@ function activarWizard(step) {
 		return;
 	}
 
+	const actual = document.querySelector('.in-progress');
 	actual.classList.remove('in-progress');
 	document.getElementById('paso' + pasoActual).open = false;
 
 	step.classList.add('in-progress');
 	document.getElementById('paso' + paso).open = true;
+
+	document.body.classList.remove('EnPaso' + pasoActual);
+	pasoActual = paso;
+	document.body.classList.add('EnPaso' + pasoActual);
 
 	let siguiente = step;
 	while (siguiente) {
@@ -964,6 +967,10 @@ function initGestures() {
 }
 
 function pointerdownHandler(ev) {
+	// mover/ ajustar la imagen solo en el paso de tipo y posición
+	if (pasoActual != '2' && pasoActual != '3')
+		return;
+
 	// The pointerdown event signals the start of a touch interaction.
 	// This event is cached to support 2-finger gestures
 	evCache.push(ev);

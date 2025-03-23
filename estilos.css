@@ -140,14 +140,12 @@ canvas {
 	aspect-ratio: 1000 / 625;
 	position: relative;
 	margin-bottom: 10px;
-	touch-action: none;
 }
 
 #Previsualizacion canvas {
 	position: absolute;
 	left: 0;
 	top: 0;
-	touch-action: none;
 }
 
 #canvas {
@@ -429,8 +427,16 @@ footer {
 
 #ControlesPosicion {
 	left: 0;
-	display: flex;
+	display: none;
 	gap: 5px;
+}
+
+body.Editando:where(.EnPaso2, .EnPaso3) #Previsualizacion {
+	touch-action: none;
+}
+
+body.Editando:where(.EnPaso2, .EnPaso3) #ControlesPosicion {
+	display: flex;
 }
 
 .BloqueBotones {
