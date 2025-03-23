@@ -527,7 +527,6 @@ a[href^='#'] {
 }
 
 :popover-open {
-	position: absolute;
 	max-width: 590px;
 	inset: 5px;
 	margin: 0;
