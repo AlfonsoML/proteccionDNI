@@ -177,6 +177,22 @@ details li {
 	padding: 0 1em;
 }
 
+a.ancla {
+	margin-left: 0.5em;
+	opacity: 0;
+	text-decoration: none;
+}
+
+a.ancla svg {
+	fill: #555;
+	vertical-align: text-top;
+	width: 1.2em;
+}
+
+details:hover a.ancla {
+	opacity: 1;
+}
+
 footer {
 	background-color: light-dark(#EFEFEF, #333);
 	border-top: 1px solid #666;

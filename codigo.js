@@ -160,6 +160,18 @@ if (hash) {
 		info.open = true;
 }
 
+// Generar enlaces visibles en los ids
+querySelector_Array('#FAQ details[id]')
+	.forEach(elmto => {
+		const id = elmto.id;
+		const anchor = document.createElement('a');
+		anchor.href = '#' + id;
+		anchor.innerHTML = '<svg viewBox="0 0 24 24" role="presentation"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>';
+		anchor.className = 'ancla';
+		anchor.onclick = function () { elmto.open = true };
+		elmto.firstElementChild.appendChild(anchor);
+	});
+
 // Si el navegador soporta el Popover API, mostraremos la información de ayuda como tooltips sin salir del modo edición
 const soportaPopover = HTMLElement.prototype.hasOwnProperty('popover');
 
@@ -181,7 +193,7 @@ querySelector_Array('.AbrirInfo')
 			// si hemos preparado el popover lo mostramos en vez de mostrar la respuesta en la parte inferior
 			if (popover) {
 				// no funciona bien, para cuando llegamos aquí el popover ya se ha cerrado por lo que se vuelve a mostrar
-				if (popover.matches(':popover-open')) 
+				if (popover.matches(':popover-open'))
 					popover.hidePopover();
 				else
 					popover.showPopover();
