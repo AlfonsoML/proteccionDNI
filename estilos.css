@@ -10,6 +10,8 @@
 	/* colores para el wizard */
 	--mainColor: var(--colorFondoBotonPrincipal);
 	--baseColor: light-dark(#555, currentColor);
+	--colorAncla: light-dark(#555, #AAA);
+	--colorPie: light-dark(#EFEFEF, #333);
 }
 
 body {
@@ -184,7 +186,7 @@ a.ancla {
 }
 
 a.ancla svg {
-	fill: #555;
+	fill: var(--colorAncla);
 	vertical-align: text-top;
 	width: 1.2em;
 }
@@ -194,7 +196,7 @@ details:hover a.ancla {
 }
 
 footer {
-	background-color: light-dark(#EFEFEF, #333);
+	background-color: var(--colorPie);
 	border-top: 1px solid #666;
 	padding: .4em 0 .8em;
 	text-align: center;

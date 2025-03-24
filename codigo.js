@@ -178,7 +178,8 @@ const soportaPopover = HTMLElement.prototype.hasOwnProperty('popover');
 // Abrir información de ayuda al pulsar el enlace
 querySelector_Array('.AbrirInfo')
 	.forEach(elmto => {
-		if (soportaPopover) {
+		// popover para los enlaces dentro del asistente
+		if (soportaPopover && elmto.closest('#pasos')) {
 			// clonamos el contenido que queremos mostrar para seguir dentro del modo edición
 			const respuesta = document.querySelector(elmto.getAttribute('href') + ' .respuesta');
 			const popover = respuesta.cloneNode(true);
