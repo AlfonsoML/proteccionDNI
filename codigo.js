@@ -109,6 +109,7 @@ document.querySelector('#paso1 p')
 			const formato = FormatosDnis[Formato.value];
 			DivMascaraDni.classList.toggle('Oculto', !formato.MascarasDni);
 			DivNumeroSoporte.classList.toggle('Oculto', !formato.NumeroSoporte);
+			CambiarEstadoBoton('2', true);
 		}
 
 		DibujarMascara();
@@ -125,6 +126,7 @@ document.querySelector('#paso1 p')
 
 Watermark.addEventListener('input', function (e) {
 	DibujarMarcaAgua();
+	CambiarEstadoBoton('4', true);
 });
 
 // Al hacer click guardarla
@@ -245,6 +247,16 @@ activarClickConTeclado(Resetear, () => {
 // Definición de funciones
 //
 //////////////////////////////////////
+
+/**
+ * Cambiamos el estado de BotonPrincipal en el botón indicado
+ * @param {any} selector
+ * @param {any} paso
+ */
+function CambiarEstadoBoton(paso, valido) {
+	document.querySelector('#paso' + paso + ' .adelante')
+		.classList.toggle('BotonPrincipal', valido);
+}
 
 function ActivarModoEdicion() {
 	document.body.classList.add('Editando');
@@ -447,6 +459,7 @@ function MostrarImagen(file) {
 	img.onload = function () {
 		URL.revokeObjectURL(img.src)
 
+		CambiarEstadoBoton('2', false);
 		ResetearControles();
 		AjustarVisibilidadResetear();
 
