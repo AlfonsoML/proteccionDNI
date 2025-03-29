@@ -38,7 +38,7 @@
 				Esta página te permite ocultar fácilmente los <a href="#porque" class="AbrirInfo">datos privados de tu DNI</a>.
 				En ocasiones te pueden pedir una copia del DNI, pero lo que no hay que hacer es mandarles una foto tal cual ya que si cae en malas manos puede causarte graves problemas.
 			</p>
-			<p>Aquí puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos, de esta manera la imagen que compartas será única para evitar que la reutilicen y además nadie tendrá acceso a los datos privados.</p>
+			<p>Aquí puedes bloquear los datos que no son necesarios y sobreescribir un texto para que no lo puedan utilizar con otros propósitos, de esta manera la imagen que compartas será única para evitar que la reutilicen.</p>
 			<p>
 				Para empezar, pulsa en el botón de elegir foto y continúa con los pasos siguientes.<br>
 				Todo este proceso se realiza únicamente en tu navegador, no se envían los datos a ninguna parte.
@@ -54,6 +54,7 @@
 					font-weight: bold;
 					text-align: center;
 				}
+
 				#pasos {
 					display: none;
 				}
@@ -88,7 +89,7 @@
 				<summary>Foto</summary>
 				<div>
 					<p class="centrado"><button class="btn BotonPrincipal" type="button" id="ElegirFoto"><span>Elige la foto</span></button></p>
-					<div id="DivFichero"><input type="file" id="SelectorFichero" accept="image/*" title="Selector de foto (no visible)"></div>
+					<div id="DivFichero"><input type="file" id="SelectorFichero" accept="image/*" title="Selector de foto (no visible)" tabindex="-1" aria-hidden="true"></div>
 				</div>
 			</details>
 			<details id="paso2" name="paso">
@@ -165,11 +166,12 @@
 			<details>
 				<summary>¿Qué hace la página?</summary>
 				<div class="respuesta">
+					<p>Se trata de seguir los pasos que recomienda la policía para proteger tu DNI, sin necesidad de que tengas que acordarte de todos y saber qué datos son importantes.</p>
 					<ol>
-						<li>Elige una foto de tu DNI. La imagen se convierte a blanco y negro y se escala a 1000px de anchura.</li>
-						<li>Elige el formato de DNI que tienes y si es la parte delantera o trasera. En base a eso se enmascaran los datos que no son necesario que nadie vea.</li>
-						<li>Ajustas si es necesario la posición de la foto para que se vea bien en la previsualización.</li>
-						<li>Añades un texto que se sobre escribirá como marca de agua, indicando para qué compartes la foto.</li>
+						<li>Elige una foto de tu DNI. La imagen se convierte a blanco y negro y se limita su tamaño para no dar una copia de alta calidad.</li>
+						<li>Elige el formato de DNI que tienes y si es la parte delantera o trasera. En base a eso se ocultan los datos que no son necesario que nadie vea.</li>
+						<li>Ajusta si es necesario la posición de la foto para que se vea bien en la previsualización.</li>
+						<li>Añade un texto que se sobreescribirá como marca de agua, indicando para qué compartes la foto.</li>
 						<li>Pulsa en el botón para descargar la foto.</li>
 					</ol>
 				</div>
@@ -187,7 +189,8 @@
 					</p>
 					<p>
 						Si tienes claro que necesita enviarles el DNI, lo que hay que hacer es seguir las <a href="https://www.rtve.es/noticias/20240604/pixelar-datos-recomendaciones-expertos-compartir-dni-internet/16132816.shtml" target="_blank">
-							directrices de la Policía Nacional</a>, de forma que esa copia esté en blanco y negro, oculte los datos que no son necesarios para identificarte y se sobreescriba un texto para que el uso sea único.<br>
+							directrices de la Policía Nacional
+						</a>, de forma que esa copia esté en blanco y negro, oculte los datos que no son necesarios para identificarte y se sobreescriba un texto para que el uso sea único.<br>
 						Eso es precisamente lo que hace esta página de forma automatizada.
 					</p>
 					<p>
@@ -213,8 +216,9 @@
 				<summary>¿Estoy seguro tras proteger así el DNI?</summary>
 				<div class="respuesta">
 					<p>
-						No, a pesar de ocultar los datos más privados, siempre has de tener cuidado cuando des tu DNI a cualquier empresa o persona. <a href="https://www.incibe.es/ciudadania/blog/precauciones-tener-en-cuenta-si-vas-enviar-tu-dni-por-internet" target="_blank">Puedes leer aquí las recomendaciones de <abbr title="Instituto Nacional de Ciberseguridad">INCIBE</abbr></a><br>
-						Es como decir "He echado la llave en la puerta al salir de casa",  eso es mejor que dejar la puerta abierta de par en par, pero un ladrón puede usar una ganzua, etc...
+						No, a pesar de ocultar los datos más privados, siempre has de tener cuidado cuando des tu DNI a cualquier empresa o persona. 
+						<a href="https://www.incibe.es/ciudadania/blog/precauciones-tener-en-cuenta-si-vas-enviar-tu-dni-por-internet" target="_blank">Puedes leer aquí las recomendaciones de <abbr title="Instituto Nacional de Ciberseguridad">INCIBE</abbr></a><br>
+						Es como decir "He echado la llave en la puerta al salir de casa", eso es mejor que dejar la puerta abierta de par en par, pero un ladrón puede usar una ganzua, etc...
 						al echar la llave evitas los problemas más básicos pero no es una seguridad completa.
 					</p>
 				</div>
@@ -267,7 +271,7 @@
 				</div>
 			</details>
 			<details id="IA_o_no_IA">
-				<summary>Ya uso otro sistema que genera una marca de agua que no se puede quitar con IA</summary>
+				<summary>Ya uso otro sistema que genera una marca de agua que no se puede quitar con <abbr title="Intelicencia Artificial">IA</abbr></summary>
 				<div class="respuesta">
 					<p>
 						Lamentablemente, eso no está protegiendo realmente tu DNI, de hecho puede que ahora tus datos estén menos seguros que antes ya que el

@@ -37,6 +37,7 @@ main {
 }
 
 label {
+	-webkit-user-select: none;
 	user-select: none;
 }
 
@@ -534,13 +535,16 @@ a[target='_blank'] {
 }
 
 a[target='_blank']:hover::after {
-	background: rgba(255, 255, 255, .5);
-	content: " " url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=);
-	font-size: 0;
-	line-height: 1;
+	background: var(--colorActivo);
+	border: 1px solid #AAA;
+	color: var(--colorAncla);
+	content: "Enlace externo";
+	display: inline-block;
+	font-size: 80%;
+	padding: 2px;
 	position: absolute;
-	right: -12px;
-	z-index: 1;
+	transform: translate(0px, -7px);
+	white-space: pre;
 }
 
 a[href^='#'] {
