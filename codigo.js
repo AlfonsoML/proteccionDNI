@@ -522,20 +522,31 @@ function PrepararDNI(img) {
 /**
 Se encarga de convertir la imagen original del DNI en una en blanco y negro mediante un webWorker
 */
-const procesadorDNI = CrearProcesador();
+let procesadorDNI = CrearProcesador();
 
 function CrearProcesador() {
-	// Al usar la página como fichero, el meta CSP 
+	if (!window.Worker) {
+		alert('El navegador no soporta WebWorkers');
+		return null;
+	}
+
+	// Al usar la página como fichero, el meta CSP
 	if (document.location.protocol == 'file:') {
 		const metaCsp = document.getElementById('MetaCSP');
-		if (metaCsp)
+		if (metaCsp) {
 			alert('Para poder ejecutar el programa desde tu ordenador necesitas eliminar la cabecera marcada como <meta id="MetaCSP"...>\r\n' +
 				'Se trata de una protección adicional para el servidor web, pero en local el navegador está aplicando otras restricciones que no son compatibles.\r\n' +
 				'Si no la eliminas, tendrás errores a continuación, o puede que no se muestre ningún error pero no veas tampoco la imagen de tu DNI (Firefox).');
-	}
+			return null;
+		}
 
-	if (!window.Worker) {
-		alert('El navegador no soporta WebWorkers');
+		// al trabajar con file: no deja crear un worker usando un fichero externo, así que lo apañamos...
+		// https://github.com/AlfonsoML/proteccionDNI/issues/18
+		const script = document.createElement('script');
+		script.src = 'worker.js';
+		script.type = 'application/javascript';
+		document.body.appendChild(script);
+
 		return null;
 	}
 
