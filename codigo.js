@@ -68,6 +68,8 @@ const EnmascararDni = document.getElementById('EnmascararDni');
 const DivMascaraDni = document.getElementById('DivMascaraDni');
 const NumeroSoporte = document.getElementById('NumeroSoporte');
 const DivNumeroSoporte = document.getElementById('DivNumeroSoporte');
+const Validez = document.getElementById('Validez');
+const DivValidez = document.getElementById('DivValidez');
 
 let nombreFichero = '';
 
@@ -102,13 +104,14 @@ document.querySelector('#paso1 p')
 		SelectorFichero.click();
 	});
 
-[Formato, EnmascararDni, NumeroSoporte].forEach(function (control) {
+[Formato, EnmascararDni, NumeroSoporte, Validez].forEach(function (control) {
 	control.addEventListener('change', function (e) {
 		if (e.target == Formato) {
 			// ajustar visibilidad del checkbox de enmascarar DNI dependiendo de si el formato muestra el DNI o no
 			const formato = FormatosDnis[Formato.value];
 			DivMascaraDni.classList.toggle('Oculto', !formato.MascarasDni);
 			DivNumeroSoporte.classList.toggle('Oculto', !formato.NumeroSoporte);
+			DivValidez.classList.toggle('Oculto', !formato.Validez);
 			CambiarEstadoBoton('2', true);
 		}
 
@@ -682,6 +685,11 @@ function DibujarMascara() {
 
 	if (NumeroSoporte.checked) {
 		const bloque = DatosFormato.NumeroSoporte;
+		if (bloque)
+			DibujarRectangulo(bloque);
+	}
+	if (Validez.checked) {
+		const bloque = DatosFormato.Validez;
 		if (bloque)
 			DibujarRectangulo(bloque);
 	}
